@@ -13,6 +13,6 @@ export default function robots() {
                 ],
             },
         ],
-        sitemap: 'https://yourcv.app/sitemap.xml',
+        sitemap: 'https://your-cv-eta.vercel.app/sitemap.xml',
     };
 }

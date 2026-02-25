@@ -5,7 +5,7 @@ import { COMPETITORS } from "@/data/competitors";
  * This file is automatically transformed into /sitemap.xml by Next.js.
  */
 export default function sitemap() {
-    const baseUrl = 'https://yourcv.app'; // Final production domain
+    const baseUrl = 'https://your-cv-eta.vercel.app'; // Correct Vercel deployment URL
 
     // 1. Core Pages (High Priority)
     const corePages = [

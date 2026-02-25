@@ -12,7 +12,7 @@ export async function POST(req) {
             return NextResponse.json({ error: "Invalid URL list" }, { status: 400 });
         }
 
-        const host = 'yourcv.app';
+        const host = 'your-cv-eta.vercel.app';
         const key = 'yourcv_indexnow_key_2026'; // Should match the key file served at root
         const keyLocation = `https://${host}/${key}.txt`;
 

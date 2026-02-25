@@ -18,7 +18,7 @@ const sourceSans = Source_Sans_3({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://yourcv.app'),
+  metadataBase: new URL('https://your-cv-eta.vercel.app'),
   title: {
     default: "YourCV | Smart AI-Powered Resume Builder & ATS Optimizer",
     template: "%s | YourCV"
@@ -35,7 +35,7 @@ export const metadata = {
     "AI job application",
     "smart resume optimizer"
   ],
-  authors: [{ name: "Darshit Patel", url: "https://yourcv.app/about" }],
+  authors: [{ name: "Darshit Patel", url: "https://your-cv-eta.vercel.app/about" }],
   creator: "YourCV AI",
   publisher: "YourCV AI",
   alternates: {
@@ -44,7 +44,7 @@ export const metadata = {
   openGraph: {
     title: "YourCV | Smart AI-Powered Resume Builder",
     description: "Stop getting rejected by bots. Create an ATS-proof resume with AI-driven content optimization and professional LaTeX templates.",
-    url: 'https://yourcv.app',
+    url: 'https://your-cv-eta.vercel.app',
     siteName: 'YourCV',
     images: [
       {
