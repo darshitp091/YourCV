@@ -243,6 +243,14 @@ export default function PreviewPage() {
                         </Link>
                     </div>
 
+                    <div className="bg-white p-6 rounded-3xl border border-border">
+                        <SocialShare
+                            url="https://your-cv-eta.vercel.app"
+                            title="I just built my professional resume with YourCV! 🚀"
+                            text="I just created my ATS-optimized resume in minutes using YourCV AI. If you're looking to level up your career, check it out here: "
+                        />
+                    </div>
+
                     <div className="bg-primary p-6 rounded-3xl text-white space-y-4 shadow-xl shadow-primary/20">
                         <LucideSparkles className="w-8 h-8 opacity-50" />
                         <div className="space-y-1">
