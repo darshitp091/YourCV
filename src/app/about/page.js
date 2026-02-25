@@ -27,7 +27,7 @@ export default function AboutPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 className="text-5xl md:text-7xl font-black font-heading leading-tight"
                             >
-                                We're building the <span className="text-gradient">Future of Hiring</span>.
+                                We&apos;re building the <span className="text-gradient">Future of Hiring</span>.
                             </motion.h1>
                             <motion.p
                                 initial={{ opacity: 0, y: 20 }}
@@ -43,7 +43,7 @@ export default function AboutPage() {
                             <div className="glass-card p-12 rounded-[3rem] rounded-tr-none relative z-10 border-primary/20 bg-primary/5">
                                 <LucideQuote className="text-primary/20 mb-6" size={48} />
                                 <p className="text-2xl font-heading font-medium text-foreground italic leading-relaxed">
-                                    "Technology shouldn't be a barrier to employment. We're using AI to make sure that human talent gets the attention it deserves."
+                                    &quot;Technology shouldn&apos;t be a barrier to employment. We&apos;re using AI to make sure that human talent gets the attention it deserves.&quot;
                                 </p>
                                 <div className="mt-8 flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold">DP</div>

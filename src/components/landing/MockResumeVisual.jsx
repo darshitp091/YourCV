@@ -45,7 +45,7 @@ export const MockResumeVisual = () => {
                         transition={{ delay: 3 }}
                         className="text-[10px] text-zinc-500 leading-relaxed italic"
                     >
-                        "High-impact engineer with 8+ years experience building AI-powered consumer apps..."
+                        &quot;High-impact engineer with 8+ years experience building AI-powered consumer apps...&quot;
                     </motion.p>
                 </div>
 

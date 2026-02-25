@@ -2,6 +2,8 @@ import { Outfit, Source_Sans_3 } from "next/font/google";
 import "../styles/globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -76,6 +78,8 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           {children}
         </AuthProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
