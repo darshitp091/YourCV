@@ -1,4 +1,5 @@
 import { COMPETITORS } from "@/data/competitors";
+import { ROLES } from "@/data/roles";
 
 /**
  * Sitemap generator for YourCV.
@@ -30,7 +31,14 @@ export default function sitemap() {
         { url: '/terms', priority: 0.3, changeFrequency: 'monthly' },
     ];
 
-    // 4. Dynamic Pages: Competitor Alternatives
+    // 4. Dynamic Pages: Role-specific Resumes
+    const roleRoutes = ROLES.map((role) => ({
+        url: `/resumes/${role.slug}`,
+        priority: 0.9,
+        changeFrequency: 'weekly',
+    }));
+
+    // 5. Dynamic Pages: Competitor Alternatives
     const alternativeRoutes = COMPETITORS.map((competitor) => ({
         url: `/alternatives/${competitor.slug}`,
         priority: 0.7,
@@ -41,6 +49,7 @@ export default function sitemap() {
         ...corePages,
         ...resourcePages,
         ...legalPages,
+        ...roleRoutes,
         ...alternativeRoutes,
     ];
 
