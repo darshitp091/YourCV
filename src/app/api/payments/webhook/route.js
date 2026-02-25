@@ -7,8 +7,15 @@ export async function POST(req) {
         const body = await req.json();
         const signature = req.headers.get("x-razorpay-signature");
 
+        const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
+
+        if (!webhookSecret) {
+            console.error("RAZORPAY_WEBHOOK_SECRET is missing");
+            return NextResponse.json({ error: "Webhook is not configured" }, { status: 500 });
+        }
+
         const expectedSignature = crypto
-            .createHmac("sha256", process.env.RAZORPAY_WEBHOOK_SECRET)
+            .createHmac("sha256", webhookSecret)
             .update(JSON.stringify(body))
             .digest("hex");
 
