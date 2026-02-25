@@ -1,35 +1,53 @@
 import { COMPETITORS } from "@/data/competitors";
 
+/**
+ * Sitemap generator for YourCV.
+ * This file is automatically transformed into /sitemap.xml by Next.js.
+ */
 export default function sitemap() {
-    const baseUrl = 'https://yourcv.app'; // Replace with actual domain
+    const baseUrl = 'https://yourcv.app'; // Final production domain
 
-    // Core pages
-    const baseRoutes = [
-        '',
-        '/templates',
-        '/blog',
-        '/pricing',
-        '/about',
-        '/contact',
-        '/privacy',
-        '/terms',
-        '/resources/ats-guide',
+    // 1. Core Pages (High Priority)
+    const corePages = [
+        { url: '', priority: 1, changeFrequency: 'daily' },
+        { url: '/templates', priority: 0.9, changeFrequency: 'weekly' },
+        { url: '/blog', priority: 0.8, changeFrequency: 'daily' },
+        { url: '/pricing', priority: 0.8, changeFrequency: 'monthly' },
     ];
 
-    const routes = baseRoutes.map((route) => ({
-        url: `${baseUrl}${route}`,
-        lastModified: new Date().toISOString().split('T')[0],
-        changeFrequency: 'weekly',
-        priority: route === '' ? 1 : 0.8,
-    }));
+    // 2. Resource & Informational Pages (Medium Priority)
+    const resourcePages = [
+        { url: '/about', priority: 0.7, changeFrequency: 'monthly' },
+        { url: '/contact', priority: 0.7, changeFrequency: 'monthly' },
+        { url: '/resources/ats-guide', priority: 0.8, changeFrequency: 'weekly' },
+        { url: '/resources/examples', priority: 0.8, changeFrequency: 'weekly' },
+        { url: '/resources/tips', priority: 0.8, changeFrequency: 'weekly' },
+    ];
 
-    // Append alternatives
+    // 3. Legal & Compliance (Low Priority)
+    const legalPages = [
+        { url: '/privacy', priority: 0.3, changeFrequency: 'monthly' },
+        { url: '/terms', priority: 0.3, changeFrequency: 'monthly' },
+    ];
+
+    // 4. Dynamic Pages: Competitor Alternatives
     const alternativeRoutes = COMPETITORS.map((competitor) => ({
-        url: `${baseUrl}/alternatives/${competitor.slug}`,
-        lastModified: new Date().toISOString().split('T')[0],
-        changeFrequency: 'monthly',
+        url: `/alternatives/${competitor.slug}`,
         priority: 0.7,
+        changeFrequency: 'monthly',
     }));
 
-    return [...routes, ...alternativeRoutes];
+    const allRoutes = [
+        ...corePages,
+        ...resourcePages,
+        ...legalPages,
+        ...alternativeRoutes,
+    ];
+
+    return allRoutes.map((route) => ({
+        url: `${baseUrl}${route.url}`,
+        lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: route.changeFrequency,
+        priority: route.priority,
+    }));
 }

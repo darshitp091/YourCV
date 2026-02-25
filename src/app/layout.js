@@ -18,32 +18,40 @@ const sourceSans = Source_Sans_3({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://yourcv.app'), // Replace with actual domain when ready
+  metadataBase: new URL('https://yourcv.app'),
   title: {
     default: "YourCV | Smart AI-Powered Resume Builder & ATS Optimizer",
     template: "%s | YourCV"
   },
-  description: "Build professional, ATS-optimized resumes in minutes with YourCV. AI-driven content, niche-specific templates, and direct LaTeX exports.",
-  keywords: ["resume builder", "free resume builder", "ATS resume", "AI resume builder", "cv maker", "professional resume", "LaTeX resume", "career tool"],
-  authors: [{ name: "YourCV Team" }],
-  creator: "YourCV",
+  description: "Build a job-winning resume in minutes with AI. YourCV uses advanced algorithms to optimize your resume for ATS, provides premium templates, and offers direct LaTeX exports for the highest professional standard.",
+  keywords: [
+    "resume builder",
+    "AI resume maker",
+    "ATS optimized resume",
+    "free cv builder",
+    "professional resume templates",
+    "LaTeX resume generator",
+    "career growth tools",
+    "AI job application",
+    "smart resume optimizer"
+  ],
+  authors: [{ name: "Darshit Patel", url: "https://yourcv.app/about" }],
+  creator: "YourCV AI",
   publisher: "YourCV AI",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
+  alternates: {
+    canonical: '/',
   },
   openGraph: {
     title: "YourCV | Smart AI-Powered Resume Builder",
-    description: "Launch your career with an ATS-optimized resume. AI-powered writing and premium templates.",
+    description: "Stop getting rejected by bots. Create an ATS-proof resume with AI-driven content optimization and professional LaTeX templates.",
     url: 'https://yourcv.app',
     siteName: 'YourCV',
     images: [
       {
-        url: '/og-image.png', // We should generate this later
+        url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'YourCV AI Platform',
+        alt: 'YourCV AI Resume Platform Preview',
       },
     ],
     locale: 'en_US',
@@ -51,13 +59,15 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "YourCV | AI Resume Builder",
-    description: "Build professional resumes in minutes with AI.",
+    title: "YourCV | The Future of Resume Building",
+    description: "Launch your career with an AI-engineered resume that beats the ATS every time.",
+    creator: "@yourcv_ai",
     images: ['/og-image.png'],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -66,6 +76,7 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  category: 'technology',
 };
 
 export default function RootLayout({ children }) {
