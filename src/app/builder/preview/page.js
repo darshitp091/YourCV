@@ -23,6 +23,7 @@ import { LaTeXModal } from "@/components/resume/LaTeXModal";
 import { incrementUsage } from "@/lib/credits";
 import { triggerCheckout } from "@/lib/razorpay";
 import { triggerWorkflow } from "@/lib/workflows/engine";
+import { SocialShare } from "@/components/common/SocialShare";
 
 export default function PreviewPage() {
     const { user } = useAuth();
