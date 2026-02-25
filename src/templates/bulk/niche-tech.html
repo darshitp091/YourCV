@@ -1,0 +1,58 @@
+<div class="niche-template p-10 bg-white font-serif max-w-[800px] mx-auto shadow-lg">
+  <header class="border-b-4 border-slate-800 pb-6 mb-8">
+    <h1 class="text-5xl font-black uppercase text-slate-900 tracking-tighter">{{personal.fullName}}</h1>
+    <p class="text-2xl text-slate-500 font-bold">{{personal.jobTitle}}</p>
+    <div class="flex gap-4 mt-4 text-xs font-mono text-slate-400">
+      <span>{{contact.email}}</span>
+      <span>{{contact.phone}}</span>
+      <span>{{contact.location}}</span>
+    </div>
+    <div class="flex gap-4 mt-2 text-[10px] font-bold uppercase tracking-widest text-slate-300">
+      {{#if contact.linkedin}}<span>LinkedIn / {{contact.linkedin}}</span>{{/if}}
+      {{#if contact.github}}<span>GitHub / {{contact.github}}</span>{{/if}}
+      {{#if contact.portfolio}}<span>Portfolio / {{contact.portfolio}}</span>{{/if}}
+    </div>
+  </header>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold bg-slate-100 px-2 py-1 inline-block mb-3">Professional Narrative</h2>
+    <p class="text-slate-700 leading-relaxed italic border-l-4 border-slate-200 pl-4">{{summary}}</p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold bg-slate-100 px-2 py-1 inline-block mb-3">Featured Projects</h2>
+    <!-- repeat:projects -->
+    <div class="mb-6 last:mb-0">
+      <div class="flex justify-between items-center mb-1">
+        <h3 class="font-bold text-slate-900 text-lg">{{name}}</h3>
+        <span class="text-xs font-bold text-slate-400 font-mono tracking-tighter">{{techStack}}</span>
+      </div>
+      <p class="text-xs text-slate-400 mb-2">{{link}}</p>
+      <p class="text-slate-700 leading-relaxed text-sm">{{description}}</p>
+    </div>
+    <!-- end:repeat -->
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold bg-slate-100 px-2 py-1 inline-block mb-3">Career History</h2>
+    <!-- repeat:experience -->
+    <div class="mb-6 last:mb-0">
+      <div class="flex justify-between items-center mb-1">
+        <h3 class="font-bold text-slate-900 text-lg">{{role}}</h3>
+        <span class="text-sm font-bold text-slate-400">{{startDate}} — {{endDate}}</span>
+      </div>
+      <p class="text-sm text-slate-600 font-bold mb-2">{{company}} • {{location}}</p>
+      <p class="text-slate-700 leading-relaxed">{{description}}</p>
+    </div>
+    <!-- end:repeat -->
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold bg-slate-100 px-2 py-1 inline-block mb-3">Core Expertise</h2>
+    <div class="flex flex-wrap gap-2 mt-2">
+      <!-- repeat:technical -->
+      <span class="px-3 py-1 bg-slate-200 text-slate-800 text-xs font-bold rounded-full">{{item}}</span>
+      <!-- end:repeat -->
+    </div>
+  </section>
+</div>

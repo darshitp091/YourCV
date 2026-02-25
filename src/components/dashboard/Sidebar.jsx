@@ -1,0 +1,109 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+    LucideFileText,
+    LucideLayout,
+    LucideSettings,
+    LucideCreditCard,
+    LucideLogOut,
+    LucideLayoutDashboard,
+    LucideZap
+} from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { BrandLogo } from "../ui/BrandLogo";
+import { clsx } from "clsx";
+import { useState, useEffect } from "react";
+import { getUsage } from "@/lib/credits";
+
+const DASHBOARD_LINKS = [
+    { name: "My Resumes", href: "/dashboard", icon: LucideFileText },
+    { name: "Templates", href: "/templates", icon: LucideLayout },
+    { name: "Automations", href: "/dashboard/workflows", icon: LucideZap },
+    { name: "Billing & Plans", href: "/dashboard/billing", icon: LucideCreditCard },
+    { name: "Account Settings", href: "/dashboard/settings", icon: LucideSettings },
+];
+
+export const Sidebar = () => {
+    const pathname = usePathname();
+    const { signOut, user } = useAuth();
+    const [usage, setUsage] = useState({ resumes_generated: 0 });
+
+    useEffect(() => {
+        if (user) {
+            getUsage(user.id).then(setUsage);
+        }
+    }, [user]);
+
+    const isPremium = user?.user_metadata?.plan === "premium" || user?.plan === "premium";
+
+    return (
+        <aside className="w-64 border-r border-border bg-white flex flex-col h-screen sticky top-0">
+            {/* Brand */}
+            <div className="p-6 border-b border-border">
+                <Link href="/" className="flex items-center gap-2 group">
+                    <BrandLogo />
+                </Link>
+            </div>
+
+            {/* Nav Links */}
+            <nav className="flex-1 p-4 space-y-1">
+                {DASHBOARD_LINKS.map((link) => {
+                    const Icon = link.icon;
+                    const isActive = pathname === link.href;
+
+                    return (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className={clsx(
+                                "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
+                                isActive
+                                    ? "bg-primary/10 text-primary shadow-sm"
+                                    : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+                            )}
+                        >
+                            <Icon className={clsx("w-5 h-5", isActive ? "text-primary" : "text-muted-foreground")} />
+                            {link.name}
+                        </Link>
+                    );
+                })}
+            </nav>
+
+            {/* Usage Indicator */}
+            <div className="p-4 mx-4 mb-4 bg-secondary/30 rounded-2xl space-y-3">
+                <div className="flex items-center justify-between text-xs font-semibold">
+                    <span className="text-muted-foreground uppercase tracking-wider">
+                        {isPremium ? "Premium Plan" : "Free Plan"}
+                    </span>
+                    <span className="text-primary">
+                        {isPremium ? "∞" : `${usage.resumes_generated} / 1`} Resumes
+                    </span>
+                </div>
+                <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
+                    <div
+                        className="h-full bg-primary transition-all duration-500"
+                        style={{ width: isPremium ? "100%" : `${Math.min((usage.resumes_generated / 1) * 100, 100)}%` }}
+                    />
+                </div>
+                {!isPremium && (
+                    <Link href="/dashboard/billing" className="block text-center text-xs font-bold text-primary hover:underline">
+                        Upgrade for MORE
+                    </Link>
+                )}
+            </div>
+
+            {/* User / Logout */}
+            <div className="p-4 border-t border-border">
+                <button
+                    onClick={signOut}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/5 transition-colors"
+                >
+                    <LucideLogOut className="w-5 h-5" />
+                    Log Out
+                </button>
+            </div>
+        </aside>
+    );
+};
