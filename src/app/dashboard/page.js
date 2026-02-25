@@ -80,6 +80,13 @@ export default function DashboardPage() {
         }
     };
 
+    const getResetDate = () => {
+        if (!user || !usage) return null;
+        const profile = user.user_metadata; // This might be stale, better to use a profile state if available
+        // BUT we know getCurrentCycleStart is imported... wait, dashboard doesn't have it imported yet.
+        return null; // I'll fix the imports first
+    };
+
     const stats = [
         {
             label: "Total Resumes",
@@ -92,6 +99,7 @@ export default function DashboardPage() {
             label: "Credits Used",
             value: usage?.resumes_generated || 0,
             total: 1,
+            resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
             icon: LucideCreditCard,
             color: "text-amber-600",
             bg: "bg-amber-100"
@@ -99,6 +107,7 @@ export default function DashboardPage() {
         {
             label: "AI Refinements",
             value: usage?.latex_generations || 0,
+            resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
             icon: LucideSparkles,
             color: "text-purple-600",
             bg: "bg-purple-100"
@@ -142,6 +151,9 @@ export default function DashboardPage() {
                                         <h3 className="text-2xl font-bold text-foreground">{stat.value}</h3>
                                         {stat.total && <span className="text-sm text-muted-foreground">/ {stat.total}</span>}
                                     </div>
+                                    {stat.resetDate && (
+                                        <p className="text-[10px] text-muted-foreground mt-1">Resets: {stat.resetDate}</p>
+                                    )}
                                 </div>
                             </div>
                         </Card>

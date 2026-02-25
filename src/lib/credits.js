@@ -1,4 +1,32 @@
 import { supabase } from "@/lib/supabase";
+import {
+    differenceInMonths,
+    addMonths,
+    format,
+    startOfDay,
+    parseISO
+} from "date-fns";
+
+/**
+ * Calculates the start date of the current billing cycle.
+ * For example, if joined Jan 15 and today is Feb 20, cycle start is Feb 15.
+ * @param {string} baseDateStr - ISO date string (created_at or plan_started_at)
+ * @returns {string} - YYYY-MM-DD
+ */
+export function getCurrentCycleStart(baseDateStr) {
+    if (!baseDateStr) return format(new Date(), 'yyyy-MM-01');
+
+    const baseDate = startOfDay(parseISO(baseDateStr));
+    const today = startOfDay(new Date());
+
+    // Calculate how many full months have passed since baseDate
+    const monthsPassed = differenceInMonths(today, baseDate);
+
+    // The current cycle started 'monthsPassed' months after baseDate
+    const cycleStart = addMonths(baseDate, monthsPassed);
+
+    return format(cycleStart, 'yyyy-MM-dd');
+}
 
 /**
  * Checks if the user has enough credits to perform an action.
@@ -10,27 +38,31 @@ export async function checkCredits(userId, type = 'resume') {
     try {
         const { data: profile, error: profileError } = await supabase
             .from('profiles')
-            .select('plan')
+            .select('plan, plan_started_at, created_at')
             .eq('id', userId)
             .single();
 
         if (profileError) throw profileError;
 
-        // Premium users have unlimited credits (mock logic)
+        // Determine the base date for the billing cycle
+        // If premium, use plan_started_at. If free, use created_at.
+        const baseDate = profile.plan === 'premium' ? profile.plan_started_at : profile.created_at;
+        const cycleStart = getCurrentCycleStart(baseDate);
+
+        // Premium users have unlimited credits
         if (profile.plan === 'premium') return true;
 
-        // Free users: Check monthly usage
-        const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+        // Free users: Check usage for the current personalized cycle
         const { data: usage, error: usageError } = await supabase
             .from('usage')
             .select('resumes_generated, latex_generations')
             .eq('user_id', userId)
-            .eq('month_year', currentMonth)
+            .eq('month_year', cycleStart) // Reusing the column to store cycle start date
             .maybeSingle();
 
         if (usageError && usageError.code !== 'PGRST116') throw usageError;
 
-        if (!usage) return true; // No usage yet this month
+        if (!usage) return true; // No usage yet this cycle
 
         if (type === 'resume' && usage.resumes_generated >= 1) return false;
         if (type === 'latex' && usage.latex_generations >= 3) return false;
@@ -46,62 +78,66 @@ export async function checkCredits(userId, type = 'resume') {
  * Increments usage for a user.
  */
 export async function incrementUsage(userId, type = 'resume') {
-    const currentMonth = new Date().toISOString().slice(0, 7);
-
     try {
-        const { data, error } = await supabase.rpc('increment_usage', {
-            u_id: userId,
-            m_y: currentMonth,
-            u_type: type
-        });
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('plan, plan_started_at, created_at')
+            .eq('id', userId)
+            .single();
 
-        if (error) {
-            // Fallback if RPC isn't available: Standard upsert
-            const { data: existing } = await supabase
+        const baseDate = profile.plan === 'premium' ? profile.plan_started_at : profile.created_at;
+        const cycleStart = getCurrentCycleStart(baseDate);
+
+        // Standard upsert logic for the personalized cycle
+        const { data: existing } = await supabase
+            .from('usage')
+            .select('*')
+            .eq('user_id', userId)
+            .eq('month_year', cycleStart)
+            .maybeSingle();
+
+        if (existing) {
+            const field = type === 'resume' ? 'resumes_generated' : 'latex_generations';
+            await supabase
                 .from('usage')
-                .select('*')
-                .eq('user_id', userId)
-                .eq('month_year', currentMonth)
-                .maybeSingle();
-
-            if (existing) {
-                const field = type === 'resume' ? 'resumes_generated' : 'latex_generations';
-                await supabase
-                    .from('usage')
-                    .update({ [field]: existing[field] + 1 })
-                    .eq('id', existing.id);
-            } else {
-                await supabase
-                    .from('usage')
-                    .insert([{
-                        user_id: userId,
-                        month_year: currentMonth,
-                        resumes_generated: type === 'resume' ? 1 : 0,
-                        latex_generations: type === 'latex' ? 1 : 0
-                    }]);
-            }
+                .update({ [field]: existing[field] + 1 })
+                .eq('id', existing.id);
+        } else {
+            await supabase
+                .from('usage')
+                .insert([{
+                    user_id: userId,
+                    month_year: cycleStart,
+                    resumes_generated: type === 'resume' ? 1 : 0,
+                    latex_generations: type === 'latex' ? 1 : 0
+                }]);
         }
     } catch (error) {
         console.error("Increment Usage Error:", error);
     }
 }
+
+/**
+ * Gets usage for the current billing cycle.
+ */
 export async function getUsage(userId) {
     if (!userId) return { resumes_generated: 0, latex_generations: 0 };
 
-    const currentMonth = new Date().toISOString().slice(0, 7);
-
-    // Defensive check
-    if (!supabase || !supabase.from) {
-        console.error("Supabase client not initialized in getUsage");
-        return { resumes_generated: 0, latex_generations: 0 };
-    }
-
     try {
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('plan, plan_started_at, created_at')
+            .eq('id', userId)
+            .single();
+
+        const baseDate = profile.plan === 'premium' ? profile.plan_started_at : profile.created_at;
+        const cycleStart = getCurrentCycleStart(baseDate);
+
         const { data, error } = await supabase
             .from('usage')
             .select('*')
             .eq('user_id', userId)
-            .eq('month_year', currentMonth)
+            .eq('month_year', cycleStart)
             .maybeSingle();
 
         if (error && error.code !== 'PGRST116') throw error;
@@ -109,9 +145,6 @@ export async function getUsage(userId) {
         return data || { resumes_generated: 0, latex_generations: 0 };
     } catch (error) {
         console.error("❌ GET USAGE CRITICAL ERROR:", error);
-        console.error("Error name:", error?.name);
-        console.error("Error message:", error?.message);
-        console.error("Error stack:", error?.stack);
         return { resumes_generated: 0, latex_generations: 0 };
     }
 }
