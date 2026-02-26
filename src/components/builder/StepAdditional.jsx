@@ -20,15 +20,15 @@ const InfoCategory = ({ title, icon: Icon, items, onAdd, onRemove, color, placeh
     return (
         <div className="space-y-6 group/cat">
             <div className="flex items-center gap-3">
-                <div className={`p-2.5 rounded-xl bg-white/[0.03] border border-white/10 shadow-2xl group-focus-within/cat:border-primary/40 transition-colors`}>
+                <div className={`p-2.5 rounded-xl bg-zinc-50 border border-zinc-200 shadow-sm group-focus-within/cat:border-primary/40 transition-colors`}>
                     <Icon className={`w-5 h-5 ${color}`} />
                 </div>
                 <div>
-                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white/80 group-focus-within/cat:text-primary transition-colors">{title}</h3>
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-900 group-focus-within/cat:text-primary transition-colors">{title}</h3>
                 </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 p-6 min-h-[80px] bg-white/[0.02] border border-white/10 rounded-[2rem] focus-within:ring-4 focus-within:ring-primary/40 focus-within:border-primary focus-within:bg-white/[0.05] transition-all duration-500 backdrop-blur-sm relative overflow-hidden">
+            <div className="flex flex-wrap gap-3 p-6 min-h-[80px] bg-white border border-zinc-200 rounded-[2rem] focus-within:ring-4 focus-within:ring-primary/10 focus-within:border-primary focus-within:bg-white transition-all duration-500 shadow-sm relative overflow-hidden group/input">
                 <AnimatePresence mode="popLayout">
                     {items.map((item) => (
                         <motion.div
@@ -40,12 +40,12 @@ const InfoCategory = ({ title, icon: Icon, items, onAdd, onRemove, color, placeh
                         >
                             <Badge
                                 variant="ghost"
-                                className="flex items-center gap-2 bg-white/5 border border-white/5 hover:bg-white/10 text-zinc-300 py-2.5 px-4 rounded-xl transition-all"
+                                className="flex items-center gap-2 bg-zinc-50 border border-zinc-100 hover:bg-zinc-100 text-zinc-600 py-2.5 px-4 rounded-xl transition-all shadow-sm"
                             >
                                 <span className="text-xs font-bold tracking-wide">{item}</span>
                                 <button
                                     onClick={() => onRemove(item)}
-                                    className="text-zinc-500 hover:text-destructive transition-colors"
+                                    className="text-zinc-400 hover:text-destructive transition-colors"
                                 >
                                     <LucideX className="w-3.5 h-3.5" />
                                 </button>
@@ -59,7 +59,7 @@ const InfoCategory = ({ title, icon: Icon, items, onAdd, onRemove, color, placeh
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 bg-transparent border-none outline-none text-sm min-w-[200px] text-white placeholder:text-zinc-700 font-medium py-1"
+                    className="flex-1 bg-transparent border-none outline-none text-sm min-w-[200px] text-zinc-900 placeholder:text-zinc-400 font-medium py-1"
                 />
             </div>
         </div>
@@ -88,11 +88,11 @@ export const StepAdditional = () => {
         <div className="space-y-12">
             <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-sm">
                         <LucideAward className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black font-heading text-white tracking-tight">Ancillary_Data</h2>
+                        <h2 className="text-3xl font-black font-heading text-zinc-900 tracking-tight">Ancillary_Core</h2>
                         <p className="text-zinc-500 text-sm font-medium tracking-wide">Finalize your professional profile augmentation.</p>
                     </div>
                 </div>
@@ -130,18 +130,16 @@ export const StepAdditional = () => {
                 />
             </div>
 
-            <div className="p-8 bg-emerald-500/5 rounded-[3rem] border border-emerald-500/10 flex items-center justify-between gap-8 relative overflow-hidden group/final">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent opacity-0 group-hover/final:opacity-100 transition-opacity" />
-
+            <div className="p-8 bg-zinc-50 rounded-[3rem] border border-zinc-200 flex items-center justify-between gap-8 relative overflow-hidden group/final shadow-sm">
                 <div className="space-y-2 relative z-10">
-                    <p className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.4em]">Final_Sync_Sequence</p>
-                    <p className="text-lg font-black text-white uppercase tracking-widest">Configuration 95% Complete</p>
+                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em]">Final_Sync_Sequence</p>
+                    <p className="text-lg font-black text-zinc-900 uppercase tracking-widest">Configuration 95% Complete</p>
                     <p className="text-xs text-zinc-500 font-medium">Your professional matrix is nearly perfected. Proceed to visual selection.</p>
                 </div>
 
                 <div className="hidden sm:block relative z-10">
-                    <div className="w-20 h-20 bg-white/5 backdrop-blur-3xl rounded-[2rem] border border-white/10 flex items-center justify-center shadow-2xl group-hover/final:border-emerald-500/40 transition-all duration-700">
-                        <span className="text-emerald-400 font-black text-xl tabular-nums drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">95%</span>
+                    <div className="w-20 h-20 bg-white rounded-[2rem] border border-zinc-200 flex items-center justify-center shadow-xl group-hover/final:border-primary/40 transition-all duration-700">
+                        <span className="text-primary font-black text-xl tabular-nums">95%</span>
                     </div>
                 </div>
             </div>

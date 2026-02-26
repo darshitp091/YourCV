@@ -12,7 +12,7 @@ export const Input = ({
 }) => {
     const variants = {
         default: "bg-white border-border text-foreground focus:ring-primary/20 focus:border-primary",
-        premium: "bg-white/5 border-white/10 text-white placeholder:text-zinc-500 focus:ring-primary/40 focus:border-primary focus:bg-white/[0.08] backdrop-blur-sm"
+        premium: "bg-white border-black/[0.08] text-zinc-900 placeholder:text-zinc-400 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all shadow-sm"
     };
 
     return (
@@ -20,7 +20,7 @@ export const Input = ({
             {label && (
                 <label className={clsx(
                     "text-[10px] font-black uppercase tracking-[0.2em] ml-1 transition-colors duration-300",
-                    variant === "premium" ? "text-zinc-500 group-focus-within/input:text-primary" : "text-foreground/80"
+                    variant === "premium" ? "text-zinc-400 group-focus-within/input:text-primary" : "text-foreground/80"
                 )}>
                     {label}
                 </label>

@@ -15,7 +15,7 @@ export const FormNavigation = ({ onNext }) => {
             <Button
                 variant="ghost"
                 onClick={prevStep}
-                className={isFirstStep ? "invisible" : "visible hover:bg-white/5 text-zinc-400 hover:text-white transition-all"}
+                className={isFirstStep ? "invisible" : "visible hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900 transition-all rounded-xl"}
             >
                 <div className="flex items-center gap-2">
                     <LucideChevronLeft className="w-4 h-4" />
@@ -28,17 +28,14 @@ export const FormNavigation = ({ onNext }) => {
                 whileTap={{ scale: 0.98 }}
                 className="relative group"
             >
-                {/* Button Glow */}
-                <div className="absolute -inset-2 bg-primary/20 rounded-[2rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-
                 <Button
                     onClick={isLastStep ? onNext : nextStep}
-                    className="min-w-[180px] bg-primary hover:bg-primary/90 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl h-14 border-b-4 border-black/20 relative z-10"
+                    className="min-w-[180px] bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl h-14 border-b-4 border-primary/20 relative z-10 shadow-lg shadow-primary/20 transition-all"
                 >
                     <div className="flex items-center justify-center gap-3 w-full">
                         <span>{isLastStep ? "Finalize_Data" : "Next_Phase"}</span>
                         {isLastStep ? (
-                            <LucideZap className="w-4 h-4 animate-pulse" />
+                            <LucideZap className="w-4 h-4 animate-pulse fill-white" />
                         ) : (
                             <LucideChevronRight className="w-4 h-4" />
                         )}

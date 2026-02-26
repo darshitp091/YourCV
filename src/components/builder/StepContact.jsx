@@ -16,11 +16,11 @@ export const StepContact = () => {
         <div className="space-y-12">
             <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-sm">
                         <LucideMail className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black font-heading text-white tracking-tight">Signal_Channels</h2>
+                        <h2 className="text-3xl font-black font-heading text-zinc-900 tracking-tight">Signal_Channels</h2>
                         <p className="text-zinc-500 text-sm font-medium tracking-wide">Establish secure communication protocols.</p>
                     </div>
                 </div>
@@ -38,7 +38,7 @@ export const StepContact = () => {
                         onChange={handleChange}
                         className="pl-14"
                     />
-                    <LucideMail className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
+                    <LucideMail className="absolute left-5 bottom-4 text-zinc-400 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
                 <div className="relative group/input">
@@ -51,7 +51,7 @@ export const StepContact = () => {
                         onChange={handleChange}
                         className="pl-14"
                     />
-                    <LucidePhone className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
+                    <LucidePhone className="absolute left-5 bottom-4 text-zinc-400 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
                 <div className="relative group/input">
@@ -64,7 +64,7 @@ export const StepContact = () => {
                         onChange={handleChange}
                         className="pl-14"
                     />
-                    <LucideMapPin className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
+                    <LucideMapPin className="absolute left-5 bottom-4 text-zinc-400 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
                 <div className="relative group/input">
@@ -77,7 +77,7 @@ export const StepContact = () => {
                         onChange={handleChange}
                         className="pl-14"
                     />
-                    <LucideLinkedin className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
+                    <LucideLinkedin className="absolute left-5 bottom-4 text-zinc-400 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
                 <div className="relative group/input">
@@ -90,7 +90,7 @@ export const StepContact = () => {
                         onChange={handleChange}
                         className="pl-14"
                     />
-                    <LucideGithub className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
+                    <LucideGithub className="absolute left-5 bottom-4 text-zinc-400 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
                 <div className="relative group/input">
@@ -103,7 +103,7 @@ export const StepContact = () => {
                         onChange={handleChange}
                         className="pl-14"
                     />
-                    <LucideGlobe className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
+                    <LucideGlobe className="absolute left-5 bottom-4 text-zinc-400 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
             </div>
         </div>

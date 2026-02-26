@@ -21,15 +21,15 @@ const SkillCategory = ({ title, icon: Icon, skills, onAdd, onRemove, color }) =>
     return (
         <div className="space-y-6 group/cat">
             <div className="flex items-center gap-3">
-                <div className={`p-2.5 rounded-xl bg-white/[0.03] border border-white/10 shadow-2xl group-focus-within/cat:border-primary/40 transition-colors`}>
+                <div className={`p-2.5 rounded-xl bg-zinc-50 border border-zinc-200 shadow-sm group-focus-within/cat:border-primary/40 transition-colors`}>
                     <Icon className={`w-5 h-5 ${color}`} />
                 </div>
                 <div>
-                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white/80 group-focus-within/cat:text-primary transition-colors">{title}</h3>
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-900 group-focus-within/cat:text-primary transition-colors">{title}</h3>
                 </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 p-6 min-h-[80px] bg-white/[0.02] border border-white/10 rounded-[2rem] focus-within:ring-4 focus-within:ring-primary/40 focus-within:border-primary focus-within:bg-white/[0.05] transition-all duration-500 backdrop-blur-sm relative overflow-hidden group/input">
+            <div className="flex flex-wrap gap-3 p-6 min-h-[80px] bg-white border border-zinc-200 rounded-[2rem] focus-within:ring-4 focus-within:ring-primary/10 focus-within:border-primary focus-within:bg-white transition-all duration-500 shadow-sm relative overflow-hidden group/input">
                 <AnimatePresence mode="popLayout">
                     {skills.map((skill) => (
                         <motion.div
@@ -41,12 +41,12 @@ const SkillCategory = ({ title, icon: Icon, skills, onAdd, onRemove, color }) =>
                         >
                             <Badge
                                 variant="ghost"
-                                className="flex items-center gap-2 bg-white/5 border border-white/5 hover:bg-white/10 text-zinc-300 py-2 px-4 rounded-xl transition-all"
+                                className="flex items-center gap-2 bg-zinc-50 border border-zinc-100 hover:bg-zinc-100 text-zinc-600 py-2 px-4 rounded-xl transition-all shadow-sm"
                             >
                                 <span className="text-xs font-bold tracking-wide">{skill}</span>
                                 <button
                                     onClick={() => onRemove(skill)}
-                                    className="text-zinc-500 hover:text-destructive transition-colors"
+                                    className="text-zinc-400 hover:text-destructive transition-colors"
                                 >
                                     <LucideX className="w-3.5 h-3.5" />
                                 </button>
@@ -56,11 +56,11 @@ const SkillCategory = ({ title, icon: Icon, skills, onAdd, onRemove, color }) =>
                 </AnimatePresence>
                 <input
                     type="text"
-                    placeholder="Type_And_Sync..."
+                    placeholder="TYPE_AND_SYNC..."
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 bg-transparent border-none outline-none text-sm min-w-[180px] text-white placeholder:text-zinc-700 font-medium py-1"
+                    className="flex-1 bg-transparent border-none outline-none text-sm min-w-[180px] text-zinc-900 placeholder:text-zinc-400 font-medium py-1"
                 />
             </div>
         </div>
@@ -89,11 +89,11 @@ export const StepSkills = () => {
         <div className="space-y-12">
             <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-sm">
                         <LucideTerminal className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black font-heading text-white tracking-tight">Expertise_Matrix</h2>
+                        <h2 className="text-3xl font-black font-heading text-zinc-900 tracking-tight">Expertise_Matrix</h2>
                         <p className="text-zinc-500 text-sm font-medium tracking-wide">Categorize your primary skill nodes.</p>
                     </div>
                 </div>
@@ -128,14 +128,14 @@ export const StepSkills = () => {
                 />
             </div>
 
-            <div className="p-6 bg-primary/5 rounded-[2rem] border border-primary/10 flex items-start gap-4 transition-all hover:bg-primary/10 group/tip">
-                <div className="p-2 bg-primary/10 rounded-xl group-hover/tip:scale-110 transition-transform">
+            <div className="p-6 bg-primary/5 rounded-[2rem] border border-primary/10 flex items-start gap-4 transition-all hover:bg-primary/10 group/tip shadow-sm">
+                <div className="p-2 bg-white rounded-xl shadow-sm border border-primary/10 group-hover/tip:scale-110 transition-transform">
                     <LucideTerminal className="w-5 h-5 text-primary" />
                 </div>
                 <div className="space-y-1">
                     <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">ATS_Optimization_Protocol</p>
-                    <p className="text-xs text-zinc-400 leading-relaxed font-medium">
-                        Search algorithms prioritize <span className="text-white">exact terminology</span>. Use standardized titles like "React.js" or "Node.js" to maximize your visibility in automated screening pipelines.
+                    <p className="text-xs text-zinc-500 leading-relaxed font-medium">
+                        Search algorithms prioritize <span className="text-zinc-800 font-bold">exact terminology</span>. Use standardized titles like "React.js" or "Node.js" to maximize your visibility in automated screening pipelines.
                     </p>
                 </div>
             </div>
