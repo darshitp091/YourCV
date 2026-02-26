@@ -53,14 +53,20 @@ export const HeroSection = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 reveal-text">
-                        <Link href="/signup">
-                            <Button size="lg" className="group px-8 py-7 text-lg rounded-2xl shadow-xl shadow-primary/20">
-                                Start Building Free
-                                <LucideChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-                        </Link>
+                        <div className="flex flex-col gap-2">
+                            <Link href="/signup">
+                                <Button size="lg" className="group px-8 py-7 text-lg rounded-2xl shadow-xl shadow-primary/20">
+                                    Get 5 Free Resumes
+                                    <LucideChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </Button>
+                            </Link>
+                            <p className="text-[10px] text-center lg:text-left font-bold text-emerald-600 uppercase tracking-widest flex items-center justify-center lg:justify-start gap-1">
+                                <LucideCheckCircle className="w-3 h-3" />
+                                100% Watermark-Free PDF
+                            </p>
+                        </div>
                         <Link href="/templates">
-                            <Button variant="outline" size="lg" className="px-8 py-7 text-lg rounded-2xl">
+                            <Button variant="outline" size="lg" className="px-8 py-7 text-lg rounded-2xl h-[76px]">
                                 View Templates
                             </Button>
                         </Link>

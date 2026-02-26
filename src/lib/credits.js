@@ -49,8 +49,14 @@ export async function checkCredits(userId, type = 'resume') {
         const baseDate = profile.plan === 'premium' ? profile.plan_started_at : profile.created_at;
         const cycleStart = getCurrentCycleStart(baseDate);
 
-        // Premium users have unlimited credits
-        if (profile.plan === 'premium') return true;
+        // Credit limits
+        const LIMITS = {
+            free: { resume: 5, latex: 5 },
+            premium: { resume: 30, latex: 30 }
+        };
+
+        const userPlan = profile.plan || 'free';
+        const limits = LIMITS[userPlan];
 
         // Free users: Check usage for the current personalized cycle
         const { data: usage, error: usageError } = await supabase
@@ -64,8 +70,8 @@ export async function checkCredits(userId, type = 'resume') {
 
         if (!usage) return true; // No usage yet this cycle
 
-        if (type === 'resume' && usage.resumes_generated >= 1) return false;
-        if (type === 'latex' && usage.latex_generations >= 3) return false;
+        if (type === 'resume' && usage.resumes_generated >= limits.resume) return false;
+        if (type === 'latex' && usage.latex_generations >= limits.latex) return false;
 
         return true;
     } catch (error) {

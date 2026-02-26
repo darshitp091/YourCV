@@ -27,7 +27,7 @@ const FAQS = [
     },
     {
         question: "What's the difference between Free and Premium?",
-        answer: "The Free plan allows for 1 resume per month with a watermark. Premium gives you 10 resumes, no watermarks, full ATS score breakdowns, and faster AI generation.",
+        answer: "The Free plan allows for 5 resumes per month with NO watermarks. Premium gives you 30 resumes, full ATS score breakdowns, priority AI generation, and access to elite templates.",
     },
 ];
 

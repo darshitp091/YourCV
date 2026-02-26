@@ -24,6 +24,7 @@ import { incrementUsage } from "@/lib/credits";
 import { triggerCheckout } from "@/lib/razorpay";
 import { triggerWorkflow } from "@/lib/workflows/engine";
 import { SocialShare } from "@/components/common/SocialShare";
+import { ResumeStrength } from "@/components/resume/ResumeStrength";
 
 export default function PreviewPage() {
     const { user } = useAuth();
@@ -244,6 +245,8 @@ export default function PreviewPage() {
                         </Link>
                     </div>
 
+                    <ResumeStrength data={resumeData} />
+
                     <div className="bg-white p-6 rounded-3xl border border-border">
                         <SocialShare
                             url="https://your-cv-eta.vercel.app"
@@ -256,7 +259,7 @@ export default function PreviewPage() {
                         <LucideSparkles className="w-8 h-8 opacity-50" />
                         <div className="space-y-1">
                             <p className="font-bold">Upgrade to Premium</p>
-                            <p className="text-xs text-white/70">Remove the YourCV watermark and get access to all 10+ premium templates.</p>
+                            <p className="text-xs text-white/70">Unlock elite templates, priority AI processing, and advanced ATS analytics.</p>
                         </div>
                         <Button
                             variant="outline"
