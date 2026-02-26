@@ -28,6 +28,12 @@ export function getCurrentCycleStart(baseDateStr) {
     return format(cycleStart, 'yyyy-MM-dd');
 }
 
+// Credit limits
+export const LIMITS = {
+    free: { resume: 5, latex: 5 },
+    premium: { resume: 30, latex: 30 }
+};
+
 /**
  * Checks if the user has enough credits to perform an action.
  * @param {string} userId - The user ID.
@@ -48,12 +54,6 @@ export async function checkCredits(userId, type = 'resume') {
         // If premium, use plan_started_at. If free, use created_at.
         const baseDate = profile.plan === 'premium' ? profile.plan_started_at : profile.created_at;
         const cycleStart = getCurrentCycleStart(baseDate);
-
-        // Credit limits
-        const LIMITS = {
-            free: { resume: 5, latex: 5 },
-            premium: { resume: 30, latex: 30 }
-        };
 
         const userPlan = profile.plan || 'free';
         const limits = LIMITS[userPlan];

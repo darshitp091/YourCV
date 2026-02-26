@@ -3,9 +3,21 @@
 import { useAuth } from "@/context/AuthContext";
 import { LucideSearch, LucideBell, LucideUserCircle } from "lucide-react";
 import { Badge } from "../ui/Badge";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 export const Topbar = ({ title = "Dashboard" }) => {
     const { user } = useAuth();
+    const [profile, setProfile] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            supabase.from('profiles').select('plan').eq('id', user.id).single()
+                .then(({ data }) => setProfile(data));
+        }
+    }, [user]);
+
+    const userPlan = profile?.plan || 'free';
 
     return (
         <header className="h-20 border-b border-border bg-white/50 backdrop-blur-md sticky top-0 z-30 px-8 flex items-center justify-between">
@@ -36,8 +48,8 @@ export const Topbar = ({ title = "Dashboard" }) => {
                             <p className="text-sm font-bold text-foreground leading-tight">
                                 {user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Personal Account"}
                             </p>
-                            <Badge variant="primary" className="text-[9px] py-0 px-1.5 h-auto uppercase tracking-tighter">
-                                Free Plan
+                            <Badge variant={userPlan === 'premium' ? "success" : "primary"} className="text-[9px] py-0 px-1.5 h-auto uppercase tracking-tighter">
+                                {userPlan === 'premium' ? "Premium Plan" : "Free Plan"}
                             </Badge>
                         </div>
                         <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">

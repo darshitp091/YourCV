@@ -15,7 +15,8 @@ import { useAuth } from "@/context/AuthContext";
 import { BrandLogo } from "../ui/BrandLogo";
 import { clsx } from "clsx";
 import { useState, useEffect } from "react";
-import { getUsage } from "@/lib/credits";
+import { getUsage, LIMITS } from "@/lib/credits";
+import { supabase } from "@/lib/supabase";
 
 const DASHBOARD_LINKS = [
     { name: "My Resumes", href: "/dashboard", icon: LucideFileText },
@@ -29,14 +30,19 @@ export const Sidebar = () => {
     const pathname = usePathname();
     const { signOut, user } = useAuth();
     const [usage, setUsage] = useState({ resumes_generated: 0 });
+    const [profile, setProfile] = useState(null);
 
     useEffect(() => {
         if (user) {
             getUsage(user.id).then(setUsage);
+            supabase.from('profiles').select('plan').eq('id', user.id).single()
+                .then(({ data }) => setProfile(data));
         }
     }, [user]);
 
-    const isPremium = user?.user_metadata?.plan === "premium" || user?.plan === "premium";
+    const userPlan = profile?.plan || 'free';
+    const isPremium = userPlan === "premium";
+    const limits = LIMITS[userPlan];
 
     return (
         <aside className="w-64 border-r border-border bg-white flex flex-col h-screen sticky top-0">
@@ -78,13 +84,13 @@ export const Sidebar = () => {
                         {isPremium ? "Premium Plan" : "Free Plan"}
                     </span>
                     <span className="text-primary">
-                        {isPremium ? "∞" : `${usage.resumes_generated} / 1`} Resumes
+                        {usage.resumes_generated} / {limits?.resume || 5} Resumes
                     </span>
                 </div>
                 <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
                     <div
                         className="h-full bg-primary transition-all duration-500"
-                        style={{ width: isPremium ? "100%" : `${Math.min((usage.resumes_generated / 1) * 100, 100)}%` }}
+                        style={{ width: `${Math.min((usage.resumes_generated / (limits?.resume || 5)) * 100, 100)}%` }}
                     />
                 </div>
                 {!isPremium && (

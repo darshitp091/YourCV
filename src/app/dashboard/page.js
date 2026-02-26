@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase";
-import { getUsage } from "@/lib/credits";
+import { getUsage, LIMITS } from "@/lib/credits";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -24,6 +24,7 @@ export default function DashboardPage() {
     const { user } = useAuth();
     const [resumes, setResumes] = useState([]);
     const [usage, setUsage] = useState(null);
+    const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeResumeMenu, setActiveResumeMenu] = useState(null);
 
@@ -56,10 +57,21 @@ export default function DashboardPage() {
                 console.error("NEXT_PUBLIC_SUPABASE_URL is missing! Requests will fail.");
             }
 
+            // Fetch Profile
+            const { data: profileData, error: profileError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+
+            if (profileError) throw profileError;
+            setProfile(profileData);
+
             // Fetch Resumes
             const { data: resumeData, error: resumeError } = await supabase
                 .from('resumes')
                 .select('*')
+                .eq('user_id', user.id)
                 .order('updated_at', { ascending: false });
 
             if (resumeError) throw resumeError;
@@ -87,6 +99,9 @@ export default function DashboardPage() {
         return null; // I'll fix the imports first
     };
 
+    const userPlan = profile?.plan || 'free';
+    const limits = LIMITS[userPlan];
+
     const stats = [
         {
             label: "Total Resumes",
@@ -98,15 +113,16 @@ export default function DashboardPage() {
         {
             label: "Credits Used",
             value: usage?.resumes_generated || 0,
-            total: 1,
+            total: limits?.resume || 5,
             resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
             icon: LucideCreditCard,
-            color: "text-amber-600",
-            bg: "bg-amber-100"
+            color: userPlan === 'premium' ? "text-primary" : "text-amber-600",
+            bg: userPlan === 'premium' ? "bg-primary/10" : "bg-amber-100"
         },
         {
             label: "AI Refinements",
             value: usage?.latex_generations || 0,
+            total: limits?.latex || 5,
             resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
             icon: LucideSparkles,
             color: "text-purple-600",
@@ -253,19 +269,21 @@ export default function DashboardPage() {
 
                 {/* Sidebar: Tips & Credits */}
                 <div className="xl:col-span-1 space-y-8">
-                    <Card variant="secondary" className="p-6 border-transparent bg-primary text-white space-y-4 shadow-xl shadow-primary/20">
-                        <LucideSparkles className="w-10 h-10 text-white/40" />
-                        <div className="space-y-2">
-                            <h3 className="font-bold text-lg">Go Premium</h3>
-                            <p className="text-xs text-white/70 leading-relaxed">Unlock unlimited resumes, AI refinements, and direct LaTeX exports with a premium plan.</p>
-                        </div>
-                        <Button
-                            onClick={() => window.location.href = '/#pricing'}
-                            className="w-full bg-white text-primary hover:bg-white/90 font-bold border-none shadow-none"
-                        >
-                            Upgrade ₹139/mo
-                        </Button>
-                    </Card>
+                    {userPlan === 'free' && (
+                        <Card variant="secondary" className="p-6 border-transparent bg-primary text-white space-y-4 shadow-xl shadow-primary/20">
+                            <LucideSparkles className="w-10 h-10 text-white/40" />
+                            <div className="space-y-2">
+                                <h3 className="font-bold text-lg">Go Premium</h3>
+                                <p className="text-xs text-white/70 leading-relaxed">Unlock unlimited resumes, AI refinements, and direct LaTeX exports with a premium plan.</p>
+                            </div>
+                            <Button
+                                onClick={() => window.location.href = '/#pricing'}
+                                className="w-full bg-white text-primary hover:bg-white/90 font-bold border-none shadow-none"
+                            >
+                                Upgrade ₹139/mo
+                            </Button>
+                        </Card>
+                    )}
 
                     <div className="bg-white p-6 rounded-3xl border border-border space-y-6">
                         <h3 className="font-bold text-sm uppercase tracking-widest text-muted-foreground">Expert Tips</h3>
