@@ -118,12 +118,12 @@ export const ResumeProvider = ({ children }) => {
                 console.log("Resume auto-saved.");
                 triggerWorkflow('resume_updated', user.id, { resumeId, data: resumeData });
             } else {
-                // NEW RESUME: Check credits first
-                const hasCredits = await checkCredits(user.id, 'resume');
+                // NEW RESUME: Check slots first
+                const hasSlots = await checkCredits(user.id, 'resume');
 
-                if (!hasCredits) {
-                    alert("You've reached the limit of 5 resumes for the Free plan. Please upgrade to Premium to create more!");
-                    window.location.href = "/#pricing"; // Redirect to pricing
+                if (!hasSlots) {
+                    alert("You've reached your resume limit. Please upgrade to Premium or delete an existing resume to create a new one!");
+                    window.location.href = "/#pricing";
                     return;
                 }
 
@@ -138,9 +138,7 @@ export const ResumeProvider = ({ children }) => {
                     localStorage.setItem("current_resume_id", data.id);
                     console.log("New resume created and saved.");
 
-                    // Deduct credit immediately
-                    await incrementUsage(user.id, 'resume');
-
+                    // Note: incrementUsage('resume') is no longer needed as we use "Slot" logic (SQL Count)
                     triggerWorkflow('resume_updated', user.id, { resumeId: data.id, data: resumeData });
                 }
             }

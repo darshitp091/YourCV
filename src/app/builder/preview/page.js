@@ -20,7 +20,7 @@ import { useRef, useState, useEffect } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { LaTeXModal } from "@/components/resume/LaTeXModal";
-import { incrementUsage } from "@/lib/credits";
+import { incrementUsage, checkCredits } from "@/lib/credits";
 import { triggerCheckout } from "@/lib/razorpay";
 import { triggerWorkflow } from "@/lib/workflows/engine";
 import { SocialShare } from "@/components/common/SocialShare";
@@ -70,7 +70,20 @@ export default function PreviewPage() {
     };
 
     const downloadPDF = async () => {
+        if (!user) {
+            router.push("/login?redirect=/builder/preview");
+            return;
+        }
+
         try {
+            // 1. Check Credits (using 'latex' as the export limit bucket)
+            const hasCredits = await checkCredits(user.id, 'latex');
+            if (!hasCredits) {
+                alert("You've reached your export limit for this month. Please upgrade to Premium for more!");
+                handleUpgrade();
+                return;
+            }
+
             setExporting(true);
             const input = document.getElementById('resume-preview');
 
@@ -95,15 +108,14 @@ export default function PreviewPage() {
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             pdf.save(`${resumeData.personal.fullName || 'Resume'}_YourCV.pdf`);
 
-            // Trigger Workflow
-            if (user) {
-                triggerWorkflow('pdf_downloaded', user.id, {
-                    resumeId: localStorage.getItem("current_resume_id"),
-                    filename: `${resumeData.personal.fullName || 'Resume'}_YourCV.pdf`
-                });
-            }
+            // 2. Increment Usage
+            await incrementUsage(user.id, 'latex');
 
-            // Increment usage is now handled on resume creation in ResumeContext
+            // 3. Trigger Workflow
+            triggerWorkflow('pdf_downloaded', user.id, {
+                resumeId: localStorage.getItem("current_resume_id"),
+                filename: `${resumeData.personal.fullName || 'Resume'}_YourCV.pdf`
+            });
 
         } catch (error) {
             console.error("PDF Export Error:", error);

@@ -1,10 +1,12 @@
 "use client";
 
 import { useResume } from "@/context/ResumeContext";
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "../ui/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "../ui/Input";
 import { Card } from "../ui/Card";
+import { checkCredits, getUsage, LIMITS } from "@/lib/credits";
 import {
     LucideBriefcase,
     LucidePlus,
@@ -12,21 +14,47 @@ import {
     LucideCalendar,
     LucideMapPin,
     LucideGripVertical,
-    LucideSparkles
+    LucideSparkles,
+    LucideCheck
 } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
+import { motion } from "framer-motion";
 
 export const StepExperience = () => {
+    const { user } = useAuth();
     const { resumeData, updateSection } = useResume();
     const [refiningId, setRefiningId] = useState(null);
+    const [remainingAI, setRemainingAI] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            const fetchUsage = async () => {
+                const usage = await getUsage(user.id);
+                const profile = await (await import("@/lib/supabase")).supabase.from('profiles').select('plan').eq('id', user.id).single();
+                const plan = profile.data?.plan || 'free';
+                const limit = LIMITS[plan].ai_refines;
+                setRemainingAI(limit - (usage.ai_refines || 0));
+            };
+            fetchUsage();
+        }
+    }, [user, refiningId]);
 
     const handleAIRefine = async (id, currentDescription, role) => {
+        if (!user) return;
+
         if (!currentDescription && !role) {
             alert("Please provide at least a job role or some initial description for AI to refine.");
             return;
         }
 
         try {
+            // 1. Check Credits
+            const hasCredits = await checkCredits(user.id, 'ai_refines');
+            if (!hasCredits) {
+                alert("You've reached your AI refinement limit for this month. Please upgrade your plan for more!");
+                return;
+            }
+
             setRefiningId(id);
             const response = await fetch("/api/resume/generate", {
                 method: "POST",
@@ -216,7 +244,14 @@ export const StepExperience = () => {
 
                                 <div className="md:col-span-2 space-y-4">
                                     <div className="flex items-center justify-between">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Operation_Impact & Metrics</label>
+                                        <div className="flex flex-col">
+                                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Operation_Impact & Metrics</label>
+                                            {remainingAI !== null && (
+                                                <span className={`text-[9px] font-bold ${remainingAI <= 2 ? 'text-amber-600' : 'text-primary uppercase tracking-widest'}`}>
+                                                    {remainingAI} AI Refines Available
+                                                </span>
+                                            )}
+                                        </div>
                                         <Button
                                             variant="ghost"
                                             size="sm"

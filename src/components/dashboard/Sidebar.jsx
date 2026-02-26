@@ -29,6 +29,7 @@ const DASHBOARD_LINKS = [
 export const Sidebar = () => {
     const pathname = usePathname();
     const { signOut, user } = useAuth();
+    const [resumeCount, setResumeCount] = useState(0);
     const [usage, setUsage] = useState({ resumes_generated: 0 });
     const [profile, setProfile] = useState(null);
 
@@ -37,8 +38,12 @@ export const Sidebar = () => {
             getUsage(user.id).then(setUsage);
             supabase.from('profiles').select('plan').eq('id', user.id).single()
                 .then(({ data }) => setProfile(data));
+
+            // Fetch actual resume count for "Slot" logic
+            supabase.from('resumes').select('id', { count: 'exact', head: true }).eq('user_id', user.id)
+                .then(({ count }) => setResumeCount(count || 0));
         }
-    }, [user]);
+    }, [user, pathname]); // Re-fetch on path change to catch deletions/creations
 
     const userPlan = profile?.plan || 'free';
     const isPremium = userPlan === "premium";
@@ -84,13 +89,13 @@ export const Sidebar = () => {
                         {isPremium ? "Premium Plan" : "Free Plan"}
                     </span>
                     <span className="text-primary">
-                        {usage.resumes_generated} / {limits?.resume || 5} Resumes
+                        {resumeCount} / {limits?.resume || 5} Resumes
                     </span>
                 </div>
                 <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
                     <div
                         className="h-full bg-primary transition-all duration-500"
-                        style={{ width: `${Math.min((usage.resumes_generated / (limits?.resume || 5)) * 100, 100)}%` }}
+                        style={{ width: `${Math.min((resumeCount / (limits?.resume || 5)) * 100, 100)}%` }}
                     />
                 </div>
                 {!isPremium && (

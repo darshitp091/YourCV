@@ -104,16 +104,17 @@ export default function DashboardPage() {
 
     const stats = [
         {
-            label: "Total Resumes",
+            label: "Resume Slots",
             value: resumes.length,
+            total: limits?.resume || 5,
             icon: LucideFileText,
             color: "text-primary",
             bg: "bg-primary/10"
         },
         {
-            label: "Credits Used",
-            value: usage?.resumes_generated || 0,
-            total: limits?.resume || 5,
+            label: "Export Credits",
+            value: usage?.latex_generations || 0,
+            total: limits?.latex || 5,
             resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
             icon: LucideCreditCard,
             color: userPlan === 'premium' ? "text-primary" : "text-amber-600",
@@ -121,8 +122,8 @@ export default function DashboardPage() {
         },
         {
             label: "AI Refinements",
-            value: usage?.latex_generations || 0,
-            total: limits?.latex || 5,
+            value: usage?.ai_refines || 0,
+            total: limits?.ai_refines || 10,
             resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
             icon: LucideSparkles,
             color: "text-purple-600",

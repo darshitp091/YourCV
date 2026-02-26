@@ -30,8 +30,16 @@ export function getCurrentCycleStart(baseDateStr) {
 
 // Credit limits
 export const LIMITS = {
-    free: { resume: 5, latex: 5 },
-    premium: { resume: 30, latex: 30 }
+    free: {
+        resume: 5,
+        latex: 5,
+        ai_refines: 10
+    },
+    premium: {
+        resume: 30,
+        latex: 30,
+        ai_refines: 100
+    }
 };
 
 /**
@@ -58,20 +66,30 @@ export async function checkCredits(userId, type = 'resume') {
         const userPlan = profile.plan || 'free';
         const limits = LIMITS[userPlan];
 
-        // Free users: Check usage for the current personalized cycle
+        if (type === 'resume') {
+            // "Slots" logic: Count actual resumes in DB
+            const { count, error: countError } = await supabase
+                .from('resumes')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', userId);
+
+            if (countError) throw countError;
+            return count < limits.resume;
+        }
+
+        // Cycle-based consumption logic
         const { data: usage, error: usageError } = await supabase
             .from('usage')
-            .select('resumes_generated, latex_generations')
+            .select('*')
             .eq('user_id', userId)
-            .eq('month_year', cycleStart) // Reusing the column to store cycle start date
+            .eq('month_year', cycleStart)
             .maybeSingle();
 
         if (usageError && usageError.code !== 'PGRST116') throw usageError;
+        if (!usage) return true;
 
-        if (!usage) return true; // No usage yet this cycle
-
-        if (type === 'resume' && usage.resumes_generated >= limits.resume) return false;
         if (type === 'latex' && usage.latex_generations >= limits.latex) return false;
+        if (type === 'ai_refines' && (usage.ai_refines || 0) >= limits.ai_refines) return false;
 
         return true;
     } catch (error) {
@@ -103,10 +121,16 @@ export async function incrementUsage(userId, type = 'resume') {
             .maybeSingle();
 
         if (existing) {
-            const field = type === 'resume' ? 'resumes_generated' : 'latex_generations';
+            const fieldMap = {
+                'resume': 'resumes_generated',
+                'latex': 'latex_generations',
+                'ai_refines': 'ai_refines'
+            };
+            const field = fieldMap[type] || 'resumes_generated';
+
             await supabase
                 .from('usage')
-                .update({ [field]: existing[field] + 1 })
+                .update({ [field]: (existing[field] || 0) + 1 })
                 .eq('id', existing.id);
         } else {
             await supabase
@@ -115,7 +139,8 @@ export async function incrementUsage(userId, type = 'resume') {
                     user_id: userId,
                     month_year: cycleStart,
                     resumes_generated: type === 'resume' ? 1 : 0,
-                    latex_generations: type === 'latex' ? 1 : 0
+                    latex_generations: type === 'latex' ? 1 : 0,
+                    ai_refines: type === 'ai_refines' ? 1 : 0
                 }]);
         }
     } catch (error) {

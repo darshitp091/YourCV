@@ -24,19 +24,35 @@ export const LaTeXModal = ({ isOpen, onClose, data }) => {
         }
     }, [isOpen]);
 
-    const handleCopy = () => {
+    const handleCopy = async () => {
+        if (!user) return;
+
+        const hasCredits = await checkCredits(user.id, "latex");
+        if (!hasCredits) {
+            alert("You've reached your export limit for this month. Please upgrade to Premium!");
+            return;
+        }
+
         navigator.clipboard.writeText(latexCode);
         setCopied(true);
-        if (user) incrementUsage(user.id, "latex");
+        await incrementUsage(user.id, "latex");
         setTimeout(() => setCopied(false), 2000);
     };
 
-    const handleDownload = () => {
+    const handleDownload = async () => {
+        if (!user) return;
+
+        const hasCredits = await checkCredits(user.id, "latex");
+        if (!hasCredits) {
+            alert("You've reached your export limit for this month. Please upgrade to Premium!");
+            return;
+        }
+
         const element = document.createElement("a");
         const file = new Blob([latexCode], { type: 'text/plain' });
         element.href = URL.createObjectURL(file);
         element.download = `${data.personal.fullName || 'Resume'}_Source.tex`;
-        if (user) incrementUsage(user.id, "latex");
+        await incrementUsage(user.id, "latex");
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);

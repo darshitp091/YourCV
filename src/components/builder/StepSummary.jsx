@@ -1,21 +1,48 @@
 "use client";
 
 import { useResume } from "@/context/ResumeContext";
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "../ui/Button";
 import { LucideSparkles, LucideMessageSquareText } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { checkCredits, getUsage, LIMITS } from "@/lib/credits";
+import { motion } from "framer-motion";
 
 export const StepSummary = () => {
+    const { user } = useAuth();
     const { resumeData, updateSection } = useResume();
     const [isGenerating, setIsGenerating] = useState(false);
+    const [remainingAI, setRemainingAI] = useState(null);
+
+    useEffect(() => {
+        if (user) {
+            const fetchUsage = async () => {
+                const usage = await getUsage(user.id);
+                const profile = await (await import("@/lib/supabase")).supabase.from('profiles').select('plan').eq('id', user.id).single();
+                const plan = profile.data?.plan || 'free';
+                const limit = LIMITS[plan].ai_refines;
+                setRemainingAI(limit - (usage.ai_refines || 0));
+            };
+            fetchUsage();
+        }
+    }, [user, isGenerating]);
 
     const handleAIQuery = async () => {
+        if (!user) return;
+
         if (!resumeData.summary && !resumeData.personal.jobTitle) {
             alert("Please provide at least a job title or a starting summary for AI to help.");
             return;
         }
 
         try {
+            // 1. Check Credits
+            const hasCredits = await checkCredits(user.id, 'ai_refines');
+            if (!hasCredits) {
+                alert("You've reached your AI refinement limit for this month. Please upgrade your plan for more!");
+                return;
+            }
+
             setIsGenerating(true);
             const response = await fetch("/api/resume/generate", {
                 method: "POST",
@@ -38,7 +65,7 @@ export const StepSummary = () => {
             }
         } catch (error) {
             console.error("AI Error:", error);
-            alert("Error generating summary. Please check your API key.");
+            alert(error.message || "Error generating summary.");
         } finally {
             setIsGenerating(false);
         }
@@ -57,7 +84,7 @@ export const StepSummary = () => {
                     </div>
                 </div>
 
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex items-center gap-4">
                     <Button
                         variant="outline"
                         size="sm"
@@ -68,6 +95,14 @@ export const StepSummary = () => {
                         <LucideSparkles className="w-4 h-4 animate-pulse" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em]">Neural_Enhancement</span>
                     </Button>
+                    {remainingAI !== null && (
+                        <div className="hidden sm:flex flex-col">
+                            <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Available</span>
+                            <span className={`text-xs font-bold ${remainingAI <= 2 ? 'text-amber-600' : 'text-primary'}`}>
+                                {remainingAI} Refines
+                            </span>
+                        </div>
+                    )}
                 </motion.div>
             </div>
 
@@ -83,7 +118,7 @@ export const StepSummary = () => {
                     className="w-full min-h-[300px] p-8 md:pl-16 bg-white border border-zinc-200 rounded-[2.5rem] focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-500 resize-none leading-relaxed text-zinc-900 placeholder:text-zinc-400 font-medium shadow-sm relative z-10"
                 />
 
-                <div className="sm:hidden mt-6">
+                <div className="sm:hidden mt-6 space-y-4">
                     <Button
                         variant="outline"
                         className="w-full flex items-center justify-center gap-2 border-primary/20 bg-primary/5 text-primary py-4 rounded-xl shadow-sm"
@@ -93,6 +128,11 @@ export const StepSummary = () => {
                         <LucideSparkles className="w-5 h-5" />
                         AI Generate Summary
                     </Button>
+                    {remainingAI !== null && (
+                        <p className="text-center text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+                            {remainingAI} AI Refinements Available
+                        </p>
+                    )}
                 </div>
             </div>
 
