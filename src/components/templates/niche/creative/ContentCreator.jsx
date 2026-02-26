@@ -81,7 +81,7 @@ export const ContentCreatorNiche = ({ data }) => {
                                             <h4 className="text-[8px] font-black tracking-[0.5em]">{proj.techStack}</h4>
                                         </div>
                                         <div className="flex justify-between items-center mb-4">
-                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none text-amber-400">#{proj.name.replace(/\s+/g, '').toLowerCase()}</h3>
+                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none text-amber-400">#{proj.name?.replace(/\s+/g, '').toLowerCase() || "STORY"}</h3>
                                         </div>
                                         <p className="text-xs text-slate-400 mb-4 font-bold border-b border-slate-800 pb-2 inline-block italic">{proj.link}</p>
                                         <p className="text-lg leading-relaxed font-serif italic text-white/90">"{proj.description}"</p>

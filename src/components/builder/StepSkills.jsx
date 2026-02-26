@@ -6,7 +6,6 @@ import { Badge } from "../ui/Badge";
 import { LucideX, LucideTerminal, LucideUsers, LucideWrench } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { motion, AnimatePresence } from "framer-motion";
 
 const SkillCategory = ({ title, icon: Icon, skills, onAdd, onRemove, color }) => {
     const [inputValue, setInputValue] = useState("");

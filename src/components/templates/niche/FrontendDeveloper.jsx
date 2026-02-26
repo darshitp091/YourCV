@@ -12,7 +12,7 @@ export const FrontendDeveloperNiche = ({ data }) => {
                 <div className="w-3 h-3 rounded-full bg-emerald-500" />
                 <div className="ml-4 bg-slate-700/50 px-4 py-0.5 rounded-md text-[9px] font-bold text-slate-400 font-mono flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    https://{personal.fullName?.toLowerCase().replace(/\s+/g, '-')}.dev
+                    https://{personal.fullName?.toLowerCase().replace(/\s+/g, '-') || "dev"}.dev
                 </div>
             </div>
 

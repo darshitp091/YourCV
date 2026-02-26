@@ -81,7 +81,7 @@ export const SocialMediaManagerNiche = ({ data }) => {
                                     <div key={proj.id} className="p-10 bg-white border-2 border-blue-50 rounded-[4rem] shadow-xl group hover:border-blue-600 transition-all border-dashed">
                                         <div className="flex justify-between items-center mb-4">
                                             <div className="space-y-1">
-                                                <h3 className="text-3xl font-black text-slate-800 tracking-tighter uppercase leading-none">#{proj.name.replace(/\s+/g, '').toLowerCase()}</h3>
+                                                <h3 className="text-3xl font-black text-slate-800 tracking-tighter uppercase leading-none">#{proj.name?.replace(/\s+/g, '').toLowerCase() || "CAMPAIGN"}</h3>
                                                 <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">{proj.techStack}</p>
                                             </div>
                                         </div>

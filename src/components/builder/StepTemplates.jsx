@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useResume } from "@/context/ResumeContext";
 import { TEMPLATES_METADATA, TEMPLATE_CATEGORIES } from "@/data/templates-metadata";
 import { TemplateCard } from "../templates/TemplateCard";
-import { LucideSearch } from "lucide-react";
+import { LucideSearch, LucideLayout } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const StepTemplates = () => {
     const { resumeData, updateSection } = useResume();
