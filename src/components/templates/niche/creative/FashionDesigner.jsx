@@ -17,6 +17,14 @@ export const FashionDesignerNiche = ({ data }) => {
                             Established MMXXVI
                         </div>
                     </div>
+                    <div className="flex gap-4 text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">
+                        <span>{contact.email}</span>
+                        <span>{contact.phone}</span>
+                        <span>{contact.location}</span>
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -49,6 +57,24 @@ export const FashionDesignerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[1em] text-slate-200 border-b border-slate-100 pb-4">Major_Collections_&_Runway_Shows</h2>
+                            <div className="space-y-12">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-12 bg-[#f9f9f9] border border-slate-100 shadow-sm group hover:bg-slate-900 transition-all duration-500">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h3 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none group-hover:text-white transition-colors">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-slate-500 transition-colors">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-400 mb-4 font-bold italic group-hover:text-slate-600 transition-colors uppercase tracking-widest border-b border-slate-200 pb-2 inline-block">{proj.link}</p>
+                                        <p className="text-lg leading-[1.8] font-light italic text-slate-500 group-hover:text-slate-300 transition-colors">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Collections & Experience */}

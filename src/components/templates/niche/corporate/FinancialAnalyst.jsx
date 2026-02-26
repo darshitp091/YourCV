@@ -17,20 +17,27 @@ export const FinancialAnalystNiche = ({ data }) => {
                 <div className="text-right text-xs font-bold text-slate-500 space-y-2 uppercase tracking-widest pb-1 font-sans">
                     <p className="border-b border-slate-100 pb-1">{contact.email}</p>
                     <p>{contact.phone}</p>
+                    <div className="pt-2 flex flex-col items-end gap-1 text-[9px] text-slate-300">
+                        {contact.linkedin && <span>LinkedIn / {contact.linkedin}</span>}
+                        {contact.github && <span>GitHub / {contact.github}</span>}
+                        {contact.portfolio && <span>Portfolio / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
             <main className="space-y-12">
                 {/* Executive Summary */}
-                <section className="space-y-4">
-                    <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Professional_Profile</h2>
-                    <p className="text-lg leading-relaxed text-slate-700 font-medium italic">
-                        "{summary}"
-                    </p>
-                </section>
+                {summary && (
+                    <section className="space-y-4">
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Professional_Profile</h2>
+                        <p className="text-lg leading-relaxed text-slate-700 font-medium italic">
+                            "{summary}"
+                        </p>
+                    </section>
+                )}
 
                 <div className="grid grid-cols-12 gap-12">
-                    {/* Main Content: Experience */}
+                    {/* Main Content: Experience & Projects */}
                     <div className="col-span-8 space-y-12">
                         <section className="space-y-10">
                             <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Experience_Record</h2>
@@ -53,6 +60,24 @@ export const FinancialAnalystNiche = ({ data }) => {
                                 ))}
                             </div>
                         </section>
+
+                        {projects && projects.length > 0 && (
+                            <section className="space-y-10">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Key_Projects</h2>
+                                <div className="space-y-8">
+                                    {projects.map((proj) => (
+                                        <div key={proj.id} className="space-y-2 group">
+                                            <div className="flex justify-between items-baseline">
+                                                <h3 className="text-lg font-black text-slate-900 group-hover:text-primary transition-colors">{proj.name}</h3>
+                                                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{proj.techStack}</span>
+                                            </div>
+                                            <p className="text-xs text-slate-500 italic leading-none">{proj.link}</p>
+                                            <p className="text-xs text-slate-600 leading-relaxed font-sans">{proj.description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
 
                     {/* Sidebar: Skills & Education */}

@@ -15,10 +15,14 @@ export const UXUIDesignerNiche = ({ data }) => {
                         <p className="text-xl font-medium text-zinc-400 font-serif italic">{personal.jobTitle || "UX/UI Designer"}</p>
                     </div>
                 </div>
-                <div className="text-right text-xs font-bold uppercase tracking-[0.2em] text-zinc-500 space-y-2">
+                <div className="text-right text-xs font-bold uppercase tracking-[0.2em] text-zinc-500 space-y-2 group">
                     <div className="bg-zinc-100 px-4 py-2 rounded-full inline-block border border-zinc-200">PORTFOLIO.LNK</div>
                     <p className="pt-2">{contact.email}</p>
                     <p>{contact.location}</p>
+                    <div className="flex flex-col items-end gap-1 pt-2 text-[9px] text-zinc-300 group-hover:text-zinc-900 transition-colors">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                    </div>
                 </div>
             </header>
 

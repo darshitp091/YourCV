@@ -32,6 +32,10 @@ export const MobileDeveloperNiche = ({ data }) => {
                         <p>{contact.location}</p>
                         <p className="text-zinc-900">{contact.email}</p>
                         <p>{contact.phone}</p>
+                        <div className="flex flex-col items-end gap-1 pt-2">
+                            {contact.linkedin && <span className="text-rose-500 lowercase">li://{contact.linkedin}</span>}
+                            {contact.github && <span className="text-orange-500 lowercase">git://{contact.github}</span>}
+                        </div>
                     </div>
                 </div>
             </header>

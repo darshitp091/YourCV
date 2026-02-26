@@ -20,6 +20,11 @@ export const PhysiotherapistNiche = ({ data }) => {
                     <p className="text-sm font-bold text-slate-900 uppercase tracking-widest">{contact.email}</p>
                     <p className="text-[11px] font-black text-slate-300 uppercase tracking-[0.4em]">{contact.location}</p>
                     <p className="text-[10px] font-black text-indigo-200 uppercase">{contact.phone} // Active</p>
+                    <div className="flex flex-col items-end gap-1 text-[9px] font-black text-indigo-200 uppercase">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -67,6 +72,24 @@ export const PhysiotherapistNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-300">Community_Health_&_Case_Studies</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border border-indigo-100 rounded-[3rem] shadow-sm group hover:border-indigo-500 transition-all border-dashed">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase italic">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-indigo-500 mb-4 font-bold underline decoration-indigo-50">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-500">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Toolkit / Skills & Edu */}

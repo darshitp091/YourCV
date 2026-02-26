@@ -20,6 +20,11 @@ export const SocialMediaManagerNiche = ({ data }) => {
                     <span className="flex items-center gap-2 border-b-2 border-blue-500/20 pb-1">{contact.email}</span>
                     <span>{contact.location}</span>
                     <span className="text-blue-600">{contact.phone}</span>
+                    <div className="flex gap-4 text-blue-400">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -67,6 +72,26 @@ export const SocialMediaManagerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 italic border-b border-slate-200 pb-4">Viral_Campaigns_&_Engagement_Labs</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border-2 border-blue-50 rounded-[4rem] shadow-xl group hover:border-blue-600 transition-all border-dashed">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <div className="space-y-1">
+                                                <h3 className="text-3xl font-black text-slate-800 tracking-tighter uppercase leading-none">#{proj.name.replace(/\s+/g, '').toLowerCase()}</h3>
+                                                <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">{proj.techStack}</p>
+                                            </div>
+                                        </div>
+                                        <p className="text-xs text-blue-600 mb-4 font-bold italic underline decoration-blue-100">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-500">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Platform Stack / Skills & Edu */}

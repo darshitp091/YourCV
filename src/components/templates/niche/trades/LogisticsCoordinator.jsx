@@ -27,6 +27,11 @@ export const LogisticsCoordinatorNiche = ({ data }) => {
                     <div className="pt-4 space-y-1">
                         <p className="text-[9px] font-black text-zinc-400 uppercase">{contact.email}</p>
                         <p className="text-[9px] font-black text-zinc-400 uppercase">{contact.location}</p>
+                        <div className="flex flex-col items-end gap-1 mt-2 text-[8px] font-black text-zinc-300">
+                            {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                            {contact.github && <span>GH / {contact.github}</span>}
+                            {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                        </div>
                     </div>
                 </div>
             </header>
@@ -70,6 +75,24 @@ export const LogisticsCoordinatorNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-zinc-300 border-b border-zinc-100 pb-4 italic">Global_Distribution_Matrix_&_Process_Audits</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border border-zinc-200 rounded-sm shadow-sm group hover:border-zinc-900 transition-all relative">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black text-zinc-900 tracking-tighter uppercase leading-none group-hover:italic transition-all">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-zinc-400 uppercase tracking-widest bg-zinc-50 px-3 py-1 border border-zinc-100 font-mono">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-zinc-400 mb-4 font-bold border-b border-zinc-50 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-zinc-500">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Stack / Skills & Edu */}

@@ -20,6 +20,11 @@ export const GraphicDesignerNiche = ({ data }) => {
                     <div className="bg-slate-900 text-white p-4 rounded-tl-3xl shadow-xl">
                         <p className="text-[10px] font-black uppercase tracking-widest truncate">{contact.email}</p>
                         <p className="text-[10px] font-bold opacity-50 pt-1">{contact.phone}</p>
+                        <div className="flex flex-col gap-1 mt-2 text-[8px] font-black text-violet-400">
+                            {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                            {contact.github && <span>GH / {contact.github}</span>}
+                            {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                        </div>
                     </div>
                 </div>
             </header>
@@ -60,6 +65,24 @@ export const GraphicDesignerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 border-b border-slate-100 pb-2">Portfolio_Showcase_&_Exhibitions</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-violet-600 text-white rounded-br-[4rem] shadow-2xl group hover:scale-[1.02] transition-transform">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-violet-200 uppercase tracking-widest border border-violet-400 px-3 py-1 rounded-full">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-violet-100 mb-4 font-bold border-b border-violet-500 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-white/90">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 <div className="col-span-12 grid grid-cols-3 gap-8 mt-6">

@@ -17,10 +17,15 @@ export const DatabaseAdministratorNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="mt-8 flex gap-8 text-[11px] font-bold text-slate-400 font-mono tracking-tight uppercase relative z-10">
+                <div className="mt-8 flex gap-8 text-[11px] font-bold text-slate-400 font-mono tracking-tight uppercase relative z-10 group">
                     <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_#10b981]" /> {contact.email}</span>
                     <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_#10b981]" /> {contact.location}</span>
                     <span className="text-slate-600">PH: {contact.phone}</span>
+                    <div className="absolute -bottom-6 flex gap-4 text-[9px] text-slate-600 group-hover:text-indigo-400 transition-colors">
+                        {contact.linkedin && <span>LI_KEY: {contact.linkedin}</span>}
+                        {contact.github && <span>GIT_REPO: {contact.github}</span>}
+                        {contact.portfolio && <span>PF_HOST: {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -66,6 +71,27 @@ export const DatabaseAdministratorNiche = ({ data }) => {
                                 ))}
                             </div>
                         </section>
+
+                        {projects && projects.length > 0 && (
+                            <section className="space-y-10 mt-16">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 flex items-center gap-2">
+                                    <span className="w-8 h-px bg-slate-200" />
+                                    Database_Schema_&_Migration_Projects
+                                </h2>
+                                <div className="space-y-10">
+                                    {projects.map((proj) => (
+                                        <div key={proj.id} className="p-8 bg-slate-50 border border-slate-100 rounded-3xl group hover:border-indigo-600 transition-all relative overflow-hidden">
+                                            <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-indigo-400">{proj.techStack}</div>
+                                            <div className="space-y-4">
+                                                <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight group-hover:text-indigo-600 transition-colors">{proj.name}</h3>
+                                                <p className="text-[9px] font-black text-indigo-400 font-mono underline decoration-indigo-100">{proj.link}</p>
+                                                <p className="text-lg leading-relaxed font-serif italic text-slate-500">"{proj.description}"</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
 
                     {/* Sidebar: Data Dictionary / Skills */}

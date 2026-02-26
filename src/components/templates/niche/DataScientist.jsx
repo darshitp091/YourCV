@@ -17,7 +17,11 @@ export const DataScientistNiche = ({ data }) => {
                 <div className="text-right text-sm space-y-1 font-semibold text-slate-400">
                     <p>{contact.email}</p>
                     <p>{contact.phone}</p>
-                    {contact.github && <p className="text-indigo-400">github.com/{contact.github}</p>}
+                    <div className="flex flex-col items-end gap-1 mt-2 text-xs">
+                        {contact.github && <p className="text-indigo-400">github.com/{contact.github}</p>}
+                        {contact.linkedin && <p className="text-indigo-400">linkedin.com/in/{contact.linkedin}</p>}
+                        {contact.portfolio && <p className="text-indigo-400">{contact.portfolio}</p>}
+                    </div>
                 </div>
             </header>
 

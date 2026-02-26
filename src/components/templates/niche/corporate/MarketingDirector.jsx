@@ -16,12 +16,17 @@ export const MarketingDirectorNiche = ({ data }) => {
                 </div>
 
                 <div className="flex justify-between w-full items-end relative z-10">
-                    <div className="flex gap-8 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                        <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-rose-600 shadow-[0_0_10px_rgba(225,29,72,0.4)]" /> {contact.email}</span>
-                        <span>{contact.location}</span>
-                    </div>
-                    <div className="text-right text-[11px] font-black text-rose-300 uppercase underline decoration-rose-100 underline-offset-8">
-                        {contact.phone}
+                    <div className="text-right text-[11px] font-black text-slate-500 uppercase tracking-widest space-y-2">
+                        <div className="border border-slate-200 px-4 py-2 rounded-md inline-block shadow-sm mb-2">
+                            {contact.email}
+                        </div>
+                        <p className="opacity-50 tracking-normal">LOC: {contact.location}</p>
+                        <p className="text-slate-900 font-mono tracking-normal underline decoration-slate-100 decoration-4 underline-offset-4">TEL: {contact.phone}</p>
+                        <div className="pt-2 flex flex-col items-end gap-1 text-[9px] font-black text-slate-300">
+                            {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                            {contact.github && <span>GH / {contact.github}</span>}
+                            {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                        </div>
                     </div>
                 </div>
             </header>
@@ -64,6 +69,24 @@ export const MarketingDirectorNiche = ({ data }) => {
                                 ))}
                             </div>
                         </section>
+
+                        {projects && projects.length > 0 && (
+                            <section className="space-y-10 mt-16">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-rose-200">Featured_Campaigns_&_Case_Studies</h2>
+                                <div className="space-y-10">
+                                    {projects.map((proj) => (
+                                        <div key={proj.id} className="p-10 bg-rose-600 text-white rounded-[3rem] shadow-lg shadow-rose-600/5 group hover:scale-[1.02] transition-transform">
+                                            <div className="flex justify-between items-center mb-4">
+                                                <h3 className="text-2xl font-black italic tracking-tighter uppercase">{proj.name}</h3>
+                                                <span className="text-[10px] font-black text-rose-200 uppercase tracking-widest">{proj.techStack}</span>
+                                            </div>
+                                            <p className="text-xs text-rose-100 mb-4 font-bold border-b border-rose-400 pb-2 inline-block">{proj.link}</p>
+                                            <p className="text-lg leading-relaxed font-serif italic opacity-90">"{proj.description}"</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                     </div>
 
                     {/* Sidebar: Creative Stack / Skills & Edu */}

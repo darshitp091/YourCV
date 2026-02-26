@@ -20,9 +20,9 @@ export const StartupFounder = ({ data }) => {
                 <div className="text-right space-y-2 text-xs font-black uppercase tracking-[0.2em] text-orange-900/40">
                     <p>{contact.email}</p>
                     <p>{contact.location}</p>
-                    <div className="flex justify-end gap-3 mt-4">
-                        {contact.linkedin && <span className="p-2 bg-white rounded-xl shadow-sm border border-orange-100">LI</span>}
-                        {contact.github && <span className="p-2 bg-white rounded-xl shadow-sm border border-orange-100">GH</span>}
+                    <div className="flex flex-col items-end gap-2 mt-4">
+                        {contact.linkedin && <span className="p-2 bg-white rounded-xl shadow-sm border border-orange-100 text-[8px] text-orange-600 font-black">LI: {contact.linkedin}</span>}
+                        {contact.github && <span className="p-2 bg-white rounded-xl shadow-sm border border-orange-100 text-[8px] text-orange-600 font-black">GH: {contact.github}</span>}
                     </div>
                 </div>
             </header>

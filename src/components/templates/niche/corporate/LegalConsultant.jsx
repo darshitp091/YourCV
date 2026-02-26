@@ -12,10 +12,17 @@ export const LegalConsultantNiche = ({ data }) => {
                     <p className="text-xl font-medium text-[#4a4f54] italic tracking-wide lowercase italic">{personal.jobTitle || "Legal Consultant & Compliance Specialist"}</p>
                 </div>
 
-                <div className="flex gap-10 text-[10px] font-bold text-[#8d949b] uppercase tracking-[0.3em] font-sans italic">
-                    <span className="border-b border-[#e5e7eb] pb-1">{contact.email}</span>
-                    <span>{contact.location}</span>
-                    <span className="text-[#1a1c1e]">{contact.phone}</span>
+                <div className="flex flex-col items-center gap-4">
+                    <div className="flex gap-10 text-[10px] font-bold text-[#8d949b] uppercase tracking-[0.3em] font-sans italic">
+                        <span className="border-b border-[#e5e7eb] pb-1">{contact.email}</span>
+                        <span>{contact.location}</span>
+                        <span className="text-[#1a1c1e]">{contact.phone}</span>
+                    </div>
+                    <div className="flex gap-4 text-[9px] font-black text-[#8d949b] uppercase tracking-[0.1em]">
+                        {contact.linkedin && <span>LinkedIn / {contact.linkedin}</span>}
+                        {contact.github && <span>GitHub / {contact.github}</span>}
+                        {contact.portfolio && <span>Portfolio / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -53,6 +60,24 @@ export const LegalConsultantNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[9px] font-black uppercase tracking-[0.6em] text-[#8d949b] italic">Key_Legal_Briefs_&_Engagements</h2>
+                            <div className="space-y-12">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-8 bg-white border border-[#e5e7eb] rounded-sm group hover:border-[#1a1c1e] transition-colors">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h3 className="text-xl font-black text-[#1a1c1e] italic">{proj.name}</h3>
+                                            <span className="text-[9px] font-bold text-[#8d949b] uppercase tracking-widest font-sans">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-[#8d949b] mb-2 font-mono underline decoration-dotted">{proj.link}</p>
+                                        <p className="text-sm text-[#6b7280] leading-relaxed font-serif italic">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Sidebar: Compliance & Qualifications */}

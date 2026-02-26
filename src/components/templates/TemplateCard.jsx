@@ -14,92 +14,91 @@ export const TemplateCard = ({ template, onSelect, isSelected }) => {
     // Simplified enriched data
     const enrichedData = {
         ...MOCK_RESUME_DATA,
-        // ...data // In case any real data is passed - 'data' is not a prop here, using MOCK_RESUME_DATA for preview
     };
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -8 }}
-            className="relative group"
+            whileHover={{ y: -12, scale: 1.02 }}
+            className="relative group transition-all duration-700"
         >
+            <div className={`absolute -inset-[2px] rounded-[2.5rem] bg-gradient-to-br from-primary via-transparent to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity blur-2xl z-0 duration-700 ${isSelected ? 'opacity-100' : ''}`} />
+
             <Card
-                variant={isSelected ? "default" : "glass"}
-                className={`overflow-hidden transition-all duration-500 border-2 ${isSelected
-                    ? "border-primary shadow-[0_20px_50px_rgba(13,110,110,0.15)] ring-4 ring-primary/5"
-                    : "border-transparent hover:border-primary/20 shadow-sm hover:shadow-xl"
+                variant="premium"
+                className={`relative z-10 overflow-hidden transition-all duration-700 border-2 rounded-[2.5rem] p-0 ${isSelected
+                    ? "border-primary shadow-[0_0_50px_rgba(var(--primary-rgb),0.3)]"
+                    : "border-white/5 hover:border-primary/40 bg-white/[0.02]"
                     }`}
             >
                 {/* Real-World Preview Container - Optimized Scale & Centering */}
-                <div className="relative aspect-[3/4.2] bg-[#F8F9FA] overflow-hidden border-b border-border/10 flex justify-center">
-                    <div className="relative group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                <div className="relative aspect-[3/4.2] bg-white/[0.01] overflow-hidden border-b border-white/10 flex justify-center group-hover:bg-white/[0.03] transition-colors">
+                    <div className="relative group-hover:scale-[1.08] transition-transform duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)]"
                         style={{
                             width: '816px',
                             height: '1056px',
-                            transform: 'scale(0.38)',
+                            transform: 'scale(0.32)',
                             transformOrigin: 'top center',
-                            marginTop: '1rem'
+                            marginTop: '2rem'
                         }}>
-                        <div className="w-full h-full bg-white shadow-[0_40px_100px_rgba(0,0,0,0.18)] rounded-sm overflow-hidden ring-1 ring-black/5">
+                        <div className="w-full h-full bg-white shadow-[0_40px_100px_rgba(0,0,0,0.5)] rounded-sm overflow-hidden ring-1 ring-black/5">
                             <Template data={enrichedData} />
                         </div>
                     </div>
 
                     {/* Sophisticated Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-4 backdrop-blur-[2px]">
-                        <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex flex-col items-center gap-3">
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 backdrop-blur-[4px]">
+                        <div className="transform translate-y-10 group-hover:translate-y-0 transition-all duration-700 flex flex-col items-center gap-4">
                             <Button
                                 variant="default"
                                 size="sm"
                                 onClick={() => onSelect(template.id)}
-                                className="shadow-2xl shadow-primary/40 px-6"
+                                className="shadow-[0_0_30px_rgba(var(--primary-rgb),0.4)] px-10 py-6 h-auto rounded-2xl bg-primary text-black font-black uppercase tracking-widest text-[10px] hover:scale-110 transition-transform"
                             >
-                                {isSelected ? <LucideCheck className="w-4 h-4 mr-2" /> : <LucideEye className="w-4 h-4 mr-2" />}
-                                {isSelected ? "Active" : "Use Template"}
+                                {isSelected ? <LucideCheck className="w-4 h-4 mr-3" /> : <LucideEye className="w-4 h-4 mr-3" />}
+                                {isSelected ? "Active_Link" : "Mount_Protocol"}
                             </Button>
 
-                            <p className="text-[10px] text-white/70 font-bold uppercase tracking-[0.2em]">
-                                ATS Optimized
-                            </p>
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                                <p className="text-[9px] text-white/50 font-black uppercase tracking-[0.4em]">
+                                    ATS_SCAN_READY
+                                </p>
+                            </div>
                         </div>
                     </div>
 
                     {/* Premium Tags Overlay */}
-                    <div className="absolute top-4 left-4 flex flex-col gap-2">
-                        {template.category === 'tech' && <Badge className="bg-blue-500/10 text-blue-600 border-blue-200">Tech</Badge>}
-                        {template.category === 'creative' && <Badge className="bg-purple-500/10 text-purple-600 border-purple-200">Creative</Badge>}
-                        {template.category === 'corporate' && <Badge className="bg-amber-500/10 text-amber-600 border-amber-200">Business</Badge>}
+                    <div className="absolute top-6 left-6 flex flex-col gap-2">
+                        {template.category === 'tech' && <div className="bg-primary/20 backdrop-blur-md text-primary border border-primary/30 px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest">Tech_Stack</div>}
+                        {template.category === 'creative' && <div className="bg-purple-500/20 backdrop-blur-md text-purple-400 border border-purple-500/30 px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest">Creative_Flux</div>}
+                        {template.category === 'corporate' && <div className="bg-amber-500/20 backdrop-blur-md text-amber-400 border border-amber-500/30 px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest">Global_Corp</div>}
                     </div>
                 </div>
 
                 {/* Footer Info - High Quality Typography */}
-                <div className="p-6 space-y-4 bg-white">
-                    <div className="space-y-1">
+                <div className="p-8 space-y-5 bg-transparent relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+
+                    <div className="space-y-2 relative z-10">
                         <div className="flex items-center justify-between">
-                            <h3 className="font-bold text-base text-foreground tracking-tight truncate">{template.name}</h3>
+                            <h3 className="font-black text-xs text-white uppercase tracking-[0.2em] group-hover:text-primary transition-colors">{template.name}</h3>
                             {isSelected && (
-                                <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                                    <LucideCheck className="w-3 h-3 text-white" />
+                                <div className="w-6 h-6 rounded-xl bg-primary flex items-center justify-center shadow-[0_0_20px_rgba(var(--primary-rgb),0.5)]">
+                                    <LucideCheck className="w-3.5 h-3.5 text-black stroke-[3px]" />
                                 </div>
                             )}
                         </div>
-                        <p className="text-[11px] text-muted-foreground line-clamp-1 font-medium">
-                            {template.description || "Professional layout for " + template.name}
+                        <p className="text-[10px] text-zinc-500 line-clamp-1 font-bold uppercase tracking-wider">
+                            {template.description || "Synthesized architecture for " + template.name}
                         </p>
                     </div>
 
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                        {template.tags.slice(0, 2).map(tag => (
-                            <span key={tag} className="text-[9px] font-black uppercase tracking-widest text-primary/50 bg-primary/5 px-2 py-0.5 rounded-md border border-primary/10">
+                    <div className="flex flex-wrap gap-2 pt-1 relative z-10">
+                        {template.tags.slice(0, 3).map(tag => (
+                            <span key={tag} className="text-[8px] font-black uppercase tracking-widest text-zinc-500 bg-white/[0.03] px-3 py-1.5 rounded-lg border border-white/5 group-hover:border-primary/20 group-hover:text-primary/70 transition-all">
                                 {tag}
                             </span>
                         ))}
-                        {template.tags.length > 2 && (
-                            <span className="text-[9px] font-black text-muted-foreground/40 self-center">
-                                +{template.tags.length - 2}
-                            </span>
-                        )}
                     </div>
                 </div>
             </Card>

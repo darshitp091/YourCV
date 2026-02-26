@@ -18,6 +18,11 @@ export const RiskManagerNiche = ({ data }) => {
                     </div>
                     <p className="opacity-50 tracking-normal">LOC: {contact.location}</p>
                     <p className="text-slate-900 font-mono tracking-normal underline decoration-slate-100 decoration-4 underline-offset-4">TEL: {contact.phone}</p>
+                    <div className="pt-2 flex flex-col items-end gap-1 text-[9px] font-black text-slate-300">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -70,6 +75,27 @@ export const RiskManagerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <div className="flex items-center gap-4">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 whitespace-nowrap">Exposure_Control_Projects</h2>
+                                <div className="flex-1 h-px bg-slate-100" />
+                            </div>
+                            <div className="space-y-12">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-8 bg-slate-900 text-white rounded-sm border-l-8 border-slate-700 shadow-xl group hover:border-slate-100 transition-all">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h3 className="text-xl font-black uppercase italic tracking-tighter">{proj.name}</h3>
+                                            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-500 mb-2 font-mono underline decoration-slate-800">{proj.link}</p>
+                                        <p className="text-sm font-serif italic text-slate-300 leading-relaxed">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Risk Matrix / Skills & Edu */}

@@ -20,10 +20,15 @@ export const CyberSecurityAnalystNiche = ({ data }) => {
                     <p className="text-sm font-bold bg-[#00ff41] text-black px-3 py-0.5 inline-block uppercase tracking-widest">{personal.jobTitle || "Cyber Security Analyst"}</p>
                 </div>
 
-                <div className="mt-8 flex gap-8 text-[10px] font-bold uppercase tracking-widest">
+                <div className="mt-8 flex flex-wrap gap-8 text-[10px] font-bold uppercase tracking-widest relative group">
                     <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-[#00ff41] rounded-full" /> {contact.email}</span>
                     <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-[#00ff41] rounded-full" /> {contact.location}</span>
                     <span className="flex items-center gap-1.5 text-white/50">{contact.phone}</span>
+                    <div className="absolute -bottom-6 flex gap-4 text-[8px] text-[#00ff41]/20 group-hover:text-[#00ff41] transition-colors">
+                        {contact.linkedin && <span>LI_NODE: {contact.linkedin}</span>}
+                        {contact.github && <span>GIT_SRC: {contact.github}</span>}
+                        {contact.portfolio && <span>UX_IFACE: {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -58,6 +63,24 @@ export const CyberSecurityAnalystNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-6 mt-16">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-[#00ff41]/60">Hardened_Projects_&_Audits</h2>
+                            <div className="space-y-8">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-6 bg-[#0a0a0a] border border-[#00ff41]/10 rounded-sm group hover:border-[#00ff41]/50 transition-all relative">
+                                        <div className="absolute top-2 right-4 text-[8px] font-black text-[#00ff41]/20 uppercase tracking-widest">{proj.techStack}</div>
+                                        <div className="space-y-4">
+                                            <h3 className="text-xl font-bold uppercase tracking-tight text-white border-b border-[#00ff41]/10 pb-1 group-hover:border-[#00ff41] transition-colors">{proj.name}</h3>
+                                            <p className="text-[9px] font-black text-[#00ff41]/40 uppercase tracking-tighter italic">{proj.link}</p>
+                                            <p className="text-xs leading-relaxed opacity-70 font-mono text-[#00ff41]">"{proj.description}"</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Firewall / Skills */}

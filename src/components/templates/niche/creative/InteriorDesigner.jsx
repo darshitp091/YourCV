@@ -21,10 +21,17 @@ export const InteriorDesignerNiche = ({ data }) => {
 
             <main className="grid grid-cols-12 gap-16">
                 {/* Contact Banner */}
-                <div className="col-span-12 flex justify-between bg-white p-8 border border-[#ebe7e0] rounded-sm shadow-sm text-[11px] font-bold text-[#8d949b] uppercase tracking-widest font-sans italic">
-                    <span className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[#43464a]/10 border border-[#43464a]/20" /> {contact.email}</span>
-                    <span>{contact.phone}</span>
-                    <span className="text-[#1a1c1e] opacity-20">EST_MMXXVI</span>
+                <div className="col-span-12 flex flex-col gap-4 bg-white p-8 border border-[#ebe7e0] rounded-sm shadow-sm text-[11px] font-bold text-[#8d949b] uppercase tracking-widest font-sans italic">
+                    <div className="flex justify-between w-full">
+                        <span className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-[#43464a]/10 border border-[#43464a]/20" /> {contact.email}</span>
+                        <span>{contact.phone}</span>
+                        <span className="text-[#1a1c1e] opacity-20">EST_MMXXVI</span>
+                    </div>
+                    <div className="flex gap-6 border-t border-[#ebe7e0] pt-4 text-[9px] text-[#43464a]/50">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
 
                 {/* Left: Design Philosophy / Summary */}
@@ -56,6 +63,24 @@ export const InteriorDesignerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-[#d1cfc9] border-b border-[#ebe7e0] pb-2">Institutional_&_Residential_Design_Portfolio</h2>
+                            <div className="space-y-12">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border border-[#ebe7e0] shadow-sm group hover:border-[#1a1c1e] transition-all relative">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h3 className="text-3xl font-black text-[#1a1c1e] tracking-tighter uppercase leading-none group-hover:italic transition-all">{proj.name}</h3>
+                                            <span className="text-[10px] font-bold text-[#8d949b] uppercase tracking-widest font-sans bg-[#fdfbf7] px-4 py-1 border border-[#ebe7e0]">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-[#8d949b] mb-4 font-bold border-b border-[#ebe7e0] pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-[1.8] font-medium text-[#43464a] italic">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Portfolio & Projects / Experience */}

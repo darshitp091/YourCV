@@ -12,10 +12,14 @@ export const ExecutiveLeader = ({ data }) => {
                         <h1 className="text-5xl font-black font-heading tracking-tight text-slate-950">{personal.fullName || "Your Name"}</h1>
                         <p className="text-xl font-bold text-slate-600 uppercase tracking-[0.2em]">{personal.jobTitle || "Executive Leader"}</p>
                     </div>
-                    <div className="text-right space-y-2 text-sm font-medium text-slate-500">
+                    <div className="text-right space-y-2 text-sm font-medium text-slate-500 group">
                         <p>{contact.location}</p>
                         <p className="font-black text-slate-950 underline decoration-primary underline-offset-4">{contact.email}</p>
                         <p>{contact.phone}</p>
+                        <div className="flex flex-col items-end gap-1 pt-2 text-[10px] text-slate-400 font-bold uppercase tracking-widest group-hover:text-primary transition-colors">
+                            {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                            {contact.github && <span>GH / {contact.github}</span>}
+                        </div>
                     </div>
                 </header>
 

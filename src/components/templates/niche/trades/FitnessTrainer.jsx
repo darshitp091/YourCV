@@ -20,10 +20,15 @@ export const FitnessTrainerNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-12 text-[11px] font-black uppercase tracking-[0.4em] text-white/40 italic">
+                <div className="flex gap-12 text-[11px] font-black uppercase tracking-[0.4em] text-white/40 italic relative group">
                     <span className="flex items-center gap-3">EMAIL: {contact.email}</span>
                     <span className="text-orange-600">LOC: {contact.location}</span>
                     <span className="text-white">PH: {contact.phone}</span>
+                    <div className="absolute -bottom-6 flex gap-4 text-[8px] tracking-[0.3em] text-white/10 group-hover:text-orange-600 transition-colors">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -68,6 +73,26 @@ export const FitnessTrainerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-zinc-700 italic border-b border-zinc-900 pb-4">Athlete_Showcase_&_Performance_Labs</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-12 bg-white text-black rounded-sm shadow-2xl group hover:scale-[1.01] transition-transform relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-8 opacity-5">
+                                            <h4 className="text-[8px] font-black tracking-[0.5em]">{proj.techStack}</h4>
+                                        </div>
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h3 className="text-5xl font-black italic tracking-tighter uppercase leading-none skew-x-[-4deg]">{proj.name}</h3>
+                                        </div>
+                                        <p className="text-xs text-orange-600 mb-4 font-bold italic border-b border-orange-100 pb-2 inline-block">{proj.link}</p>
+                                        <p className="text-2xl leading-none font-black uppercase tracking-tighter text-zinc-800">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Stack / Skills & Edu */}

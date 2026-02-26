@@ -15,10 +15,17 @@ export const NursePractitionerNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-10 text-[11px] font-black text-slate-400 tracking-[0.2em] uppercase">
-                    <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-teal-400 group-hover:animate-ping" /> {contact.email}</span>
-                    <span>{contact.phone}</span>
-                    <span className="ml-auto text-teal-200">LIC: NP-REG_2026</span>
+                <div className="flex flex-col gap-2">
+                    <div className="flex gap-10 text-[11px] font-black text-slate-400 tracking-[0.2em] uppercase">
+                        <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-teal-400 group-hover:animate-ping" /> {contact.email}</span>
+                        <span>{contact.phone}</span>
+                        <span className="ml-auto text-teal-200">LIC: NP-REG_2026</span>
+                    </div>
+                    <div className="flex gap-4 text-[9px] font-bold text-teal-300 uppercase">
+                        {contact.linkedin && <span>LinkedIn / {contact.linkedin}</span>}
+                        {contact.github && <span>GitHub / {contact.github}</span>}
+                        {contact.portfolio && <span>Portfolio / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -66,6 +73,24 @@ export const NursePractitionerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-teal-300">Clinical_Research_&_Projects</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-teal-50/30 rounded-[3rem] border border-teal-100 shadow-sm group hover:bg-teal-600 transition-all">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-2xl font-black text-teal-900 tracking-tighter group-hover:text-white uppercase italic transition-colors">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-teal-400 uppercase tracking-widest group-hover:text-teal-100 transition-colors">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-teal-600 mb-4 font-bold border-b border-teal-200 pb-2 inline-block group-hover:text-white group-hover:border-teal-400 transition-colors">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-500 group-hover:text-teal-50 transition-colors">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Expertise & Credentials / Skills & Edu */}

@@ -15,10 +15,15 @@ export const ChefNiche = ({ data }) => {
                     <p className="text-xl font-bold tracking-[0.4em] text-slate-400 uppercase italic leading-none">{personal.jobTitle || "Executive Chef & Culinary Director"}</p>
                 </div>
 
-                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 italic font-sans">
+                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 italic font-sans relative group">
                     <span className="border-b border-slate-100 pb-1">{contact.email}</span>
                     <span>{contact.location}</span>
                     <span className="text-slate-900 opacity-100 border-b border-slate-900 pb-1">{contact.phone}</span>
+                    <div className="absolute -bottom-6 flex gap-4 text-[8px] tracking-[0.3em] font-sans text-slate-200 group-hover:text-slate-900 transition-colors">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -59,6 +64,24 @@ export const ChefNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-slate-200 border-b border-slate-50 pb-4 italic font-sans">Culinary_Innovations_&_Special_Menus</h2>
+                            <div className="space-y-12">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-12 bg-white border border-slate-100 shadow-sm group hover:bg-slate-900 transition-all duration-500 relative">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h3 className="text-4xl font-black italic tracking-tighter uppercase text-slate-900 leading-none group-hover:text-white transition-colors">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest group-hover:text-slate-500 transition-colors">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-400 mb-4 font-bold border-b border-slate-50 pb-2 inline-block italic group-hover:text-slate-100 transition-colors">{proj.link}</p>
+                                        <p className="text-xl leading-relaxed font-serif italic text-slate-500 group-hover:text-slate-300 transition-colors">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Toolkit / Skills & Edu */}

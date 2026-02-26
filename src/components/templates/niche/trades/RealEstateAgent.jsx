@@ -70,6 +70,24 @@ export const RealEstateAgentNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 border-b border-slate-100 pb-4 italic">Key_Transactions_&_Market_Expansions</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border border-slate-100 rounded-sm shadow-sm group hover:border-amber-600 transition-all relative">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black text-slate-900 tracking-tighter uppercase leading-none group-hover:italic transition-all">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest bg-amber-50 px-3 py-1 border border-amber-100">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-amber-600/50 mb-4 font-bold border-b border-amber-50 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-500">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Market Toolkit / Skills & Edu */}

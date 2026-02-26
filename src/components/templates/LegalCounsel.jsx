@@ -16,10 +16,14 @@ export const LegalCounsel = ({ data }) => {
                         {personal.jobTitle || "Legal Professional"}
                     </p>
                 </div>
-                <div className="text-right text-xs font-bold space-y-2 uppercase tracking-widest text-zinc-400">
+                <div className="text-right text-xs font-bold space-y-2 uppercase tracking-widest text-zinc-400 group">
                     <p className="text-zinc-950 underline underline-offset-8 decoration-zinc-200">{contact.email}</p>
                     <p>{contact.phone}</p>
                     <p>{contact.location}</p>
+                    <div className="flex flex-col items-end gap-1 pt-2 group-hover:text-zinc-950 transition-colors">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                    </div>
                 </div>
             </header>
 

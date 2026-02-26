@@ -16,12 +16,17 @@ export const PlumberNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-10 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 italic pt-4">
+                <div className="flex gap-10 text-[10px] font-black uppercase tracking-[0.4em] text-slate-300 italic pt-4 relative group">
                     <span>{contact.email}</span>
                     <span className="text-sky-600">|</span>
                     <span>{contact.location}</span>
                     <span className="text-sky-600">|</span>
                     <span className="text-slate-900">{contact.phone}</span>
+                    <div className="absolute -bottom-4 flex gap-4 text-[8px] tracking-[0.2em] text-slate-200 group-hover:text-sky-600 transition-colors">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -65,6 +70,24 @@ export const PlumberNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 border-b border-slate-100 pb-4 italic">Commercial_System_Installs_&_Retrofits</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border border-sky-50 rounded-3xl shadow-sm group hover:border-sky-600 transition-all relative">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black text-slate-900 tracking-tighter uppercase leading-none group-hover:italic transition-all">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-sky-600 uppercase tracking-widest bg-sky-50 px-3 py-1 rounded-full border border-sky-100">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-sky-600/50 mb-4 font-bold border-b border-sky-50 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-500">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Toolkit / Skills & Edu */}

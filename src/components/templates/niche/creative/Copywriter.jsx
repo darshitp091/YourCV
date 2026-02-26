@@ -16,6 +16,11 @@ export const CopywriterNiche = ({ data }) => {
                     <span className="border-b border-[#2d2d2d]/10 pb-1">{contact.email}</span>
                     <span>{contact.location}</span>
                     <span className="text-[#2d2d2d]">{contact.phone}</span>
+                    <div className="flex gap-6 text-[#2d2d2d]/40">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -58,6 +63,24 @@ export const CopywriterNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[9px] font-black uppercase tracking-[0.8em] text-[#8a8a8a] italic">Published_Works_&_Creative_Copy</h2>
+                            <div className="space-y-12">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-12 bg-white border border-[#d1cfc9] shadow-inner group hover:border-[#2d2d2d] transition-colors relative">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h3 className="text-3xl font-black text-[#2d2d2d] tracking-tight italic">"{proj.name}"</h3>
+                                            <span className="text-[10px] font-bold text-[#8a8a8a] uppercase tracking-widest font-sans">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-[#2d2d2d]/40 mb-4 font-bold italic underline decoration-[#d1cfc9]">{proj.link}</p>
+                                        <p className="text-lg leading-[1.8] font-serif italic text-[#444444]">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Linguistic Toolkit / Skills & Edu */}

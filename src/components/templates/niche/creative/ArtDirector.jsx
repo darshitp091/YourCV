@@ -23,6 +23,11 @@ export const ArtDirectorNiche = ({ data }) => {
                     <span>{contact.email}</span>
                     <span>{contact.location}</span>
                     <span className="text-white opacity-100">{contact.phone}</span>
+                    <div className="flex gap-4 text-white">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -63,6 +68,26 @@ export const ArtDirectorNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/20 border-b border-white/5 pb-4 italic">Executive_Visual_Portfolio</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white text-black rounded-sm shadow-2xl group hover:skew-x-[-2deg] transition-all relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-8 opacity-5">
+                                            <h4 className="text-[8px] font-black tracking-[0.5em]">{proj.techStack}</h4>
+                                        </div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none">{proj.name}</h3>
+                                        </div>
+                                        <p className="text-xs text-slate-400 mb-4 font-bold border-b border-slate-100 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-800">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Mastery / Skills & Edu */}

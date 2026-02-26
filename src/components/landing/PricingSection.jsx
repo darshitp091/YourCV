@@ -15,7 +15,7 @@ const PLANS = [
         description: "Everything you need to land your next role.",
         features: [
             { text: "5 resumes per month", included: true },
-            { text: "Access to all 10 templates", included: true },
+            { text: "50+ professional templates", included: true },
             { text: "Download as PDF (No watermark)", included: true },
             { text: "LaTeX code + Browser preview", included: true },
             { text: "ATS Score Analysis", included: true },
@@ -31,8 +31,8 @@ const PLANS = [
         description: "For serious job seekers who want the edge.",
         features: [
             { text: "30 resumes per month", included: true },
-            { text: "All 10 templates (Premium support)", included: true },
-            { text: "15 LaTeX generations / month", included: true },
+            { text: "50+ professional templates", included: true },
+            { text: "30 LaTeX generations / month", included: true },
             { text: "Full ATS score breakdown", included: true },
             { text: "Priority AI generation", included: true },
             { text: "Unlimited edits & versions", included: true },

@@ -26,9 +26,15 @@ export const MarketingMaven = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center text-xs font-black uppercase tracking-[0.3em] text-gray-400">
-                    <p>{contact.email}</p>
-                    <p>{contact.phone}</p>
+                <div className="flex justify-between items-center text-xs font-black uppercase tracking-[0.3em] text-gray-400 group">
+                    <div className="flex gap-6">
+                        <p>{contact.email}</p>
+                        <p>{contact.phone}</p>
+                        <div className="flex gap-3 text-gray-200 group-hover:text-gray-900 transition-colors lowercase">
+                            {contact.linkedin && <span>li://{contact.linkedin}</span>}
+                            {contact.portfolio && <span>pf://{contact.portfolio}</span>}
+                        </div>
+                    </div>
                     <p className="bg-gray-100 px-4 py-2 rounded-full text-gray-900 font-bold">{contact.location}</p>
                 </div>
             </header>

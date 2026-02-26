@@ -5,6 +5,8 @@ import { Input } from "../ui/Input";
 import { Badge } from "../ui/Badge";
 import { LucideX, LucideTerminal, LucideUsers, LucideWrench } from "lucide-react";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SkillCategory = ({ title, icon: Icon, skills, onAdd, onRemove, color }) => {
     const [inputValue, setInputValue] = useState("");
@@ -18,35 +20,48 @@ const SkillCategory = ({ title, icon: Icon, skills, onAdd, onRemove, color }) =>
     };
 
     return (
-        <div className="space-y-4">
-            <div className="flex items-center gap-2">
-                <Icon className={`w-5 h-5 ${color}`} />
-                <h3 className="font-bold font-heading text-foreground">{title}</h3>
+        <div className="space-y-6 group/cat">
+            <div className="flex items-center gap-3">
+                <div className={`p-2.5 rounded-xl bg-white/[0.03] border border-white/10 shadow-2xl group-focus-within/cat:border-primary/40 transition-colors`}>
+                    <Icon className={`w-5 h-5 ${color}`} />
+                </div>
+                <div>
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-white/80 group-focus-within/cat:text-primary transition-colors">{title}</h3>
+                </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 p-3 min-h-[50px] bg-white border border-border rounded-xl focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
-                {skills.map((skill) => (
-                    <Badge
-                        key={skill}
-                        variant="ghost"
-                        className="flex items-center gap-1.5 bg-secondary/30 border-transparent hover:bg-secondary/50 py-1"
-                    >
-                        {skill}
-                        <button
-                            onClick={() => onRemove(skill)}
-                            className="text-muted-foreground hover:text-destructive transition-colors"
+            <div className="flex flex-wrap gap-3 p-6 min-h-[80px] bg-white/[0.02] border border-white/10 rounded-[2rem] focus-within:ring-4 focus-within:ring-primary/40 focus-within:border-primary focus-within:bg-white/[0.05] transition-all duration-500 backdrop-blur-sm relative overflow-hidden group/input">
+                <AnimatePresence mode="popLayout">
+                    {skills.map((skill) => (
+                        <motion.div
+                            key={skill}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                            layout
                         >
-                            <LucideX className="w-3 h-3" />
-                        </button>
-                    </Badge>
-                ))}
+                            <Badge
+                                variant="ghost"
+                                className="flex items-center gap-2 bg-white/5 border border-white/5 hover:bg-white/10 text-zinc-300 py-2 px-4 rounded-xl transition-all"
+                            >
+                                <span className="text-xs font-bold tracking-wide">{skill}</span>
+                                <button
+                                    onClick={() => onRemove(skill)}
+                                    className="text-zinc-500 hover:text-destructive transition-colors"
+                                >
+                                    <LucideX className="w-3.5 h-3.5" />
+                                </button>
+                            </Badge>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
                 <input
                     type="text"
-                    placeholder="Type and press Enter..."
+                    placeholder="Type_And_Sync..."
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 bg-transparent border-none outline-none text-sm min-w-[120px] placeholder:text-muted-foreground/50"
+                    className="flex-1 bg-transparent border-none outline-none text-sm min-w-[180px] text-white placeholder:text-zinc-700 font-medium py-1"
                 />
             </div>
         </div>
@@ -72,15 +87,22 @@ export const StepSkills = () => {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="space-y-2">
-                <h2 className="text-2xl font-bold font-heading text-foreground">Skills & Expertise</h2>
-                <p className="text-muted-foreground">Categorize your strengths to help ATS and recruiters find you.</p>
+        <div className="space-y-12">
+            <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                        <LucideTerminal className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-black font-heading text-white tracking-tight">Expertise_Matrix</h2>
+                        <p className="text-zinc-500 text-sm font-medium tracking-wide">Categorize your primary skill nodes.</p>
+                    </div>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8">
+            <div className="grid grid-cols-1 gap-12">
                 <SkillCategory
-                    title="Technical Skills"
+                    title="Technical Infrastructure"
                     icon={LucideTerminal}
                     skills={resumeData.skills.technical}
                     onAdd={(skill) => addSkill("technical", skill)}
@@ -89,7 +111,7 @@ export const StepSkills = () => {
                 />
 
                 <SkillCategory
-                    title="Soft Skills & Leadership"
+                    title="Neural Networking (Soft Skills)"
                     icon={LucideUsers}
                     skills={resumeData.skills.soft}
                     onAdd={(skill) => addSkill("soft", skill)}
@@ -98,7 +120,7 @@ export const StepSkills = () => {
                 />
 
                 <SkillCategory
-                    title="Tools & Technologies"
+                    title="Applied Technologies"
                     icon={LucideWrench}
                     skills={resumeData.skills.tools}
                     onAdd={(skill) => addSkill("tools", skill)}
@@ -107,13 +129,16 @@ export const StepSkills = () => {
                 />
             </div>
 
-            <div className="p-4 bg-amber-50 rounded-xl border border-amber-200/50 flex items-start gap-3">
-                <div className="bg-white p-1.5 rounded-lg shadow-sm">
-                    <LucideTerminal className="w-4 h-4 text-amber-600" />
+            <div className="p-6 bg-primary/5 rounded-[2rem] border border-primary/10 flex items-start gap-4 transition-all hover:bg-primary/10 group/tip">
+                <div className="p-2 bg-primary/10 rounded-xl group-hover/tip:scale-110 transition-transform">
+                    <LucideTerminal className="w-5 h-5 text-primary" />
                 </div>
-                <p className="text-xs text-amber-800/80 leading-relaxed">
-                    <span className="font-bold">ATS Tip:</span> Use specific keywords like "React.js" instead of just "React" or "Frontend" to improve your ranking in automated searches.
-                </p>
+                <div className="space-y-1">
+                    <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">ATS_Optimization_Protocol</p>
+                    <p className="text-xs text-zinc-400 leading-relaxed font-medium">
+                        Search algorithms prioritize <span className="text-white">exact terminology</span>. Use standardized titles like "React.js" or "Node.js" to maximize your visibility in automated screening pipelines.
+                    </p>
+                </div>
             </div>
         </div>
     );

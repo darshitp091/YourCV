@@ -19,12 +19,17 @@ export const HairStylistNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-10 text-[11px] font-bold text-[#b0b0b0] uppercase tracking-widest font-sans italic border-y border-[#f0f0f0] py-3 w-full justify-center">
+                <div className="flex gap-10 text-[11px] font-bold text-[#b0b0b0] uppercase tracking-widest font-sans italic border-y border-[#f0f0f0] py-3 w-full justify-center relative group">
                     <span>{contact.email}</span>
                     <span className="text-[#ff7b9c] opacity-50">✦</span>
                     <span>{contact.location}</span>
                     <span className="text-[#ff7b9c] opacity-50">✦</span>
                     <span className="text-[#1a1c1e]">{contact.phone}</span>
+                    <div className="absolute -bottom-6 flex gap-4 text-[8px] tracking-[0.3em] font-sans text-[#b0b0b0] group-hover:text-[#ff7b9c] transition-colors">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -66,6 +71,24 @@ export const HairStylistNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-[#d0d0d0] border-b border-[#f0f0f0] pb-4 italic">Artistic_Portfolio_&_Style_Exhibits</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border border-[#ffc1cc]/20 rounded-[4rem] shadow-sm group hover:border-[#ff7b9c] transition-all relative">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black text-[#1a1c1e] tracking-tighter uppercase leading-none group-hover:italic transition-all">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-[#ff7b9c] uppercase tracking-widest bg-[#fff5f6] px-3 py-1 rounded-full">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-[#ff7b9c]/50 mb-4 font-bold border-b border-[#fff5f6] pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-[#5a5d61]">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Mastery / Skills & Edu */}

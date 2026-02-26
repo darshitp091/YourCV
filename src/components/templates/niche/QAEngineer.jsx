@@ -30,6 +30,11 @@ export const QAEngineerNiche = ({ data }) => {
                         <p className="text-xs font-bold text-slate-600">URL: {contact.email}</p>
                         <p className="text-xs font-bold text-slate-600">LOC: {contact.location}</p>
                         <p className="text-xs font-bold text-slate-600">TEL: {contact.phone}</p>
+                        <div className="flex flex-col items-end gap-1 mt-2 text-[9px] text-slate-300 font-mono">
+                            {contact.linkedin && <span>LI_KEY: {contact.linkedin}</span>}
+                            {contact.github && <span>GIT_SRC: {contact.github}</span>}
+                            {contact.portfolio && <span>PF_NODE: {contact.portfolio}</span>}
+                        </div>
                     </div>
                 </div>
             </header>
@@ -75,6 +80,27 @@ export const QAEngineerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-8 mt-16">
+                            <div className="flex items-center gap-3 text-xs font-black uppercase tracking-[0.3em] text-slate-400">
+                                <span className="w-12 h-px bg-slate-200" />
+                                Automated_Test_Suites_&_Frameworks
+                            </div>
+                            <div className="space-y-8">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-8 bg-white border border-slate-100 rounded-2xl group hover:border-emerald-500/30 transition-all shadow-sm relative overflow-hidden">
+                                        <div className="absolute top-2 right-6 text-[8px] font-black text-emerald-500/20 uppercase tracking-widest">{proj.techStack}</div>
+                                        <div className="space-y-4">
+                                            <h3 className="text-2xl font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase leading-tight tracking-tighter">{proj.name}</h3>
+                                            <p className="text-[9px] font-black text-emerald-500/40 uppercase tracking-tighter italic">{proj.link}</p>
+                                            <p className="text-xs leading-relaxed text-slate-600 font-medium italic">"{proj.description}"</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Validation Suite / Skills */}

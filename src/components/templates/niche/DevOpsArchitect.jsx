@@ -14,10 +14,15 @@ export const DevOpsArchitectNiche = ({ data }) => {
                         {personal.jobTitle || "DevOps Architect"}
                     </div>
                 </div>
-                <div className="text-right text-[10px] space-y-1 font-bold tracking-widest uppercase text-zinc-500">
+                <div className="text-right text-[10px] space-y-1 font-bold tracking-widest uppercase text-zinc-500 relative group">
                     <p>{contact.email}</p>
                     <p>{contact.phone}</p>
                     <p>{contact.location}</p>
+                    <div className="absolute -bottom-6 flex flex-col items-end gap-1 text-[8px] text-zinc-700 group-hover:text-[#3b82f6] transition-colors">
+                        {contact.linkedin && <span>LI_ADDR: {contact.linkedin}</span>}
+                        {contact.github && <span>GIT_SRC: {contact.github}</span>}
+                        {contact.portfolio && <span>PF_HOST: {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -54,6 +59,24 @@ export const DevOpsArchitectNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-6 mt-16">
+                            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-[#3b82f6]">Infrastructure_Code_&_Labs</h2>
+                            <div className="space-y-8">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-6 bg-[#111827] rounded-lg border border-zinc-800 shadow-xl group hover:border-[#3b82f6] transition-all relative overflow-hidden">
+                                        <div className="absolute top-2 right-4 text-[8px] font-black text-[#3b82f6]/20 uppercase tracking-widest">{proj.techStack}</div>
+                                        <div className="space-y-4">
+                                            <h3 className="text-lg font-bold text-white uppercase group-hover:text-[#3b82f6] transition-colors">{proj.name}</h3>
+                                            <p className="text-[9px] font-black text-zinc-600 uppercase tracking-tighter italic">{proj.link}</p>
+                                            <p className="text-xs text-zinc-400 leading-relaxed font-sans italic">"{proj.description}"</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Stack */}

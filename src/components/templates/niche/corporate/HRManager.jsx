@@ -16,6 +16,11 @@ export const HRManagerNiche = ({ data }) => {
                     <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-stone-300" /> {contact.location}</span>
                     <span>{contact.phone}</span>
                 </div>
+                <div className="flex gap-4 mt-2 text-[9px] font-bold text-stone-300 uppercase">
+                    {contact.linkedin && <span>LinkedIn / {contact.linkedin}</span>}
+                    {contact.github && <span>GitHub / {contact.github}</span>}
+                    {contact.portfolio && <span>Portfolio / {contact.portfolio}</span>}
+                </div>
             </header>
 
             <main className="grid grid-cols-12 gap-12">
@@ -90,6 +95,25 @@ export const HRManagerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-12">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-stone-300">Strategic_HR_Initiatives</h2>
+                            <div className="space-y-8">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-8 bg-white rounded-3xl border border-stone-50 shadow-sm relative group overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-32 h-32 bg-stone-900 opacity-[0.02] rounded-full translate-x-16 -translate-y-16" />
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h3 className="text-xl font-black text-stone-900 tracking-tighter">{proj.name}</h3>
+                                            <span className="text-[9px] font-black text-stone-400 uppercase tracking-widest">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-stone-400 mb-2 italic underline decoration-stone-50">{proj.link}</p>
+                                        <p className="text-xs text-stone-600 leading-relaxed font-medium italic">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </main>
 

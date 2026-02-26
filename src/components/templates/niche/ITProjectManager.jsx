@@ -18,11 +18,16 @@ export const ITProjectManagerNiche = ({ data }) => {
                         <span>SPRINT_STATUS: READY</span>
                     </div>
                 </div>
-                <div className="text-right space-y-2 pt-2">
+                <div className="text-right space-y-2 pt-2 relative group">
                     <div className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] mb-2 font-mono">Channel: Contact</div>
                     <p className="text-sm font-bold text-slate-800">{contact.email}</p>
                     <p className="text-sm font-bold text-slate-600">{contact.location}</p>
                     <p className="text-[11px] font-black text-slate-400 opacity-50">{contact.phone}</p>
+                    <div className="absolute -bottom-10 right-0 flex flex-col items-end gap-1 text-[9px] text-slate-300 group-hover:text-slate-900 transition-colors">
+                        {contact.linkedin && <span>LI: {contact.linkedin}</span>}
+                        {contact.github && <span>GH: {contact.github}</span>}
+                        {contact.portfolio && <span>PF: {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -62,6 +67,27 @@ export const ITProjectManagerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Strategic_Initiatives_&_MVPs</h2>
+                            <div className="space-y-8">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm group hover:shadow-md transition-shadow relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-24 h-24 bg-slate-50 rounded-full translate-x-12 -translate-y-12" />
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center">
+                                                <h3 className="text-2xl font-black text-slate-900 tracking-tight underline decoration-slate-200 underline-offset-8">{proj.name}</h3>
+                                                <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-3 py-1 rounded-full uppercase italic border border-slate-100">{proj.techStack}</span>
+                                            </div>
+                                            <p className="text-[10px] text-slate-300 font-mono tracking-tighter italic">{proj.link}</p>
+                                            <p className="text-lg leading-relaxed text-slate-700 font-medium italic relative z-10">"{proj.description}"</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right Column: Resource Allocation / Skills */}

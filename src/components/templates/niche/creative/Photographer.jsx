@@ -19,10 +19,15 @@ export const PhotographerNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.6em] text-white/20 italic border-y border-white/5 py-4 w-full justify-center">
+                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.6em] text-white/20 italic border-y border-white/5 py-4 w-full justify-center relative group">
                     <span>{contact.email}</span>
                     <span className="text-white opacity-100 italic">ƒ/2026</span>
                     <span>{contact.location}</span>
+                    <div className="absolute -bottom-6 flex gap-4 text-[7px] tracking-[0.3em] text-white/10 group-hover:text-white transition-colors">
+                        {contact.linkedin && <span>LI//{contact.linkedin}</span>}
+                        {contact.github && <span>GH//{contact.github}</span>}
+                        {contact.portfolio && <span>PF//{contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -66,6 +71,24 @@ export const PhotographerNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-12 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/10 border-b border-white/5 pb-4 italic">Featured_Gallery_&_Technical_Shoots</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-12 bg-white text-black border-2 border-white shadow-[0_35px_60px_-15px_rgba(255,255,255,0.1)] group hover:scale-[1.01] transition-transform">
+                                        <div className="flex justify-between items-center mb-6">
+                                            <h3 className="text-4xl font-black italic tracking-tighter uppercase leading-none skew-x-[-4deg]">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest border border-slate-200 px-4 py-1">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-500 mb-4 font-bold italic border-b border-slate-100 pb-2 inline-block">{proj.link}</p>
+                                        <p className="text-xl leading-relaxed font-serif italic text-slate-800 font-bold">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Equipment & Specs / Skills & Edu */}

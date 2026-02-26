@@ -31,10 +31,15 @@ export const FrontendDeveloperNiche = ({ data }) => {
                         <div className="bg-indigo-50 text-indigo-600 px-4 py-2 rounded-lg inline-block font-mono text-xs font-bold border border-indigo-100">
                             const contact = &#123; status: 'available' &#125;;
                         </div>
-                        <div className="flex flex-col text-[11px] font-bold text-slate-400 tracking-wider">
+                        <div className="flex flex-col text-[11px] font-bold text-slate-400 tracking-wider relative group">
                             <span>{contact.email}</span>
                             <span>{contact.location}</span>
                             <span>{contact.phone}</span>
+                            <div className="absolute -bottom-10 right-0 flex flex-col items-end gap-1 text-[9px] text-slate-300 group-hover:text-indigo-600 transition-colors font-mono">
+                                {contact.linkedin && <span>const linkedin = '{contact.linkedin}';</span>}
+                                {contact.github && <span>const github = '{contact.github}';</span>}
+                                {contact.portfolio && <span>const portfolio = '{contact.portfolio}';</span>}
+                            </div>
                         </div>
                     </div>
                 </header>

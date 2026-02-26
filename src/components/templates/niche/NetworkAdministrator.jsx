@@ -28,10 +28,14 @@ export const NetworkAdministratorNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="text-right text-[11px] font-bold text-slate-400 space-y-1">
+                <div className="text-right text-[11px] font-bold text-slate-400 space-y-1 group">
                     <p className="text-cyan-400 font-mono">REMOTE_ADDR: {contact.email}</p>
                     <p>PH_UPLINK: {contact.phone}</p>
-                    <p className="opacity-50">STATUS: ACTIVE_LISTENING</p>
+                    <div className="pt-2 flex flex-col items-end gap-1 text-[9px] text-slate-600 group-hover:text-cyan-500 transition-colors font-mono">
+                        {contact.linkedin && <span>LI_ADDR: {contact.linkedin}</span>}
+                        {contact.github && <span>GIT_REPO: {contact.github}</span>}
+                        {contact.portfolio && <span>PF_HOST: {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 

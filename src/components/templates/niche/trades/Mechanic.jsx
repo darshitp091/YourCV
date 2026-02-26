@@ -20,12 +20,17 @@ export const MechanicNiche = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500 italic pt-6 w-full border-t border-zinc-800/50 mt-4">
+                <div className="flex gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500 italic pt-6 w-full border-t border-zinc-800/50 mt-4 relative group">
                     <span>{contact.email}</span>
                     <span className="text-zinc-800">//</span>
                     <span>{contact.location}</span>
                     <span className="text-zinc-800">//</span>
                     <span className="text-amber-500">{contact.phone}</span>
+                    <div className="absolute -bottom-6 flex gap-4 text-[8px] tracking-[0.2em] text-zinc-700 group-hover:text-amber-500 transition-colors">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -72,6 +77,24 @@ export const MechanicNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-zinc-700 italic border-b border-zinc-900 pb-4">Specialized_Mechanical_Overhauls_&_Restorations</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-zinc-900 border border-zinc-800 rounded-sm shadow-sm group hover:border-amber-500 transition-all relative">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black text-white tracking-tighter uppercase leading-none group-hover:italic transition-all">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest bg-zinc-800 px-3 py-1 border border-zinc-700 font-mono">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-zinc-600 mb-4 font-bold border-b border-zinc-800 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-zinc-400">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Toolkit / Skills & Edu */}

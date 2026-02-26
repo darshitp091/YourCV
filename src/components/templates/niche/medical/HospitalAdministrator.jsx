@@ -17,6 +17,11 @@ export const HospitalAdministratorNiche = ({ data }) => {
                         <p className="text-xs font-bold text-slate-900 tracking-tight">{contact.email}</p>
                     </div>
                     <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] pt-2 italic">LOC: {contact.location} // {contact.phone}</p>
+                    <div className="flex flex-col items-end gap-1 text-[9px] font-black text-slate-400 uppercase">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -64,6 +69,26 @@ export const HospitalAdministratorNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300">Administrative_&_Institutional_Projects</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-slate-900 text-white rounded-[3.5rem] shadow-xl group hover:scale-[1.01] transition-transform relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-8 opacity-5">
+                                            <h4 className="text-[8px] font-black tracking-[0.5em]">{proj.techStack}</h4>
+                                        </div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-2xl font-black italic tracking-tighter uppercase">{proj.name}</h3>
+                                        </div>
+                                        <p className="text-xs text-slate-400 mb-4 font-bold border-b border-slate-800 pb-2 inline-block">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic opacity-90">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Administrative Skillset / Skills & Edu */}

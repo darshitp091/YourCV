@@ -18,6 +18,11 @@ export const PharmacistNiche = ({ data }) => {
                         <p className="text-xs font-bold text-emerald-900 tracking-tight">{contact.email}</p>
                     </div>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest pt-2 italic">LOC: {contact.location} // {contact.phone}</p>
+                    <div className="flex flex-col items-end gap-1 text-[9px] font-black text-emerald-300 uppercase">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -65,6 +70,24 @@ export const PharmacistNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-800/20">Pharmaceutical_Development_&_Leadership</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-white border-2 border-emerald-50 rounded-[3rem] shadow-sm group hover:border-emerald-600 transition-all border-dashed">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase italic">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-emerald-600 mb-4 font-bold underline decoration-emerald-100">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-500">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Expertise & Credentials / Skills & Edu */}

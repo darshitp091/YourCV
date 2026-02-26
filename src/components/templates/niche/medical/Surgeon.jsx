@@ -16,6 +16,11 @@ export const SurgeonNiche = ({ data }) => {
                     <p className="border-b border-slate-100 pb-2 text-slate-900">{contact.email}</p>
                     <p className="italic">OR_ID: SURG_2026_X</p>
                     <p className="text-slate-300 font-mono tracking-normal">PH: {contact.phone}</p>
+                    <div className="flex flex-col items-end gap-1 text-[9px] font-black text-slate-200">
+                        {contact.linkedin && <span>LinkedIn / {contact.linkedin}</span>}
+                        {contact.github && <span>GitHub / {contact.github}</span>}
+                        {contact.portfolio && <span>Portfolio / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -62,6 +67,24 @@ export const SurgeonNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 whitespace-nowrap">Special_Operative_Cases_&_Research</h2>
+                            <div className="space-y-12">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-8 bg-slate-50 border-r-[12px] border-slate-900 shadow-xl group hover:border-slate-400 transition-all">
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h3 className="text-xl font-black text-slate-900 italic tracking-tighter">{proj.name}</h3>
+                                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-400 mb-2 font-mono underline decoration-slate-900">{proj.link}</p>
+                                        <p className="text-sm font-serif italic text-slate-700 leading-relaxed font-bold">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Surgical Skillset / Skills & Edu */}

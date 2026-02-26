@@ -18,6 +18,11 @@ export const VideoEditorNiche = ({ data }) => {
                 <div className="col-span-4 text-right space-y-2 border-l border-zinc-800 pl-8">
                     <p className="text-[10px] font-black text-white px-4 py-1 bg-zinc-800 rounded-sm inline-block uppercase tracking-widest">{contact.email}</p>
                     <p className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.4em] pt-2">{contact.location} // {contact.phone}</p>
+                    <div className="flex flex-col items-end gap-1 text-[9px] font-black text-zinc-700 uppercase">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -64,6 +69,24 @@ export const VideoEditorNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.8em] text-zinc-700 italic border-b border-zinc-900 pb-4">Selected_Portfolio_&_Cuts</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-zinc-900 border border-zinc-800 rounded-lg shadow-2xl group hover:border-zinc-400 transition-all border-dashed">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase text-white leading-none">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-zinc-500 mb-4 font-bold border-b border-zinc-800 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-zinc-400">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Stack / Skills & Edu */}

@@ -20,6 +20,11 @@ export const RadiologistNiche = ({ data }) => {
                         <p className="text-xs font-bold text-blue-300 tracking-tight">{contact.email}</p>
                     </div>
                     <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em] pt-2 font-mono">{contact.phone}</p>
+                    <div className="flex flex-col items-end gap-1 text-[9px] font-black text-slate-700 uppercase">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -68,6 +73,24 @@ export const RadiologistNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-600">Advanced_Imaging_Research_&_Trials</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl group hover:border-blue-500 transition-all border-dashed">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-2xl font-black italic tracking-tighter uppercase text-white">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-blue-500 uppercase tracking-widest">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-blue-400 mb-4 font-bold border-b border-slate-800 pb-2 inline-block">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-400">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Modality Toolkit / Skills & Edu */}

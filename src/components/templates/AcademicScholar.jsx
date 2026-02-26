@@ -12,6 +12,9 @@ export const AcademicScholar = ({ data }) => {
                     <span>{contact.email}</span>
                     <span>{contact.phone}</span>
                     <span>{contact.location}</span>
+                    {contact.linkedin && <span>LinkedIn: {contact.linkedin}</span>}
+                    {contact.github && <span>GitHub: {contact.github}</span>}
+                    {contact.portfolio && <span>Portfolio: {contact.portfolio}</span>}
                 </div>
             </header>
 

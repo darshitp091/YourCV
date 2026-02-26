@@ -27,7 +27,11 @@ export const CloudArchitectNiche = ({ data }) => {
                 <div className="text-right text-[11px] font-bold text-[#64748b] space-y-1">
                     <p className="text-[#38bdf8]">PUBLIC_DNS: {contact.email}</p>
                     <p>PH_UPLINK: {contact.phone}</p>
-                    <p className="opacity-50">AWS_CERTIFIED_SOLUTIONS_ARCH_PRO</p>
+                    <div className="flex flex-col items-end gap-1 mt-2 text-[9px] text-[#475569] font-mono">
+                        {contact.linkedin && <span>LI_ADDR: {contact.linkedin}</span>}
+                        {contact.github && <span>GIT_REPO: {contact.github}</span>}
+                        {contact.portfolio && <span>PF_HOST: {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -75,6 +79,27 @@ export const CloudArchitectNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#38bdf8]/50 flex items-center gap-3">
+                                <span className="w-12 h-0.5 bg-[#1e293b]" />
+                                Infrastructure_Architectures_&_Solutions
+                            </h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-8 bg-[#111827] border border-[#1e293b] rounded-2xl shadow-xl group hover:border-[#38bdf8]/50 transition-all relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-[#38bdf8]/20">{proj.techStack}</div>
+                                        <div className="space-y-4">
+                                            <h3 className="text-xl font-bold text-white uppercase tracking-tight group-hover:text-[#38bdf8] transition-colors">{proj.name}</h3>
+                                            <p className="text-[10px] text-[#38bdf8]/50 font-mono italic underline decoration-[#38bdf8]/10">{proj.link}</p>
+                                            <p className="text-xs text-[#94a3b8] leading-relaxed font-medium">"{proj.description}"</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Sidebar: Stack Modules / Skills */}

@@ -16,10 +16,14 @@ export const HealthcarePro = ({ data }) => {
                         {personal.jobTitle || "Medical Professional"}
                     </p>
                 </div>
-                <div className="text-right text-xs space-y-1 font-bold">
+                <div className="text-right text-xs space-y-1 font-bold group">
                     <p className="text-sky-100">{contact.email}</p>
                     <p>{contact.phone}</p>
-                    <p className="bg-sky-800/50 px-3 py-1 rounded-full mt-2">{contact.location}</p>
+                    <p className="bg-sky-800/50 px-3 py-1 rounded-full mt-2 inline-block ml-auto">{contact.location}</p>
+                    <div className="flex flex-col items-end gap-1 pt-2 text-[10px] text-sky-200/50 group-hover:text-white transition-colors">
+                        {contact.linkedin && <span>LI: {contact.linkedin}</span>}
+                        {contact.portfolio && <span>PF: {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 

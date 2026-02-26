@@ -24,6 +24,11 @@ export const ArchitectNiche = ({ data }) => {
                     <div className="bg-white border border-slate-200 p-4 rounded-sm shadow-sm">
                         <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">{contact.email}</p>
                         <p className="text-[10px] font-bold text-slate-400 pt-1">{contact.phone}</p>
+                        <div className="flex flex-col items-end gap-1 mt-2 text-[8px] font-black text-slate-300">
+                            {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                            {contact.github && <span>GH / {contact.github}</span>}
+                            {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                        </div>
                     </div>
                 </div>
             </header>
@@ -86,6 +91,24 @@ export const ArchitectNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-300 border-b border-slate-200 pb-2 italic">Institutional_&_Residential_Design_Ledger</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-slate-900 text-white rounded-none border border-slate-800 shadow-2xl group hover:border-slate-500 transition-all border-dashed">
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none">{proj.name}</h3>
+                                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest border border-slate-700 px-3 py-1 font-mono">{proj.techStack}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-400 mb-4 font-bold underline decoration-slate-800">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-slate-300">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 <div className="col-span-12 pt-12">

@@ -13,84 +13,97 @@ export const StepContact = () => {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="space-y-2">
-                <h2 className="text-2xl font-bold font-heading">Contact Information</h2>
-                <p className="text-muted-foreground">How can recruiters reach out to you?</p>
+        <div className="space-y-12">
+            <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                        <LucideMail className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-black font-heading text-white tracking-tight">Signal_Channels</h2>
+                        <p className="text-zinc-500 text-sm font-medium tracking-wide">Establish secure communication protocols.</p>
+                    </div>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="relative group/input">
                     <Input
-                        label="Email Address"
+                        variant="premium"
+                        label="Primary Email"
                         name="email"
                         type="email"
                         placeholder="darshit@example.com"
                         value={resumeData.contact.email}
                         onChange={handleChange}
-                        className="pl-11"
+                        className="pl-14"
                     />
-                    <LucideMail className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                    <LucideMail className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
-                <div className="relative">
+                <div className="relative group/input">
                     <Input
-                        label="Phone Number"
+                        variant="premium"
+                        label="Holographic Phone"
                         name="phone"
                         placeholder="+1 (555) 000-0000"
                         value={resumeData.contact.phone}
                         onChange={handleChange}
-                        className="pl-11"
+                        className="pl-14"
                     />
-                    <LucidePhone className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                    <LucidePhone className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
-                <div className="relative">
+                <div className="relative group/input">
                     <Input
-                        label="Location"
+                        variant="premium"
+                        label="Current Coordinates"
                         name="location"
                         placeholder="New York, NY"
                         value={resumeData.contact.location}
                         onChange={handleChange}
-                        className="pl-11"
+                        className="pl-14"
                     />
-                    <LucideMapPin className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                    <LucideMapPin className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
-                <div className="relative">
+                <div className="relative group/input">
                     <Input
-                        label="LinkedIn URL"
+                        variant="premium"
+                        label="LinkedIn Protocol"
                         name="linkedin"
                         placeholder="linkedin.com/in/username"
                         value={resumeData.contact.linkedin}
                         onChange={handleChange}
-                        className="pl-11"
+                        className="pl-14"
                     />
-                    <LucideLinkedin className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                    <LucideLinkedin className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
-                <div className="relative">
+                <div className="relative group/input">
                     <Input
-                        label="GitHub URL"
+                        variant="premium"
+                        label="Source Repository"
                         name="github"
                         placeholder="github.com/username"
                         value={resumeData.contact.github}
                         onChange={handleChange}
-                        className="pl-11"
+                        className="pl-14"
                     />
-                    <LucideGithub className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                    <LucideGithub className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
 
-                <div className="relative">
+                <div className="relative group/input">
                     <Input
-                        label="Portfolio Website"
+                        variant="premium"
+                        label="Digital Domain"
                         name="portfolio"
                         placeholder="darshit.dev"
                         value={resumeData.contact.portfolio}
                         onChange={handleChange}
-                        className="pl-11"
+                        className="pl-14"
                     />
-                    <LucideGlobe className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                    <LucideGlobe className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                 </div>
             </div>
         </div>

@@ -39,88 +39,101 @@ export const StepProjects = () => {
     };
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex items-center justify-between gap-4">
-                <div className="space-y-2">
-                    <h2 className="text-2xl font-bold font-heading text-foreground">Featured Projects</h2>
-                    <p className="text-muted-foreground">Highlight personal projects or key professional contributions.</p>
+        <div className="space-y-12">
+            <div className="flex items-center justify-between gap-6">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                        <LucideLayout className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                        <h2 className="text-3xl font-black font-heading text-white tracking-tight">Project_Gallery</h2>
+                        <p className="text-zinc-500 text-sm font-medium tracking-wide">Showcase your high-impact deployments.</p>
+                    </div>
                 </div>
+
                 <Button
                     variant="outline"
                     size="sm"
                     onClick={addProject}
-                    className="bg-primary/5 text-primary border-primary/20 hover:bg-primary/10"
+                    className="border-primary/40 bg-primary/5 hover:bg-primary/20 text-primary rounded-xl px-5 py-6 h-auto transition-all"
                 >
                     <LucidePlus className="mr-2 w-4 h-4" />
-                    Add Project
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Add_Project</span>
                 </Button>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-10">
                 {resumeData.projects.length === 0 ? (
-                    <div
+                    <motion.div
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
                         onClick={addProject}
-                        className="p-12 border-2 border-dashed border-border rounded-3xl flex flex-col items-center justify-center gap-4 cursor-pointer hover:bg-primary/5 hover:border-primary/30 transition-all group"
+                        className="p-16 border-2 border-dashed border-white/5 rounded-[3rem] bg-white/[0.02] flex flex-col items-center justify-center gap-6 cursor-pointer hover:bg-primary/5 hover:border-primary/20 transition-all group/empty relative overflow-hidden"
                     >
-                        <div className="w-16 h-16 rounded-full bg-secondary/50 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <LucideCode2 className="w-8 h-8 text-muted-foreground group-hover:text-primary transition-colors" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover/empty:opacity-100 transition-opacity" />
+
+                        <div className="w-20 h-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center group-hover/empty:scale-110 group-hover/empty:border-primary/40 transition-all duration-700 relative z-10">
+                            <LucideCode2 className="w-10 h-10 text-zinc-600 group-hover/empty:text-primary transition-colors" />
                         </div>
-                        <div className="text-center">
-                            <p className="font-bold text-foreground">Showcase your work</p>
-                            <p className="text-sm text-muted-foreground mt-1">Projects demonstrate your skills in action. Add them here.</p>
+                        <div className="text-center relative z-10">
+                            <p className="text-lg font-black text-white uppercase tracking-widest">Initialize Projects</p>
+                            <p className="text-[10px] text-zinc-500 mt-2 font-bold uppercase tracking-[0.3em]">No project contributions detected.</p>
                         </div>
-                    </div>
+                    </motion.div>
                 ) : (
                     resumeData.projects.map((project) => (
-                        <Card key={project.id} className="relative p-8 group">
+                        <Card key={project.id} variant="premium" className="relative p-10 group overflow-visible border-white/10 hover:border-primary/30 transition-all duration-700">
                             <button
                                 onClick={() => removeProject(project.id)}
-                                className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-xl transition-all"
+                                className="absolute -top-3 -right-3 p-3 bg-white/5 backdrop-blur-xl border border-white/10 text-zinc-500 hover:text-white hover:bg-destructive/20 hover:border-destructive/40 rounded-2xl transition-all shadow-2xl z-20 group/delete opacity-0 group-hover:opacity-100"
                             >
-                                <LucideTrash2 className="w-5 h-5" />
+                                <LucideTrash2 className="w-4 h-4" />
                             </button>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="relative">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div className="relative group/input">
                                     <Input
-                                        label="Project Name"
-                                        placeholder="AI Image Generator / E-commerce Platform"
+                                        variant="premium"
+                                        label="Project Title"
+                                        placeholder="e.g. Quantum Analytics Suite"
                                         value={project.name}
                                         onChange={(e) => updateProject(project.id, "name", e.target.value)}
-                                        className="pl-11"
+                                        className="pl-14"
                                     />
-                                    <LucideLayout className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                                    <LucideLayout className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                                 </div>
 
-                                <div className="relative">
+                                <div className="relative group/input">
                                     <Input
-                                        label="Tech Stack"
-                                        placeholder="React, Next.js, Node.js, Supabase"
+                                        variant="premium"
+                                        label="Technical Stack"
+                                        placeholder="e.g. Next.js / Rust / Web3"
                                         value={project.techStack}
                                         onChange={(e) => updateProject(project.id, "techStack", e.target.value)}
-                                        className="pl-11"
+                                        className="pl-14"
                                     />
-                                    <LucideCpu className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                                    <LucideCpu className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                                 </div>
 
-                                <div className="relative md:col-span-2">
+                                <div className="relative group/input md:col-span-2">
                                     <Input
-                                        label="Project Link / GitHub"
-                                        placeholder="https://github.com/darshit/project-name"
+                                        variant="premium"
+                                        label="Live Deployment / Repository"
+                                        placeholder="https://github.com/identity/project-nexus"
                                         value={project.link}
                                         onChange={(e) => updateProject(project.id, "link", e.target.value)}
-                                        className="pl-11"
+                                        className="pl-14"
                                     />
-                                    <LucideGlobe className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
+                                    <LucideGlobe className="absolute left-5 bottom-4 text-zinc-600 w-5 h-5 transition-colors group-focus-within/input:text-primary" />
                                 </div>
 
-                                <div className="md:col-span-2">
-                                    <label className="text-sm font-medium text-foreground/80 mb-2 block">Description</label>
+                                <div className="md:col-span-2 space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Operation_Impact & Logic</label>
                                     <textarea
-                                        placeholder="Built a full-stack platform that handles 10k+ daily active users. Optimized performance by 40%..."
+                                        placeholder="Architected a zero-latency distribution network for 1M+ active nodes. Implemented end-to-end telemetry..."
                                         value={project.description}
                                         onChange={(e) => updateProject(project.id, "description", e.target.value)}
-                                        className="w-full min-h-[100px] p-4 bg-secondary/30 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 resize-none text-sm placeholder:text-muted-foreground/50"
+                                        className="w-full min-h-[150px] p-6 bg-white/[0.02] border border-white/10 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-primary/40 focus:border-primary focus:bg-white/[0.05] transition-all duration-500 resize-none text-sm text-white placeholder:text-zinc-700 font-medium leading-relaxed"
                                     />
                                 </div>
                             </div>
@@ -132,11 +145,15 @@ export const StepProjects = () => {
             {resumeData.projects.length > 0 && (
                 <Button
                     variant="outline"
-                    className="w-full border-dashed border-2 py-6 text-muted-foreground hover:text-primary hover:border-primary/50"
+                    className="w-full border-dashed border-2 border-white/5 bg-white/[0.01] py-10 rounded-[2.5rem] text-zinc-500 hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all group/add-more"
                     onClick={addProject}
                 >
-                    <LucidePlus className="mr-2 w-5 h-5" />
-                    Add Another Project
+                    <div className="flex flex-col items-center gap-2">
+                        <div className="p-2 rounded-xl bg-white/5 border border-white/5 group-hover/add-more:scale-110 transition-transform">
+                            <LucidePlus className="w-5 h-5" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em]">Initialize_Another_Project</span>
+                    </div>
                 </Button>
             )}
         </div>

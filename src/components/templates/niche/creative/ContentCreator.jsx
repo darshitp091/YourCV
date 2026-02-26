@@ -20,6 +20,11 @@ export const ContentCreatorNiche = ({ data }) => {
                     <span className="flex items-center gap-2 underline decoration-amber-400 decoration-4 underline-offset-4">{contact.email}</span>
                     <span>{contact.location}</span>
                     <span className="text-slate-900">{contact.phone}</span>
+                    <div className="flex gap-4 text-amber-500">
+                        {contact.linkedin && <span>LI / {contact.linkedin}</span>}
+                        {contact.github && <span>GH / {contact.github}</span>}
+                        {contact.portfolio && <span>PF / {contact.portfolio}</span>}
+                    </div>
                 </div>
             </header>
 
@@ -65,6 +70,26 @@ export const ContentCreatorNiche = ({ data }) => {
                             ))}
                         </div>
                     </section>
+
+                    {projects && projects.length > 0 && (
+                        <section className="space-y-10 mt-16">
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300">Viral_Productions_&_Creative_Exhibits</h2>
+                            <div className="space-y-10">
+                                {projects.map((proj) => (
+                                    <div key={proj.id} className="p-10 bg-slate-900 text-white rounded-[4rem] shadow-2xl group hover:scale-[1.02] transition-transform relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 p-8 opacity-5">
+                                            <h4 className="text-[8px] font-black tracking-[0.5em]">{proj.techStack}</h4>
+                                        </div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none text-amber-400">#{proj.name.replace(/\s+/g, '').toLowerCase()}</h3>
+                                        </div>
+                                        <p className="text-xs text-slate-400 mb-4 font-bold border-b border-slate-800 pb-2 inline-block italic">{proj.link}</p>
+                                        <p className="text-lg leading-relaxed font-serif italic text-white/90">"{proj.description}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
 
                 {/* Right: Technical Toolkit / Skills & Edu */}
