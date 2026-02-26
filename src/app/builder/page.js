@@ -77,21 +77,21 @@ export default function BuilderPage() {
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col items-center py-16 px-6 relative z-10 max-w-7xl mx-auto w-full">
-                {/* HUD & Strength Matrix */}
-                <div className="w-full max-w-5xl mb-20 grid grid-cols-1 lg:grid-cols-4 gap-12 items-end">
-                    <div className="lg:col-span-3">
+            <div className="flex-1 flex flex-col items-center py-12 px-6 relative z-10 max-w-[1500px] mx-auto w-full">
+                {/* HUD & Strength Matrix - Aligned with Container */}
+                <div className="w-full max-w-[1400px] mb-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+                    <div className="lg:col-span-9 bg-white/40 backdrop-blur-md border border-white/40 rounded-[2.5rem] p-6 md:p-12 shadow-sm h-full flex flex-col justify-center">
                         <ProgressBar />
                     </div>
-                    <div className="bg-white/60 backdrop-blur-xl border border-white rounded-[2rem] shadow-xl shadow-black/5 p-6 relative overflow-hidden group/strength">
+                    <div className="lg:col-span-3 bg-white/60 backdrop-blur-xl border border-white rounded-[2.5rem] shadow-xl shadow-black/5 p-6 relative overflow-hidden group/strength h-full">
                         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/strength:opacity-100 transition-opacity" />
                         <ResumeStrength />
                     </div>
                 </div>
 
-                {/* Main Form Container - Lumina Evolution */}
-                <div className="w-full max-w-5xl relative group">
-                    <div className="bg-white/80 backdrop-blur-[100px] rounded-[3.5rem] border border-white p-10 md:p-16 shadow-[0_32px_120px_-16px_rgba(0,0,0,0.08)] min-h-[700px] flex flex-col justify-between relative overflow-hidden ring-1 ring-black/5">
+                {/* Main Form Container - Broadened Lumina Evolution */}
+                <div className="w-full max-w-[1400px] relative group">
+                    <div className="bg-white/80 backdrop-blur-[100px] rounded-[3.5rem] border border-white p-6 md:p-12 shadow-[0_32px_120px_-16px_rgba(0,0,0,0.08)] min-h-[700px] flex flex-col justify-between relative overflow-hidden ring-1 ring-black/5">
                         {/* Internal Accents */}
                         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
                         <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
