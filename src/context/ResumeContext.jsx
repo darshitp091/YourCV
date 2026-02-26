@@ -122,7 +122,7 @@ export const ResumeProvider = ({ children }) => {
                 const hasCredits = await checkCredits(user.id, 'resume');
 
                 if (!hasCredits) {
-                    alert("You've reached the limit of 1 resume for the Free plan. Please upgrade to Premium to create more!");
+                    alert("You've reached the limit of 5 resumes for the Free plan. Please upgrade to Premium to create more!");
                     window.location.href = "/#pricing"; // Redirect to pricing
                     return;
                 }

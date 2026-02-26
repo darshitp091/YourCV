@@ -38,7 +38,7 @@ export default function TermsPage() {
 
                             <h2>4. Subscription and Payments</h2>
                             <ul>
-                                <li><strong>Free Plan:</strong> Includes basic resume building and limited templates with watermarks.</li>
+                                <li><strong>Free Plan:</strong> Includes basic resume building, all templates, and no watermarks.</li>
                                 <li><strong>Premium Plan:</strong> Recurring monthly fee for full access to all features, priority AI, and clean exports.</li>
                                 <li><strong>Refunds:</strong> Payments are generally non-refundable, but we evaluate requests on a case-by-case basis.</li>
                             </ul>
