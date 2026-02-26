@@ -52,6 +52,9 @@ export const ResumeProvider = ({ children }) => {
     const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 9));
     const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
+    const isLastStep = currentStep === 9;
+    const isFirstStep = currentStep === 1;
+
     // Debounced Auto-save logic
     useEffect(() => {
         const saver = setTimeout(() => {
@@ -163,6 +166,31 @@ export const ResumeProvider = ({ children }) => {
         }
     };
 
+    const validateStep = (step) => {
+        switch (step) {
+            case 2: // Personal
+                if (!resumeData.personal.fullName || !resumeData.personal.jobTitle) {
+                    alert("Please fill in your name and job title.");
+                    return false;
+                }
+                return true;
+            case 3: // Contact
+                if (!resumeData.contact.email || !resumeData.contact.phone) {
+                    alert("Please fill in your email and phone number.");
+                    return false;
+                }
+                return true;
+            case 4: // Summary
+                if (!resumeData.summary || resumeData.summary.length < 50) {
+                    alert("Please provide a professional summary (at least 50 characters).");
+                    return false;
+                }
+                return true;
+            default:
+                return true;
+        }
+    };
+
     return (
         <ResumeContext.Provider value={{
             currentStep,
@@ -172,7 +200,10 @@ export const ResumeProvider = ({ children }) => {
             updateSection,
             nextStep,
             prevStep,
-            saveResume
+            saveResume,
+            validateStep,
+            isFirstStep,
+            isLastStep
         }}>
             {children}
         </ResumeContext.Provider>

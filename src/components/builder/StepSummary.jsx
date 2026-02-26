@@ -79,8 +79,11 @@ export const StepSummary = () => {
                         <LucideMessageSquareText className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black font-heading text-zinc-900 tracking-tight">Core_Brief</h2>
-                        <p className="text-zinc-500 text-sm font-medium tracking-wide">Synthesize your professional trajectory.</p>
+                        <h2 className="text-3xl font-black font-heading text-zinc-900 tracking-tight">
+                            Core_Brief
+                            <span className="text-red-500 ml-1">*</span>
+                        </h2>
+                        <p className="text-zinc-500 text-sm font-medium tracking-wide">Synthesize your professional trajectory (Required).</p>
                     </div>
                 </div>
 

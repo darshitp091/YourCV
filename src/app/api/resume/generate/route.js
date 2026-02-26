@@ -27,18 +27,23 @@ export async function POST(req) {
                             cookiesToSet.forEach(({ name, value, options }) =>
                                 cookieStore.set(name, value, options)
                             );
-                        } catch {
+                        } catch (error) {
                             // The `setAll` method was called from a Server Component.
                             // This can be ignored if you have middleware refreshing
                             // user sessions.
+                            console.warn("Supabase SSR: Failed to set cookies in API route", error.message);
                         }
                     },
                 },
             }
         );
-        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-        if (authError || !user) {
+        // Use getSession for more robust session verification in SSR
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        const user = session?.user;
+
+        if (sessionError || !user) {
+            console.error("Auth Fail:", sessionError?.message || "No user found in session");
             return NextResponse.json({ error: "Unauthorized. Please sign in." }, { status: 401 });
         }
 

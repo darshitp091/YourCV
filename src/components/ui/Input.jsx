@@ -6,6 +6,7 @@ import { twMerge } from "tailwind-merge";
 export const Input = ({
     label,
     error,
+    required,
     className,
     variant = "default",
     ...props
@@ -23,6 +24,7 @@ export const Input = ({
                     variant === "premium" ? "text-zinc-400 group-focus-within/input:text-primary" : "text-foreground/80"
                 )}>
                     {label}
+                    {required && <span className="text-red-500 ml-1">*</span>}
                 </label>
             )}
             <input

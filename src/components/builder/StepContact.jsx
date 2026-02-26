@@ -31,6 +31,7 @@ export const StepContact = () => {
                     <Input
                         variant="premium"
                         label="Primary Email"
+                        required
                         name="email"
                         type="email"
                         placeholder="darshit@example.com"
@@ -45,6 +46,7 @@ export const StepContact = () => {
                     <Input
                         variant="premium"
                         label="Holographic Phone"
+                        required
                         name="phone"
                         placeholder="+1 (555) 000-0000"
                         value={resumeData.contact.phone}

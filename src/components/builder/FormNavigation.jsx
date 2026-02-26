@@ -6,9 +6,16 @@ import { LucideChevronLeft, LucideChevronRight, LucideZap } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const FormNavigation = ({ onNext }) => {
-    const { currentStep, prevStep, nextStep } = useResume();
-    const isLastStep = currentStep === 9;
-    const isFirstStep = currentStep === 1;
+    const { currentStep, prevStep, nextStep, validateStep, isFirstStep, isLastStep } = useResume();
+    const handleNext = () => {
+        if (isLastStep) {
+            onNext();
+        } else {
+            if (validateStep(currentStep)) {
+                nextStep();
+            }
+        }
+    };
 
     return (
         <div className="flex items-center justify-between">
@@ -29,7 +36,7 @@ export const FormNavigation = ({ onNext }) => {
                 className="relative group"
             >
                 <Button
-                    onClick={isLastStep ? onNext : nextStep}
+                    onClick={handleNext}
                     className="min-w-[180px] bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-2xl h-14 border-b-4 border-primary/20 relative z-10 shadow-lg shadow-primary/20 transition-all"
                 >
                     <div className="flex items-center justify-center gap-3 w-full">

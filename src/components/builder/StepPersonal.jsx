@@ -114,6 +114,7 @@ export const StepPersonal = () => {
                         <Input
                             variant="premium"
                             label="Legal Full Name"
+                            required
                             placeholder="Enter your name..."
                             value={resumeData.personal.fullName}
                             onChange={(e) => updateSection("personal", { ...resumeData.personal, fullName: e.target.value })}
@@ -126,6 +127,7 @@ export const StepPersonal = () => {
                         <Input
                             variant="premium"
                             label="Professional Designation"
+                            required
                             placeholder="e.g. Architect of Digital Experiences"
                             value={resumeData.personal.jobTitle}
                             onChange={(e) => updateSection("personal", { ...resumeData.personal, jobTitle: e.target.value })}
