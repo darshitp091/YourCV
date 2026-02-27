@@ -247,7 +247,9 @@ export const StepExperience = () => {
                                 <div className="md:col-span-2 space-y-4">
                                     <div className="flex items-center justify-between">
                                         <div className="flex flex-col">
-                                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Operation_Impact & Metrics</label>
+                                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">
+                                                Operation_Impact & Metrics <span className="text-red-500">*</span>
+                                            </label>
                                             {remainingAI !== null && (
                                                 <span className={`text-[9px] font-bold ${remainingAI <= 2 ? 'text-amber-600' : 'text-primary uppercase tracking-widest'}`}>
                                                     {remainingAI} AI Refines Available

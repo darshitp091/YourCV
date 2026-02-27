@@ -195,8 +195,8 @@ export const ResumeProvider = ({ children }) => {
                     return showAlert("Please add at least one professional experience record.");
                 }
                 const firstExp = resumeData.experience[0];
-                if (!firstExp.company || !firstExp.role) {
-                    return showAlert("Please provide at least the Organization and Role for your primary experience.");
+                if (!firstExp.company || !firstExp.role || !firstExp.description) {
+                    return showAlert("Please provide the Organization, Role, and a brief Description for your primary experience.");
                 }
                 return true;
             case 6: // Education
@@ -213,7 +213,14 @@ export const ResumeProvider = ({ children }) => {
                     return showAlert("Please add at least one technical skill.");
                 }
                 return true;
-            case 8: // Projects (Optional)
+            case 8: // Projects
+                if (resumeData.projects.length > 0) {
+                    const firstProj = resumeData.projects[0];
+                    if (!firstProj.name) {
+                        return showAlert("Please provide a Title for your project.");
+                    }
+                }
+                return true;
             case 9: // Additional (Optional)
                 return true;
             default:

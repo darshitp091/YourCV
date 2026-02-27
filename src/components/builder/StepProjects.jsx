@@ -93,6 +93,7 @@ export const StepProjects = () => {
                                     <Input
                                         variant="premium"
                                         label="Project Title"
+                                        required
                                         placeholder="e.g. Quantum Analytics Suite"
                                         value={project.name}
                                         onChange={(e) => updateProject(project.id, "name", e.target.value)}

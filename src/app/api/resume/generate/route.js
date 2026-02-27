@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { refineResumeContent } from "@/lib/gemini";
+import { refineWithHuggingFace } from "@/lib/huggingface";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { checkCredits, incrementUsage } from "@/lib/credits";
@@ -38,12 +38,11 @@ export async function POST(req) {
             }
         );
 
-        // Use getSession for more robust session verification in SSR
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        const user = session?.user;
+        // Use getUser for the most robust server-side session verification
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-        if (sessionError || !user) {
-            console.error("Auth Fail:", sessionError?.message || "No user found in session");
+        if (authError || !user) {
+            console.error("Auth Fail:", authError?.message || "No user found");
             return NextResponse.json({ error: "Unauthorized. Please sign in." }, { status: 401 });
         }
 
@@ -55,8 +54,8 @@ export async function POST(req) {
             }, { status: 403 });
         }
 
-        // 3. Process with AI
-        const refined = await refineResumeContent(content, type, context);
+        // 3. Process with AI (Using HuggingFace)
+        const refined = await refineWithHuggingFace(content, type, context);
 
         // 4. Increment Usage
         await incrementUsage(user.id, 'ai_refines');
