@@ -59,3 +59,46 @@ Refined ${type}: [/INST]</s>`;
         throw error;
     }
 }
+
+/**
+ * Audits resume quality using HuggingFace Inference API.
+ */
+export async function auditWithHuggingFace(resumeData) {
+    const apiKey = process.env.HUGGINGFACE_API_KEY;
+    const model = "mistralai/Mistral-7B-Instruct-v0.3";
+    const apiUrl = `https://api-inference.huggingface.co/models/${model}`;
+
+    if (!apiKey) return { score: 0, feedback: ["API Key missing"] };
+
+    const prompt = `<s>[INST] You are an ATS Audit Specialist. Analyze this resume and provide a quality score (0-100) and 3-4 professional feedback points.
+Output ONLY a JSON object: {"score": number, "feedback": ["point1", "point2", "point3"]}
+
+Resume Data:
+${JSON.stringify(resumeData)}
+
+Analysis (JSON ONLY): [/INST]</s>`;
+
+    try {
+        const response = await fetch(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`,
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({
+                inputs: prompt,
+                parameters: { max_new_tokens: 300, temperature: 0.1 }
+            }),
+        });
+
+        const result = await response.json();
+        const text = Array.isArray(result) ? result[0].generated_text : result.generated_text;
+
+        // Extract JSON from response
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        return jsonMatch ? JSON.parse(jsonMatch[0]) : { score: 75, feedback: ["Unable to parse full AI analysis"] };
+    } catch (error) {
+        console.error("Audit Error:", error);
+        return { score: 50, feedback: ["AI Audit system temporarily offline"] };
+    }
+}

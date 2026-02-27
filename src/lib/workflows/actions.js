@@ -1,6 +1,6 @@
 import { supabase } from "../supabase";
 
-import { auditResumeQuality } from "../gemini";
+import { auditWithHuggingFace } from "../huggingface";
 
 /**
  * Executes a specific workflow action.
@@ -31,8 +31,8 @@ async function handleAiAudit(config, payload) {
         return { error: "No resume data provided." };
     }
 
-    console.log("[Actions] Running Real AI Audit...");
-    const auditResult = await auditResumeQuality(payload.resumeData);
+    console.log("[Actions] Running Real AI Audit (HuggingFace)...");
+    const auditResult = await auditWithHuggingFace(payload.resumeData);
 
     // Save the audit result to a metadata table or update the resume if needed
     // For now, return it to the engine to be logged in workflow_logs
