@@ -49,8 +49,14 @@ export default function BuilderPage() {
                 <div className="absolute bottom-[-10%] right-[-10%] w-[65%] h-[65%] bg-accent/10 rounded-full blur-[160px] opacity-40" />
                 <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[140px] opacity-20" />
 
-                {/* Subtle Grid Pattern */}
-                <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:radial-gradient(ellipse_at_center,black,transparent)] opacity-[0.02] invert" />
+                {/* Subtle CSS Grid Pattern */}
+                <div
+                    className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent)] opacity-[0.03] invert"
+                    style={{
+                        backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
+                        backgroundSize: '40px 40px'
+                    }}
+                />
             </div>
 
             {/* Premium Header */}
