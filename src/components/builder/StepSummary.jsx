@@ -30,8 +30,8 @@ export const StepSummary = () => {
     const handleAIQuery = async () => {
         if (!user) return;
 
-        if (!resumeData.summary && !resumeData.personal.jobTitle) {
-            alert("Please provide at least a job title or a starting summary for AI to help.");
+        if (!resumeData.summary.trim()) {
+            alert("Please write a rough draft of your summary first. The AI will then help you refine it!");
             return;
         }
 
@@ -91,12 +91,16 @@ export const StepSummary = () => {
                     <Button
                         variant="outline"
                         size="sm"
-                        className="hidden sm:flex items-center gap-2 border-primary/20 bg-primary/5 hover:bg-primary/10 text-primary rounded-xl px-5 py-6 h-auto shadow-sm"
+                        className={`hidden sm:flex items-center gap-2 border-primary/20 rounded-xl px-5 py-6 h-auto shadow-sm ${!resumeData.summary.trim()
+                                ? "bg-zinc-50 text-zinc-400 border-zinc-100 cursor-not-allowed opacity-70"
+                                : "bg-primary/5 hover:bg-primary/10 text-primary"
+                            }`}
                         onClick={handleAIQuery}
                         isLoading={isGenerating}
+                        disabled={!resumeData.summary.trim()}
                     >
-                        <LucideSparkles className="w-4 h-4 animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Neural_Enhancement</span>
+                        <LucideSparkles className={`w-4 h-4 ${resumeData.summary.trim() ? "animate-pulse" : ""}`} />
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Neural_Refinement</span>
                     </Button>
                     {remainingAI !== null && (
                         <div className="hidden sm:flex flex-col">
@@ -124,12 +128,16 @@ export const StepSummary = () => {
                 <div className="sm:hidden mt-6 space-y-4">
                     <Button
                         variant="outline"
-                        className="w-full flex items-center justify-center gap-2 border-primary/20 bg-primary/5 text-primary py-4 rounded-xl shadow-sm"
+                        className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl shadow-sm ${!resumeData.summary.trim()
+                                ? "bg-zinc-50 text-zinc-400 border-zinc-100 cursor-not-allowed"
+                                : "bg-primary/5 border-primary/20 text-primary"
+                            }`}
                         onClick={handleAIQuery}
                         isLoading={isGenerating}
+                        disabled={!resumeData.summary.trim()}
                     >
                         <LucideSparkles className="w-5 h-5" />
-                        AI Generate Summary
+                        {resumeData.summary.trim() ? "Neural Refinement" : "Write a draft to refine"}
                     </Button>
                     {remainingAI !== null && (
                         <p className="text-center text-[10px] font-bold text-zinc-400 uppercase tracking-widest">

@@ -42,8 +42,8 @@ export const StepExperience = () => {
     const handleAIRefine = async (id, currentDescription, role) => {
         if (!user) return;
 
-        if (!currentDescription && !role) {
-            alert("Please provide at least a job role or some initial description for AI to refine.");
+        if (!currentDescription.trim()) {
+            alert("Please provide a rought description of your role first. The AI will then help you refine it!");
             return;
         }
 
@@ -259,12 +259,16 @@ export const StepExperience = () => {
                                         <Button
                                             variant="ghost"
                                             size="sm"
-                                            className="h-8 text-[9px] text-primary hover:bg-primary/5 uppercase font-black tracking-widest gap-2 px-4 rounded-xl border border-primary/20 transition-all shadow-sm"
+                                            className={`h-8 text-[9px] uppercase font-black tracking-widest gap-2 px-4 rounded-xl border border-primary/20 transition-all shadow-sm ${!exp.description.trim()
+                                                    ? "bg-zinc-50 text-zinc-400 border-zinc-100 cursor-not-allowed"
+                                                    : "text-primary hover:bg-primary/5"
+                                                }`}
                                             onClick={() => handleAIRefine(exp.id, exp.description, exp.role)}
                                             isLoading={refiningId === exp.id}
+                                            disabled={!exp.description.trim()}
                                         >
-                                            <LucideSparkles className="w-3.5 h-3.5 animate-pulse" />
-                                            AI-Refine_Log
+                                            <LucideSparkles className={`w-3.5 h-3.5 ${exp.description.trim() ? "animate-pulse" : ""}`} />
+                                            {exp.description.trim() ? "AI-Refine_Log" : "Draft required for AI"}
                                         </Button>
                                     </div>
                                     <textarea

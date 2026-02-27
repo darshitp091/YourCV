@@ -42,7 +42,11 @@ export async function POST(req) {
         const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {
-            console.error("Auth Fail:", authError?.message || "No user found");
+            console.error("Auth Fail Diagnostic:", {
+                error: authError?.message,
+                cookiesPresent: cookieStore.getAll().length > 0,
+                cookieNames: cookieStore.getAll().map(c => c.name)
+            });
             return NextResponse.json({ error: "Unauthorized. Please sign in." }, { status: 401 });
         }
 
