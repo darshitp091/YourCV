@@ -166,25 +166,55 @@ export const ResumeProvider = ({ children }) => {
         }
     };
 
-    const validateStep = (step) => {
+    const validateStep = (step, silent = false) => {
+        const showAlert = (msg) => {
+            if (!silent) alert(msg);
+            return false;
+        };
+
         switch (step) {
+            case 1: // Templates
+                return true;
             case 2: // Personal
                 if (!resumeData.personal.fullName || !resumeData.personal.jobTitle) {
-                    alert("Please fill in your name and job title.");
-                    return false;
+                    return showAlert("Please fill in your name and job title.");
                 }
                 return true;
             case 3: // Contact
                 if (!resumeData.contact.email || !resumeData.contact.phone) {
-                    alert("Please fill in your email and phone number.");
-                    return false;
+                    return showAlert("Please fill in your email and phone number.");
                 }
                 return true;
             case 4: // Summary
                 if (!resumeData.summary || resumeData.summary.length < 50) {
-                    alert("Please provide a professional summary (at least 50 characters).");
-                    return false;
+                    return showAlert("Please provide a professional summary (at least 50 characters).");
                 }
+                return true;
+            case 5: // Experience
+                if (resumeData.experience.length === 0) {
+                    return showAlert("Please add at least one professional experience record.");
+                }
+                const firstExp = resumeData.experience[0];
+                if (!firstExp.company || !firstExp.role) {
+                    return showAlert("Please provide at least the Organization and Role for your primary experience.");
+                }
+                return true;
+            case 6: // Education
+                if (resumeData.education.length === 0) {
+                    return showAlert("Please add at least one academic record.");
+                }
+                const firstEdu = resumeData.education[0];
+                if (!firstEdu.school || !firstEdu.degree) {
+                    return showAlert("Please provide at least the School and Degree for your primary education.");
+                }
+                return true;
+            case 7: // Skills
+                if (resumeData.skills.technical.length === 0) {
+                    return showAlert("Please add at least one technical skill.");
+                }
+                return true;
+            case 8: // Projects (Optional)
+            case 9: // Additional (Optional)
                 return true;
             default:
                 return true;

@@ -166,6 +166,7 @@ export const StepExperience = () => {
                                     <Input
                                         variant="premium"
                                         label="Organization"
+                                        required
                                         placeholder="e.g. Hyper-Reality Corp"
                                         value={exp.company}
                                         onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
@@ -178,6 +179,7 @@ export const StepExperience = () => {
                                     <Input
                                         variant="premium"
                                         label="Strategic Role"
+                                        required
                                         placeholder="e.g. Systems Architect"
                                         value={exp.role}
                                         onChange={(e) => updateExperience(exp.id, "role", e.target.value)}

@@ -96,6 +96,7 @@ export const StepEducation = () => {
                                     <Input
                                         variant="premium"
                                         label="Academy / Institution"
+                                        required
                                         placeholder="e.g. Stanford University"
                                         value={edu.school}
                                         onChange={(e) => updateEducation(edu.id, "school", e.target.value)}
@@ -108,6 +109,7 @@ export const StepEducation = () => {
                                     <Input
                                         variant="premium"
                                         label="Certification / Degree"
+                                        required
                                         placeholder="e.g. Bachelor of Science"
                                         value={edu.degree}
                                         onChange={(e) => updateEducation(edu.id, "degree", e.target.value)}

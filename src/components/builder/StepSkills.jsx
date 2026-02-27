@@ -25,7 +25,10 @@ const SkillCategory = ({ title, icon: Icon, skills, onAdd, onRemove, color }) =>
                     <Icon className={`w-5 h-5 ${color}`} />
                 </div>
                 <div>
-                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-900 group-focus-within/cat:text-primary transition-colors">{title}</h3>
+                    <h3 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-900 group-focus-within/cat:text-primary transition-colors">
+                        {title}
+                        {title === "Technical Infrastructure" && <span className="text-red-500 ml-1">*</span>}
+                    </h3>
                 </div>
             </div>
 
