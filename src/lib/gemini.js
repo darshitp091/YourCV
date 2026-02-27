@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const MODEL_NAME = "gemini-1.5-flash"; // Standard stable name
+const MODEL_NAME = "gemini-2.0-flash"; // Updated to match new key capabilities
 
 /**
  * Refines a professional summary or work experience description using Gemini.
@@ -17,8 +17,8 @@ export async function refineResumeContent(content, type = 'summary', context = {
     }
 
     try {
-        // Explicitly using v1 to avoid version mismatches in some environments
-        const model = genAI.getGenerativeModel({ model: MODEL_NAME }, { apiVersion: 'v1' });
+        // Explicitly using v1beta to support newer models
+        const model = genAI.getGenerativeModel({ model: MODEL_NAME }, { apiVersion: 'v1beta' });
 
         const prompt = `
       You are an expert ATS-certified resume writer with a focus on high-impact careers in North America and Europe.
@@ -68,7 +68,7 @@ export async function auditResumeQuality(resumeData) {
     }
 
     try {
-        const model = genAI.getGenerativeModel({ model: MODEL_NAME }, { apiVersion: 'v1' });
+        const model = genAI.getGenerativeModel({ model: MODEL_NAME }, { apiVersion: 'v1beta' });
 
         const prompt = `
       You are an elite career coach and ATS specialized auditor.
