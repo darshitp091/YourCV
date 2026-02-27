@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
 import { ThreeBackground } from "./ThreeBackground";
-import { LucideChevronRight, LucideRocket, LucideCheckCircle } from "lucide-react";
+import { LucideChevronRight, LucideRocket, LucideCheckCircle, LucideBot } from "lucide-react";
 import { MockResumeVisual } from "./MockResumeVisual";
 import Link from "next/link";
 import gsap from "gsap";
@@ -31,15 +31,13 @@ export const HeroSection = () => {
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
                 {/* Text Content */}
                 <div className="space-y-8 text-center lg:text-left">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 text-primary text-sm font-semibold reveal-text"
-                    >
-                        <LucideRocket className="w-4 h-4" />
-                        <span>AI-Powered Career Transformation</span>
-                    </motion.div>
+                    <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl glass border border-primary/20 bg-primary/5 text-primary text-xs font-black uppercase tracking-[0.2em] reveal-text">
+                        <div className="relative">
+                            <LucideBot className="w-5 h-5 animate-pulse" />
+                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-500 rounded-full border-2 border-white animate-ping" />
+                        </div>
+                        <span>Neural_Enhancement_Active</span>
+                    </div>
 
                     <h1 className="text-5xl md:text-8xl font-black font-heading leading-[1.1] tracking-tight reveal-text">
                         Build your <br />
