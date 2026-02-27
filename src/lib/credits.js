@@ -45,12 +45,14 @@ export const LIMITS = {
 /**
  * Checks if the user has enough credits to perform an action.
  * @param {string} userId - The user ID.
- * @param {string} type - 'resume' or 'latex'.
+ * @param {string} type - 'resume', 'latex', or 'ai_refines'.
+ * @param {object} customClient - Optional authenticated Supabase client (Server Side).
  * @returns {Promise<boolean>}
  */
-export async function checkCredits(userId, type = 'resume') {
+export async function checkCredits(userId, type = 'resume', customClient = null) {
+    const client = customClient || supabase;
     try {
-        const { data: profile, error: profileError } = await supabase
+        const { data: profile, error: profileError } = await client
             .from('profiles')
             .select('plan, plan_started_at, created_at')
             .eq('id', userId)
@@ -68,7 +70,7 @@ export async function checkCredits(userId, type = 'resume') {
 
         if (type === 'resume') {
             // "Slots" logic: Count actual resumes in DB
-            const { count, error: countError } = await supabase
+            const { count, error: countError } = await client
                 .from('resumes')
                 .select('*', { count: 'exact', head: true })
                 .eq('user_id', userId);
@@ -78,7 +80,7 @@ export async function checkCredits(userId, type = 'resume') {
         }
 
         // Cycle-based consumption logic
-        const { data: usage, error: usageError } = await supabase
+        const { data: usage, error: usageError } = await client
             .from('usage')
             .select('*')
             .eq('user_id', userId)
@@ -101,9 +103,10 @@ export async function checkCredits(userId, type = 'resume') {
 /**
  * Increments usage for a user.
  */
-export async function incrementUsage(userId, type = 'resume') {
+export async function incrementUsage(userId, type = 'resume', customClient = null) {
+    const client = customClient || supabase;
     try {
-        const { data: profile } = await supabase
+        const { data: profile } = await client
             .from('profiles')
             .select('plan, plan_started_at, created_at')
             .eq('id', userId)
@@ -113,7 +116,7 @@ export async function incrementUsage(userId, type = 'resume') {
         const cycleStart = getCurrentCycleStart(baseDate);
 
         // Standard upsert logic for the personalized cycle
-        const { data: existing } = await supabase
+        const { data: existing } = await client
             .from('usage')
             .select('*')
             .eq('user_id', userId)
@@ -128,12 +131,12 @@ export async function incrementUsage(userId, type = 'resume') {
             };
             const field = fieldMap[type] || 'resumes_generated';
 
-            await supabase
+            await client
                 .from('usage')
                 .update({ [field]: (existing[field] || 0) + 1 })
                 .eq('id', existing.id);
         } else {
-            await supabase
+            await client
                 .from('usage')
                 .insert([{
                     user_id: userId,
@@ -151,11 +154,12 @@ export async function incrementUsage(userId, type = 'resume') {
 /**
  * Gets usage for the current billing cycle.
  */
-export async function getUsage(userId) {
-    if (!userId) return { resumes_generated: 0, latex_generations: 0 };
+export async function getUsage(userId, customClient = null) {
+    if (!userId) return { resumes_generated: 0, latex_generations: 0, ai_refines: 0 };
+    const client = customClient || supabase;
 
     try {
-        const { data: profile } = await supabase
+        const { data: profile } = await client
             .from('profiles')
             .select('plan, plan_started_at, created_at')
             .eq('id', userId)
@@ -164,7 +168,7 @@ export async function getUsage(userId) {
         const baseDate = profile.plan === 'premium' ? profile.plan_started_at : profile.created_at;
         const cycleStart = getCurrentCycleStart(baseDate);
 
-        const { data, error } = await supabase
+        const { data, error } = await client
             .from('usage')
             .select('*')
             .eq('user_id', userId)
@@ -173,9 +177,9 @@ export async function getUsage(userId) {
 
         if (error && error.code !== 'PGRST116') throw error;
 
-        return data || { resumes_generated: 0, latex_generations: 0 };
+        return data || { resumes_generated: 0, latex_generations: 0, ai_refines: 0 };
     } catch (error) {
         console.error("❌ GET USAGE CRITICAL ERROR:", error);
-        return { resumes_generated: 0, latex_generations: 0 };
+        return { resumes_generated: 0, latex_generations: 0, ai_refines: 0 };
     }
 }

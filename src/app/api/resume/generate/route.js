@@ -51,7 +51,7 @@ export async function POST(req) {
         }
 
         // 2. Check Credits
-        const hasCredits = await checkCredits(user.id, 'ai_refines');
+        const hasCredits = await checkCredits(user.id, 'ai_refines', supabase);
         if (!hasCredits) {
             return NextResponse.json({
                 error: "AI Refinement limit reached for this month. Please upgrade your plan for more!"
@@ -62,7 +62,7 @@ export async function POST(req) {
         const refined = await refineWithHuggingFace(content, type, context);
 
         // 4. Increment Usage
-        await incrementUsage(user.id, 'ai_refines');
+        await incrementUsage(user.id, 'ai_refines', supabase);
 
         return NextResponse.json({ refined });
     } catch (error) {
