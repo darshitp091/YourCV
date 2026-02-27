@@ -14,6 +14,7 @@ import {
     LucideBriefcase
 } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
+import { motion } from "framer-motion";
 
 export const StepEducation = () => {
     const { resumeData, updateSection } = useResume();

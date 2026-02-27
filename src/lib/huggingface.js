@@ -5,7 +5,7 @@
 export async function refineWithHuggingFace(content, type = 'summary', context = {}) {
     const apiKey = process.env.HUGGINGFACE_API_KEY;
     const model = "mistralai/Mistral-7B-Instruct-v0.3";
-    const apiUrl = `https://api-inference.huggingface.co/models/${model}`;
+    const apiUrl = `https://router.huggingface.co/hf-inference/models/${model}`;
 
     if (!apiKey) {
         throw new Error("HuggingFace API Key missing.");
