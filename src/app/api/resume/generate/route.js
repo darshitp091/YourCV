@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { refineWithHuggingFace } from "@/lib/huggingface";
+import { refineWithAI } from "@/lib/duckai";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { checkCredits, incrementUsage } from "@/lib/credits";
@@ -58,8 +58,8 @@ export async function POST(req) {
             }, { status: 403 });
         }
 
-        // 3. Process with AI (Using HuggingFace)
-        const refined = await refineWithHuggingFace(content, type, context);
+        // 3. Process with AI (Using DuckAI - Keyless)
+        const refined = await refineWithAI(content, type, context);
 
         // 4. Increment Usage
         await incrementUsage(user.id, 'ai_refines', supabase);
