@@ -89,13 +89,13 @@ export const Sidebar = () => {
                         {isPremium ? "Premium Plan" : "Free Plan"}
                     </span>
                     <span className="text-primary">
-                        {resumeCount} / {limits?.resume || 5} Resumes
+                        {usage?.resumes_generated || 0} / {limits?.resume || 5} Resumes
                     </span>
                 </div>
                 <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
                     <div
                         className="h-full bg-primary transition-all duration-500"
-                        style={{ width: `${Math.min((resumeCount / (limits?.resume || 5)) * 100, 100)}%` }}
+                        style={{ width: `${Math.min(((usage?.resumes_generated || 0) / (limits?.resume || 5)) * 100, 100)}%` }}
                     />
                 </div>
                 {!isPremium && (

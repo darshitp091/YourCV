@@ -105,20 +105,11 @@ export default function DashboardPage() {
     const stats = [
         {
             label: "Resume Slots",
-            value: resumes.length,
+            value: usage?.resumes_generated || 0,
             total: limits?.resume || 5,
             icon: LucideFileText,
             color: "text-primary",
             bg: "bg-primary/10"
-        },
-        {
-            label: "Export Credits",
-            value: usage?.latex_generations || 0,
-            total: limits?.latex || 5,
-            resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
-            icon: LucideCreditCard,
-            color: userPlan === 'premium' ? "text-primary" : "text-amber-600",
-            bg: userPlan === 'premium' ? "bg-primary/10" : "bg-amber-100"
         },
         {
             label: "AI Refinements",
@@ -140,12 +131,22 @@ export default function DashboardPage() {
                     <h1 className="text-3xl font-bold font-heading text-foreground">Welcome back, {user?.user_metadata?.full_name?.split(" ")[0] || "User"}!</h1>
                     <p className="text-muted-foreground">Ready to take the next step in your career?</p>
                 </div>
-                <Link href="/builder">
-                    <Button size="lg" className="shadow-lg shadow-primary/20">
-                        <LucidePlus className="mr-2 w-5 h-5" />
-                        Create New Resume
-                    </Button>
-                </Link>
+                {usage?.resumes_generated >= (limits?.resume || 5) ? (
+                    <div className="flex flex-col items-end gap-2">
+                        <Button size="lg" disabled className="bg-zinc-200 text-zinc-500 cursor-not-allowed border-none shadow-none grayscale">
+                            <LucidePlus className="mr-2 w-5 h-5" />
+                            Limit Reached (5/5)
+                        </Button>
+                        <p className="text-[10px] font-bold text-primary animate-pulse">Upgrade to Premium for 30 Slots ✨</p>
+                    </div>
+                ) : (
+                    <Link href="/builder">
+                        <Button size="lg" className="shadow-lg shadow-primary/20">
+                            <LucidePlus className="mr-2 w-5 h-5" />
+                            Create New Resume
+                        </Button>
+                    </Link>
+                )}
             </div>
 
             {/* Stats Grid */}

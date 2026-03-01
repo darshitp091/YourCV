@@ -141,7 +141,9 @@ export const ResumeProvider = ({ children }) => {
                     localStorage.setItem("current_resume_id", data.id);
                     console.log("New resume created and saved.");
 
-                    // Note: incrementUsage('resume') is no longer needed as we use "Slot" logic (SQL Count)
+                    // Increment usage for permanent slot logic
+                    await incrementUsage(user.id, 'resume');
+
                     triggerWorkflow('resume_updated', user.id, { resumeId: data.id, data: resumeData });
                 }
             }

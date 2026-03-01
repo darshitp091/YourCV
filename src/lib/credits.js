@@ -32,12 +32,10 @@ export function getCurrentCycleStart(baseDateStr) {
 export const LIMITS = {
     free: {
         resume: 5,
-        latex: 5,
         ai_refines: 10
     },
     premium: {
         resume: 30,
-        latex: 30,
         ai_refines: 100
     }
 };
@@ -69,13 +67,17 @@ export async function checkCredits(userId, type = 'resume', customClient = null)
         const limits = LIMITS[userPlan];
 
         if (type === 'resume') {
-            // "Slots" logic: Count actual resumes in DB
-            const { count, error: countError } = await client
-                .from('resumes')
-                .select('*', { count: 'exact', head: true })
-                .eq('user_id', userId);
+            // "Permanent Slots" logic: Check usage.resumes_generated instead of DB count
+            const { data: usage, error: usageError } = await client
+                .from('usage')
+                .select('resumes_generated')
+                .eq('user_id', userId)
+                .eq('month_year', cycleStart) // Slots are technically "lifetime" but we track per cycle for simplicity in free/premium transitions
+                .maybeSingle();
 
-            if (countError) throw countError;
+            if (usageError && usageError.code !== 'PGRST116') throw usageError;
+
+            const count = usage?.resumes_generated || 0;
             return count < limits.resume;
         }
 
