@@ -19,15 +19,24 @@ async function getVQD() {
         const response = await fetch("https://duckduckgo.com/duckchat/v1/status?q=1", {
             headers: {
                 "x-vqd-accept": "1",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "Referer": "https://duckduckgo.com/"
             }
         });
 
+        if (!response.ok) {
+            console.error(`DuckAI Status Error: ${response.status} ${response.statusText}`);
+            throw new Error(`DuckAI Status Failed: ${response.status}`);
+        }
+
         const vqd = response.headers.get("x-vqd-4");
-        if (!vqd) throw new Error("Failed to obtain VQD token from DuckDuckGo");
+        if (!vqd) {
+            console.error("DuckAI Headers:", [...response.headers.entries()]);
+            throw new Error("Failed to obtain VQD token from DuckDuckGo headers");
+        }
         return vqd;
     } catch (error) {
-        console.error("DuckAI VQD Error:", error);
+        console.error("DuckAI VQD Error detail:", error);
         throw error;
     }
 }

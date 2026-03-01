@@ -1,6 +1,6 @@
 import { supabase } from "../supabase";
 
-import { auditWithAI } from "../duckai";
+import { auditWithAI } from "../pollinations";
 
 /**
  * Executes a specific workflow action.
@@ -31,7 +31,7 @@ async function handleAiAudit(config, payload) {
         return { error: "No resume data provided." };
     }
 
-    console.log("[Actions] Running Real AI Audit (DuckAI)...");
+    console.log("[Actions] Running Real AI Audit (Pollinations)...");
     const auditResult = await auditWithAI(payload.resumeData);
 
     // Save the audit result to a metadata table or update the resume if needed

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { refineWithAI } from "@/lib/duckai";
+import { refineWithAI } from "@/lib/pollinations";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { checkCredits, incrementUsage } from "@/lib/credits";
@@ -58,7 +58,7 @@ export async function POST(req) {
             }, { status: 403 });
         }
 
-        // 3. Process with AI (Using DuckAI - Keyless)
+        // 3. Process with AI (Using Pollinations - Keyless)
         const refined = await refineWithAI(content, type, context);
 
         // 4. Increment Usage
