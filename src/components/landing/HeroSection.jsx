@@ -50,10 +50,10 @@ export const HeroSection = () => {
                         YourCV turns your experience into opportunities in seconds.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 reveal-text">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-4 reveal-text">
                         <div className="flex flex-col gap-2">
                             <Link href="/signup">
-                                <Button size="lg" className="group px-8 py-7 text-lg rounded-2xl shadow-xl shadow-primary/20">
+                                <Button size="lg" className="group px-8 py-7 text-lg rounded-2xl shadow-xl shadow-primary/20 w-full sm:w-auto h-[76px]">
                                     Get 5 Free Resumes
                                     <LucideChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </Button>
@@ -63,8 +63,8 @@ export const HeroSection = () => {
                                 100% Watermark-Free PDF
                             </p>
                         </div>
-                        <Link href="/templates">
-                            <Button variant="outline" size="lg" className="px-8 py-7 text-lg rounded-2xl h-[76px]">
+                        <Link href="/templates" className="mb-[18px]">
+                            <Button variant="outline" size="lg" className="px-8 py-7 text-lg rounded-2xl h-[76px] w-full sm:w-auto">
                                 View Templates
                             </Button>
                         </Link>

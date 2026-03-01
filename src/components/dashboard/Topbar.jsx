@@ -46,7 +46,7 @@ export const Topbar = ({ title = "Dashboard" }) => {
                     <div className="flex items-center gap-3 pl-4 border-l border-border">
                         <div className="text-right hidden sm:block">
                             <p className="text-sm font-bold text-foreground leading-tight">
-                                {user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Personal Account"}
+                                {user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Guest Session"}
                             </p>
                             <Badge variant={userPlan === 'premium' ? "success" : "primary"} className="text-[9px] py-0 px-1.5 h-auto uppercase tracking-tighter">
                                 {userPlan === 'premium' ? "Premium Plan" : "Free Plan"}
