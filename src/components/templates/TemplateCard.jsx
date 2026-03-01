@@ -8,7 +8,7 @@ import { LucideEye, LucideCheck, LucideInfo } from "lucide-react";
 import { getTemplateComponent } from "@/lib/template-registry";
 import { MOCK_RESUME_DATA } from "@/data/mock-resume-data";
 
-export const TemplateCard = ({ template, onSelect, isSelected }) => {
+export const TemplateCard = ({ template, onSelect, isSelected, showActions = true }) => {
     const Template = getTemplateComponent(template.id);
 
     // Simplified enriched data
@@ -45,27 +45,29 @@ export const TemplateCard = ({ template, onSelect, isSelected }) => {
                         </div>
                     </div>
 
-                    {/* Sophisticated Hover Overlay */}
-                    <div className="absolute inset-0 bg-white/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 backdrop-blur-[4px]">
-                        <div className="transform translate-y-10 group-hover:translate-y-0 transition-all duration-700 flex flex-col items-center gap-4">
-                            <Button
-                                variant="default"
-                                size="sm"
-                                onClick={() => onSelect(template.id)}
-                                className="shadow-[0_10px_30px_rgba(var(--primary-rgb),0.3)] px-10 py-6 h-auto rounded-2xl bg-primary text-white font-black uppercase tracking-widest text-[10px] hover:scale-110 transition-transform"
-                            >
-                                {isSelected ? <LucideCheck className="w-4 h-4 mr-3" /> : <LucideEye className="w-4 h-4 mr-3" />}
-                                {isSelected ? "Active_Link" : "Mount_Protocol"}
-                            </Button>
+                    {/* Sophisticated Hover Overlay - Only shown if actions are enabled */}
+                    {showActions && (
+                        <div className="absolute inset-0 bg-white/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 backdrop-blur-[4px]">
+                            <div className="transform translate-y-10 group-hover:translate-y-0 transition-all duration-700 flex flex-col items-center gap-4">
+                                <Button
+                                    variant="default"
+                                    size="sm"
+                                    onClick={() => onSelect(template.id)}
+                                    className="shadow-[0_10px_30px_rgba(var(--primary-rgb),0.3)] px-10 py-6 h-auto rounded-2xl bg-primary text-white font-black uppercase tracking-widest text-[10px] hover:scale-110 transition-transform"
+                                >
+                                    {isSelected ? <LucideCheck className="w-4 h-4 mr-3" /> : <LucideEye className="w-4 h-4 mr-3" />}
+                                    {isSelected ? "Active_Link" : "Mount_Protocol"}
+                                </Button>
 
-                            <div className="flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                                <p className="text-[9px] text-zinc-400 font-black uppercase tracking-[0.4em]">
-                                    ATS_SCAN_READY
-                                </p>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                                    <p className="text-[9px] text-zinc-400 font-black uppercase tracking-[0.4em]">
+                                        ATS_SCAN_READY
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Premium Tags Overlay */}
                     <div className="absolute top-6 left-6 flex flex-col gap-2">

@@ -51,6 +51,7 @@ function TemplatesGallery() {
                                 filteredTemplates={filteredTemplates}
                                 selectedId={selectedId}
                                 handleSelect={handleSelect}
+                                isGuest={false}
                             />
                         </main>
                     </div>
@@ -67,6 +68,7 @@ function TemplatesGallery() {
                             filteredTemplates={filteredTemplates}
                             selectedId={selectedId}
                             handleSelect={handleSelect}
+                            isGuest={isGuest}
                         />
                     </main>
                     <Footer />
@@ -76,7 +78,7 @@ function TemplatesGallery() {
     );
 }
 
-function GalleryContent({ searchQuery, setSearchQuery, activeCategory, setActiveCategory, filteredTemplates, selectedId, handleSelect }) {
+function GalleryContent({ searchQuery, setSearchQuery, activeCategory, setActiveCategory, filteredTemplates, selectedId, handleSelect, isGuest }) {
     return (
         <div className="max-w-7xl mx-auto space-y-12 pb-32">
             {/* Header Section */}
@@ -132,6 +134,7 @@ function GalleryContent({ searchQuery, setSearchQuery, activeCategory, setActive
                             template={template}
                             isSelected={selectedId === template.id}
                             onSelect={handleSelect}
+                            showActions={!isGuest}
                         />
                     ))}
                 </div>
