@@ -22,7 +22,6 @@ const DASHBOARD_LINKS = [
     { name: "My Resumes", href: "/dashboard", icon: LucideFileText },
     { name: "Templates", href: "/templates", icon: LucideLayout },
     { name: "Automations", href: "/dashboard/workflows", icon: LucideZap },
-    { name: "Billing & Plans", href: "/dashboard/billing", icon: LucideCreditCard },
     { name: "Account Settings", href: "/dashboard/settings", icon: LucideSettings },
 ];
 
@@ -89,7 +88,7 @@ export const Sidebar = () => {
                         {isPremium ? "Premium Plan" : "Free Plan"}
                     </span>
                     <span className="text-primary">
-                        {usage?.resumes_generated || 0} / {limits?.resume || 5} Resumes
+                        {usage?.resumes_generated || 0} / {limits?.resume || 5} Credits
                     </span>
                 </div>
                 <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
@@ -99,7 +98,7 @@ export const Sidebar = () => {
                     />
                 </div>
                 {!isPremium && (
-                    <Link href="/dashboard/billing" className="block text-center text-xs font-bold text-primary hover:underline">
+                    <Link href="/dashboard/settings" className="block text-center text-xs font-bold text-primary hover:underline">
                         Upgrade for MORE
                     </Link>
                 )}

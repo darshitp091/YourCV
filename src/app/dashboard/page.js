@@ -104,7 +104,7 @@ export default function DashboardPage() {
 
     const stats = [
         {
-            label: "Resume Slots",
+            label: "Resume Credits",
             value: usage?.resumes_generated || 0,
             total: limits?.resume || 5,
             icon: LucideFileText,
@@ -135,9 +135,9 @@ export default function DashboardPage() {
                     <div className="flex flex-col items-end gap-2">
                         <Button size="lg" disabled className="bg-zinc-200 text-zinc-500 cursor-not-allowed border-none shadow-none grayscale">
                             <LucidePlus className="mr-2 w-5 h-5" />
-                            Limit Reached (5/5)
+                            Credits Exhausted (5/5)
                         </Button>
-                        <p className="text-[10px] font-bold text-primary animate-pulse">Upgrade to Premium for 30 Slots ✨</p>
+                        <p className="text-[10px] font-bold text-primary animate-pulse">Upgrade to Premium for 30 Credits ✨</p>
                     </div>
                 ) : (
                     <Link href="/builder">
