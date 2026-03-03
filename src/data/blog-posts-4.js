@@ -10,7 +10,7 @@ export const BLOG_POSTS_4 = [
         date: "Jan 15, 2026",
         author: "Elon Musk",
         category: "Global",
-        image: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
         readTime: "8 min read",
         content: `
             <p>The world is your office — and in 2026, international hiring has never been more accessible. Companies are actively seeking talent across borders, and visa-sponsored positions are on the rise. But landing a role in a different continent requires a specific strategy, from resume formatting to interview approach.</p>
@@ -60,7 +60,7 @@ export const BLOG_POSTS_4 = [
         date: "Jan 12, 2026",
         author: "Tim Ferriss",
         category: "Writing Tips",
-        image: "https://images.unsplash.com/photo-1454165833767-027ffea70250?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
         readTime: "6 min read",
         content: `
             <p>Activity is just noise. Impact is the signal. When a recruiter reads "Managed a team of 10 engineers," they think "okay, so what?" But when they read "Led a team of 10 engineers to deliver a platform migration 2 weeks ahead of schedule, saving $200K in infrastructure costs" — that's a signal worth amplifying.</p>
@@ -111,7 +111,7 @@ export const BLOG_POSTS_4 = [
         date: "Jan 10, 2026",
         author: "Gary Vaynerchuk",
         category: "Career Tech",
-        image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop",
         readTime: "6 min read",
         content: `
             <p>Side hustles show entrepreneurial spirit — a trait highly valued in 2026 startups and innovative companies. But they can also raise concerns about focus, commitment, and potential conflicts of interest. Knowing when to include them and how to present them is key.</p>
@@ -160,7 +160,7 @@ export const BLOG_POSTS_4 = [
         date: "Jan 08, 2026",
         author: "Darshit Patel",
         category: "Guides",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=800&auto=format&fit=crop",
         readTime: "8 min read",
         content: `
             <p>Submitting your resume without testing it against an ATS is like sending a rocket into space without running simulations. You might get lucky — but the odds are against you. ATS testing tools show you exactly what a machine sees when it parses your resume, and the results are often surprising.</p>
@@ -216,7 +216,7 @@ export const BLOG_POSTS_4 = [
         date: "Jan 05, 2026",
         author: "Ray Kurzweil",
         category: "Future",
-        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop",
         readTime: "9 min read",
         content: `
             <p>The only constant is change — and the pace of change is accelerating. As we look toward 2027, the job market is poised for transformations that will create entirely new career categories while rendering others obsolete. Here's what the data and trends suggest, and how you can prepare today.</p>

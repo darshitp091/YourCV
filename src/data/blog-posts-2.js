@@ -10,7 +10,7 @@ export const BLOG_POSTS_2 = [
         date: "Feb 10, 2026",
         author: "Dr. Lisa Ray",
         category: "Soft Skills",
-        image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>While AI can write code, analyze data, and even generate creative content, it cannot lead people through an emotional crisis, negotiate a complex partnership with empathy, or inspire a team through uncertainty. In 2026, as AI automates more technical tasks, soft skills have become the ultimate differentiator in the job market.</p>
@@ -54,7 +54,7 @@ export const BLOG_POSTS_2 = [
         date: "Feb 08, 2026",
         author: "James Miller",
         category: "Writing Tips",
-        image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1542435503-956c469947f6?q=80&w=800&auto=format&fit=crop",
         readTime: "6 min read",
         content: `
             <p>The words you choose on your resume matter more than you think. Recruiters spend an average of 6-7 seconds on their first scan — and the verbs you use determine whether they keep reading or move on. Active, powerful language is the only way to make your achievements stand out in a sea of generic resumes.</p>
@@ -124,7 +124,7 @@ export const BLOG_POSTS_2 = [
         date: "Feb 05, 2026",
         author: "Rachel Green",
         category: "Networking",
-        image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>LinkedIn has over 1 billion users, and while it remains a powerful platform, the signal-to-noise ratio has plummeted. In 2026, the most effective job seekers are finding opportunities through smaller, more trusted circles. Quality over quantity is the new networking mantra.</p>
@@ -175,7 +175,7 @@ export const BLOG_POSTS_2 = [
         date: "Feb 02, 2026",
         author: "Tom Hardy",
         category: "Freelance",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>Freelancers often struggle to appear "employable" to corporate HR departments. The assumption — fair or not — is that freelancers lack structure, commitment, and the ability to work within a team hierarchy. But the truth is, successful freelancers are some of the most skilled professionals in any market. The challenge is framing your experience correctly.</p>
@@ -228,7 +228,7 @@ export const BLOG_POSTS_2 = [
         date: "Jan 30, 2026",
         author: "Darshit Patel",
         category: "Mistakes",
-        image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1484981138541-3d074aa97571?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>You could be the most qualified candidate in the applicant pool and still get rejected if your resume contains certain red flags. Recruiters are trained to scan for these warning signs, and even one can land your resume in the rejection pile within seconds.</p>

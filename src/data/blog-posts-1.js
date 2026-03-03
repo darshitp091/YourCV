@@ -10,7 +10,7 @@ export const BLOG_POSTS_1 = [
         date: "Feb 22, 2026",
         author: "Darshit Patel",
         category: "Career Tech",
-        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=800&auto=format&fit=crop",
         readTime: "8 min read",
         content: `
             <p>The job market in 2026 is faster and more competitive than ever. With thousands of applicants for every remote role, recruiters are increasingly relying on sophisticated AI filtering systems. To compete, you need an AI of your own — and that's exactly what modern AI resume builders provide.</p>
@@ -59,7 +59,7 @@ export const BLOG_POSTS_1 = [
         date: "Feb 20, 2026",
         author: "Sarah Johnson",
         category: "Remote Work",
-        image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>Remote work has fundamentally shifted from a niche benefit to a global standard. By 2026, over 60% of knowledge workers operate in fully remote or hybrid environments. However, the way you present your remote work capabilities on a resume has changed significantly — and most candidates are getting it wrong.</p>
@@ -117,7 +117,7 @@ export const BLOG_POSTS_1 = [
         date: "Feb 18, 2026",
         author: "Alex Rivera",
         category: "Guides",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=800&auto=format&fit=crop",
         readTime: "10 min read",
         content: `
             <p>If you've been applying to jobs and hearing nothing back, there's a high chance your resume is being rejected by an Applicant Tracking System (ATS) before a human ever sees it. In 2026, ATS technology has evolved significantly, and understanding how it works is the key to getting your foot in the door.</p>
@@ -172,7 +172,7 @@ export const BLOG_POSTS_1 = [
         date: "Feb 15, 2026",
         author: "Emma Watson",
         category: "Design",
-        image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1586953208448-b95a79798f07?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>The "one-size-fits-all" resume is dead. In 2026, the design of your resume sends a powerful signal about your professional identity before a recruiter reads a single word. A designer's resume needs to showcase aesthetic sensibility, while a lawyer's resume must emanate stability and tradition. Choosing the wrong template can cost you the interview.</p>
@@ -228,7 +228,7 @@ export const BLOG_POSTS_1 = [
         date: "Feb 12, 2026",
         author: "David Chen",
         category: "Interviews",
-        image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1565688534245-05d6b5be184a?q=80&w=800&auto=format&fit=crop",
         readTime: "8 min read",
         content: `
             <p>Getting the interview is only half the battle. In 2026, the interview process itself has been transformed by technology — many first-round interviews are now conducted by AI avatars, and even human-led interviews follow structured frameworks that AI can help you prepare for.</p>

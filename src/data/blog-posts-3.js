@@ -10,7 +10,7 @@ export const BLOG_POSTS_3 = [
         date: "Jan 28, 2026",
         author: "Chris Evans",
         category: "Career Tech",
-        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>The traditional career ladder — where you climb from junior to senior over decades at the same company — is fading fast. In 2026, the gig economy has matured into a legitimate career path, with millions of professionals choosing project-based work over permanent employment. But presenting this non-linear journey on a resume requires a completely different approach.</p>
@@ -59,7 +59,7 @@ export const BLOG_POSTS_3 = [
         date: "Jan 25, 2026",
         author: "Meghan Markle",
         category: "Negotiation",
-        image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1553729459-afe8f2e2ed65?q=80&w=800&auto=format&fit=crop",
         readTime: "8 min read",
         content: `
             <p>Salary transparency laws have fundamentally changed the negotiation landscape. In 2026, most major job listings include salary ranges, giving candidates unprecedented access to compensation data. But having the information is only half the battle — knowing how to use it is what separates good offers from great ones.</p>
@@ -117,7 +117,7 @@ export const BLOG_POSTS_3 = [
         date: "Jan 22, 2026",
         author: "Mark Zuckerberg",
         category: "Pivoting",
-        image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=800&auto=format&fit=crop",
         readTime: "8 min read",
         content: `
             <p>AI is reshaping industries at an unprecedented pace. Roles that were secure five years ago are being automated, while entirely new career paths are emerging. If you're facing disruption, the good news is: pivoting isn't starting over — it's evolving. Your past experience is a foundation, not a cage.</p>
@@ -173,7 +173,7 @@ export const BLOG_POSTS_3 = [
         date: "Jan 20, 2026",
         author: "Jony Ive",
         category: "Design",
-        image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>Design is how it works, not just how it looks. When it comes to resumes, visual hierarchy — the arrangement of elements to guide the reader's eye — can mean the difference between getting noticed and getting overlooked. Recruiters spend an average of just 6 seconds on their initial resume scan. Your design needs to make those 6 seconds count.</p>
@@ -226,7 +226,7 @@ export const BLOG_POSTS_3 = [
         date: "Jan 18, 2026",
         author: "Susan Cain",
         category: "Soft Skills",
-        image: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>Personal branding doesn't have to mean posting daily on LinkedIn, speaking at conferences, or building a massive following. For introverts, the most effective branding strategies are quiet, intentional, and sustainable. The power of the "quiet expert" is underrated — and in a noisy digital world, authenticity stands out more than volume.</p>
