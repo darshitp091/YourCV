@@ -59,7 +59,7 @@ export const BLOG_POSTS_3 = [
         date: "Jan 25, 2026",
         author: "Meghan Markle",
         category: "Negotiation",
-        image: "https://images.unsplash.com/photo-1553729459-afe8f2e2ed65?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=800&auto=format&fit=crop",
         readTime: "8 min read",
         content: `
             <p>Salary transparency laws have fundamentally changed the negotiation landscape. In 2026, most major job listings include salary ranges, giving candidates unprecedented access to compensation data. But having the information is only half the battle — knowing how to use it is what separates good offers from great ones.</p>

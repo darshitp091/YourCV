@@ -228,7 +228,7 @@ export const BLOG_POSTS_2 = [
         date: "Jan 30, 2026",
         author: "Darshit Patel",
         category: "Mistakes",
-        image: "https://images.unsplash.com/photo-1484981138541-3d074aa97571?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?q=80&w=800&auto=format&fit=crop",
         readTime: "7 min read",
         content: `
             <p>You could be the most qualified candidate in the applicant pool and still get rejected if your resume contains certain red flags. Recruiters are trained to scan for these warning signs, and even one can land your resume in the rejection pile within seconds.</p>
