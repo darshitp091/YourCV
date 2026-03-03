@@ -1,11 +1,21 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { BLOG_POSTS } from "@/data/blog-posts";
 import Link from "next/link";
 import { LucideClock, LucideUser, LucideArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+
+export const metadata = {
+    title: "Career Blog — Resume Tips, ATS Guides & Job Search Strategies",
+    description: "Expert advice on resume building, ATS optimization, interview strategies, and navigating the job market in 2026. Free career insights from YourCV.",
+    keywords: [
+        "resume tips", "ATS guide", "resume writing tips", "how to write a resume",
+        "interview tips", "career advice", "resume examples", "job search strategies",
+        "resume format", "ATS resume tips", "resume keywords", "career blog"
+    ],
+    alternates: {
+        canonical: '/blog',
+    },
+};
 
 export default function BlogPage() {
     return (
@@ -16,39 +26,22 @@ export default function BlogPage() {
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
                     <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-                        <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-primary font-bold uppercase tracking-widest text-xs"
-                        >
+                        <span className="text-primary font-bold uppercase tracking-widest text-xs">
                             Career Insights
-                        </motion.span>
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-5xl md:text-7xl font-black font-heading"
-                        >
+                        </span>
+                        <h1 className="text-5xl md:text-7xl font-black font-heading">
                             The <span className="text-gradient">Career Blog</span>
-                        </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-muted-foreground text-lg"
-                        >
+                        </h1>
+                        <p className="text-muted-foreground text-lg">
                             Expert advice on resume building, interview strategies, and navigating the future of work.
-                        </motion.p>
+                        </p>
                     </div>
 
                     {/* Blog Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {BLOG_POSTS.map((post, index) => (
-                            <motion.article
+                            <article
                                 key={post.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.05 }}
                                 className="group bg-white rounded-[2rem] rounded-tr-none overflow-hidden border border-border hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
                             >
                                 <Link href={`/blog/${post.slug}`}>
@@ -87,7 +80,7 @@ export default function BlogPage() {
                                         </div>
                                     </div>
                                 </Link>
-                            </motion.article>
+                            </article>
                         ))}
                     </div>
                 </div>

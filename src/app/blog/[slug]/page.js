@@ -1,32 +1,82 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { BLOG_POSTS } from "@/data/blog-posts";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LucideCalendar, LucideUser, LucideClock, LucideArrowLeft, LucideShare2, LucideSparkles } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { AuthorBio } from "@/components/blog/AuthorBio";
+import { notFound } from "next/navigation";
+import { Button } from "@/components/ui/Button";
 
-export default function BlogPostPage() {
-    const params = useParams();
-    const post = BLOG_POSTS.find((p) => p.slug === params.slug);
+// SSG: Pre-render all blog pages at build time
+export async function generateStaticParams() {
+    return BLOG_POSTS.map((post) => ({
+        slug: post.slug,
+    }));
+}
+
+// Per-page SEO metadata
+export async function generateMetadata({ params }) {
+    const { slug } = await params;
+    const post = BLOG_POSTS.find((p) => p.slug === slug);
+    if (!post) return {};
+
+    return {
+        title: post.title,
+        description: post.metaDescription || post.excerpt,
+        keywords: post.keywords || [],
+        openGraph: {
+            title: post.title,
+            description: post.metaDescription || post.excerpt,
+            type: 'article',
+            publishedTime: post.date,
+            authors: [post.author],
+            images: [{ url: post.image, width: 800, height: 400, alt: post.title }],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.metaDescription || post.excerpt,
+            images: [post.image],
+        },
+        alternates: {
+            canonical: `/blog/${post.slug}`,
+        },
+    };
+}
+
+export default async function BlogPostPage({ params }) {
+    const { slug } = await params;
+    const post = BLOG_POSTS.find((p) => p.slug === slug);
 
     if (!post) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center space-y-4">
-                    <h1 className="text-4xl font-bold">Post not found</h1>
-                    <Link href="/blog" className="text-primary font-bold">Back to Blog</Link>
-                </div>
-            </div>
-        );
+        notFound();
     }
+
+    // Article JSON-LD Structured Data
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: post.title,
+        description: post.metaDescription || post.excerpt,
+        image: post.image,
+        datePublished: post.date,
+        author: {
+            '@type': 'Person',
+            name: post.author,
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'YourCV',
+            url: 'https://your-cv-eta.vercel.app',
+        },
+    };
 
     return (
         <main className="min-h-screen bg-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Header />
 
             <article className="pt-32 pb-24">
@@ -42,21 +92,17 @@ export default function BlogPostPage() {
                         </Link>
 
                         <div className="space-y-6 text-center">
-                            <motion.span
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
+                            <span
                                 className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-black uppercase tracking-widest"
                             >
                                 {post.category}
-                            </motion.span>
+                            </span>
 
-                            <motion.h1
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                            <h1
                                 className="text-4xl md:text-6xl font-black font-heading leading-tight"
                             >
                                 {post.title}
-                            </motion.h1>
+                            </h1>
 
                             <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground font-medium">
                                 <div className="flex items-center gap-2">
@@ -78,9 +124,7 @@ export default function BlogPostPage() {
 
                 {/* Featured Image */}
                 <div className="px-6 mb-16">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
+                    <div
                         className="max-w-6xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl"
                     >
                         <img
@@ -88,7 +132,7 @@ export default function BlogPostPage() {
                             alt={post.title}
                             className="w-full aspect-[21/9] object-cover"
                         />
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* Content */}

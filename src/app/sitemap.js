@@ -1,5 +1,6 @@
 import { COMPETITORS } from "@/data/competitors";
 import { ROLES } from "@/data/roles";
+import { BLOG_POSTS } from "@/data/blog-posts";
 
 /**
  * Sitemap generator for YourCV.
@@ -45,12 +46,20 @@ export default function sitemap() {
         changeFrequency: 'monthly',
     }));
 
+    // 6. Dynamic Pages: Blog Posts (NEW — Critical for SEO)
+    const blogRoutes = BLOG_POSTS.map((post) => ({
+        url: `/blog/${post.slug}`,
+        priority: 0.8,
+        changeFrequency: 'weekly',
+    }));
+
     const allRoutes = [
         ...corePages,
         ...resourcePages,
         ...legalPages,
         ...roleRoutes,
         ...alternativeRoutes,
+        ...blogRoutes,
     ];
 
     return allRoutes.map((route) => ({
@@ -60,3 +69,4 @@ export default function sitemap() {
         priority: route.priority,
     }));
 }
+

@@ -109,7 +109,7 @@ export const PricingSection = () => {
                                 <h3 className="text-2xl font-bold font-heading mb-4 text-foreground/80">{plan.name}</h3>
                                 <div className="flex items-baseline gap-1 mb-6">
                                     <span className="text-6xl font-black tracking-tighter text-primary">{plan.price}</span>
-                                    {plan.price !== "$0" && <span className="text-muted-foreground font-bold">/month</span>}
+                                    {plan.price !== "₹0" && <span className="text-muted-foreground font-bold">/month</span>}
                                 </div>
                                 <p className="text-muted-foreground font-medium">{plan.description}</p>
                             </div>

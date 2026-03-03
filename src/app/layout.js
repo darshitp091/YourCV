@@ -25,15 +25,28 @@ export const metadata = {
   },
   description: "Build a job-winning resume in minutes with AI. YourCV uses advanced algorithms to optimize your resume for ATS, provides premium templates, and offers direct LaTeX exports for the highest professional standard.",
   keywords: [
-    "resume builder",
-    "AI resume maker",
-    "ATS optimized resume",
-    "free cv builder",
-    "professional resume templates",
-    "LaTeX resume generator",
-    "career growth tools",
-    "AI job application",
-    "smart resume optimizer"
+    // Tier 1: High Volume (10K-100K+/mo)
+    "resume builder", "cv maker", "free resume builder", "resume maker",
+    "build resume online", "AI resume builder", "resume templates",
+    "cv builder", "resume format", "resume generator",
+    // Tier 2: Medium Volume (1K-10K/mo)
+    "ATS resume builder", "professional resume builder", "best resume builder",
+    "resume builder AI free", "resume builder online free", "resume maker online",
+    "create resume free", "one page resume", "online cv maker free",
+    "resume builder free download",
+    // Tier 3: Long-Tail (100-1K/mo, Low Competition)
+    "ATS friendly resume template free", "AI resume writer free",
+    "resume builder for freshers", "resume builder for students",
+    "free resume builder no credit card", "LaTeX resume builder",
+    "resume builder with AI", "ATS score checker free",
+    "resume builder India", "resume for software engineer",
+    "resume for data scientist", "resume for product manager",
+    "best free resume builder 2026", "professional CV template free download",
+    "modern resume template free", "ATS optimized resume",
+    "smart resume optimizer", "AI job application",
+    "career growth tools", "resume writing tips",
+    "how to write a resume", "resume examples",
+    "resume keywords for ATS", "job application resume format"
   ],
   authors: [{ name: "Darshit Patel", url: "https://your-cv-eta.vercel.app/about" }],
   creator: "YourCV AI",
