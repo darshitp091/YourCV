@@ -9,7 +9,7 @@ import {
     LucideLogOut,
     LucideZap
 } from "lucide-react";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/context/AuthContext";
 import { BrandLogo } from "../ui/BrandLogo";
 import { clsx } from "clsx";
 import { useState, useEffect } from "react";

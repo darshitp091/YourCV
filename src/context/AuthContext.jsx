@@ -45,8 +45,7 @@ export const AuthProvider = ({ children }) => {
             // Proactively create profile entry for foreign key constraints
             const { error: profileError } = await supabase.from('profiles').upsert({
                 id: data.user.id,
-                full_name: fullName,
-                plan: 'free'
+                full_name: fullName
             });
 
             if (profileError) {

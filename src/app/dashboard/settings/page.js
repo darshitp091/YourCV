@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
