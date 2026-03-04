@@ -1,69 +1,57 @@
-# YourCV - Open-Source Professional Resume Builder
+# YourCV - The AI-Powered Community Resume Builder 🚀
 
-**YourCV** is an open-source, state-of-the-art resume builder designed to help professionals create stunning, industry-tailored resumes for free. Supported by the community, YourCV ensures your professional profile stands out to recruiters and applicant tracking systems (ATS) without any subscription fees or limits.
+**YourCV** is a high-performance, open-source resume builder designed to level the professional playing field. By combining **Google Gemini AI** with **LaTeX-quality precision**, YourCV helps you build job-winning resumes in minutes—completely free, forever.
 
-## 🚀 Features
+### 🌟 Why YourCV?
+Most "free" resume builders lock your best work behind a paywall at the last second. YourCV is built differently. We are **100% ad-supported and community-driven**, meaning you get premium features like AI refinement, unlimited templates, and watermark-free exports without ever opening your wallet.
 
-- **100% Free & Unlimited**: Build and export as many resumes as you need. No credits, no limits.
-- **AI-Powered Optimization**: Generate professional summaries and role descriptions using Google Gemini AI.
-- **Dynamic Template Engine**: Access the full library of professional templates, including reactive designs like "Pikachu" and "Onyx".
-- **Niche Specialization**: Industry-specific templates for Tech, Creative, Medical, Corporate, and more.
-- **Real-Time Preview**: Instant rendering of your data across all templates.
-- **PDF Export**: Export high-quality, print-ready PDFs without watermarks.
-- **Community Supported**: Monetized through Adsterra ads to keep the tool free for everyone.
+## ✨ Key Features
+
+- **🛡️ 100% Free & Unlimited**: No subscription, no "credits", no catch. Build 1 or 100 resumes.
+- **🧠 AI-Engineered Content**: Leverage Google Gemini Pro to write professional summaries and bullet points that beat ATS filters.
+- **🎨 Premium Templates**: Access a library of sleek, modern, and reactive templates (including "Pikachu" and "Onyx").
+- **📑 LaTeX-Level Precision**: Clean, professional layouts that look perfect on any screen or printer.
+- **🚫 Zero Watermarks**: Your data, your resume. Download clean PDFs every time.
+- **📈 Ad-Supported Mission**: Powered by non-intrusive ads to keep the servers running and the tools free for all.
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: [Next.js 16](https://nextjs.org), [React 19](https://react.dev)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com), [Framer Motion](https://www.framer.com/motion/)
-- **Backend / Database**: [Supabase](https://supabase.com) (Auth, PostgreSQL)
-- **AI**: [Google Gemini Pro API](https://ai.google.dev/)
-- **Ad Network**: [Adsterra](https://adsterra.com)
-- **Icons**: [Lucide React](https://lucide.dev)
+- **Styling**: Vanilla CSS (Premium Custom Design), [Framer Motion](https://www.framer.com/motion/)
+- **Backend**: [Supabase](https://supabase.com) (Auth & PostgreSQL)
+- **AI Engine**: [Google Gemini Pro](https://ai.google.dev/)
+- **Monetization**: [Adsterra](https://adsterra.com)
 
-## 📦 Getting Started
+## 📦 Local Development
 
 ### Prerequisites
+- Node.js 18+
+- Supabase Project (Auth & DB)
+- Gemini API Key
 
-- Node.js (Latest LTS)
-- npm or pnpm
-- Supabase Account
-- Gemini API Key (for AI features)
-- Adsterra API Key (optional for stats)
-
-### Installation
-
-1. **Clone the repository**:
+### Setup
+1. **Clone & Install**:
    ```bash
    git clone https://github.com/darshitp091/YourCV.git
    cd YourCV
-   ```
-
-2. **Install dependencies**:
-   ```bash
    npm install
    ```
 
-3. **Configure Environment Variables**:
-   Create a `.env.local` file in the root directory and add your credentials:
+2. **Environment Configuration**:
+   Create a `.env.local` file:
    ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ADSTERRA_API_KEY=your_adsterra_api_key
-   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_api_key
+   NEXT_PUBLIC_SUPABASE_URL=your_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
+   NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_key
    ```
 
-4. **Run the development server**:
+3. **Launch**:
    ```bash
    npm run dev
    ```
 
-5. **Open the application**:
-   Navigate to [http://localhost:3000](http://localhost:3000).
-
 ## 📄 License
-
-This project is open-source under the MIT License.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-Built with ❤️ for professional excellence.
+**Built with ❤️ for a fairer job market.**
