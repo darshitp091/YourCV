@@ -16,7 +16,8 @@ import {
     LucideMoreVertical,
     LucideSparkles,
     LucideCreditCard,
-    LucideTrash2
+    LucideTrash2,
+    LucideCheckCircle
 } from "lucide-react";
 import Link from "next/link";
 
