@@ -108,9 +108,10 @@ export default function RootLayout({ children }) {
         <Analytics />
         <SpeedInsights />
         {/* Adsterra Social Bar (Anti-Adblock) */}
-        <script type='text/javascript' src='//pl25927364.highperformanceformat.com/73/b6/b2/73b6b292ed780e89f620ff15c77b7ef0.js' async></script>
+        {/* Adsterra Social Bar (Anti-Adblock) */}
+        <script type='text/javascript' src='https://pl28841418.effectivegatecpm.com/1a/85/0b/1a850b5b97dc16b1d8b2c562942e1ea7.js' async></script>
         {/* Adsterra Pop-under (Main Revenue Tab) */}
-        <script type='text/javascript' src='//pl25927364.highperformanceformat.com/a4/bc/cc/a4bccc84e68e42d07fe284186b2af48a.js' async></script>
+        <script type='text/javascript' src='https://pl28841366.effectivegatecpm.com/f0/20/c9/f020c9aa02578f425e9157b44645d72b.js' async></script>
       </body>
     </html>
   );
