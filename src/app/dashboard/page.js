@@ -23,8 +23,6 @@ import Link from "next/link";
 export default function DashboardPage() {
     const { user } = useAuth();
     const [resumes, setResumes] = useState([]);
-    const [usage, setUsage] = useState(null);
-    const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeResumeMenu, setActiveResumeMenu] = useState(null);
 
@@ -53,20 +51,6 @@ export default function DashboardPage() {
         try {
             setLoading(true);
 
-            if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-                console.error("NEXT_PUBLIC_SUPABASE_URL is missing! Requests will fail.");
-            }
-
-            // Fetch Profile
-            const { data: profileData, error: profileError } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
-
-            if (profileError) throw profileError;
-            setProfile(profileData);
-
             // Fetch Resumes
             const { data: resumeData, error: resumeError } = await supabase
                 .from('resumes')
@@ -77,50 +61,12 @@ export default function DashboardPage() {
             if (resumeError) throw resumeError;
             setResumes(resumeData || []);
 
-            // Fetch Usage for current month
-            const usageData = await getUsage(user.id);
-            setUsage(usageData);
-
         } catch (error) {
-            console.error("❌ DASHBOARD FETCH CRITICAL ERROR:", error);
-            console.error("Error name:", error?.name);
-            console.error("Error message:", error?.message);
-            console.error("Error stack:", error?.stack);
-            console.error("Supabase URL in use:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+            console.error("❌ DASHBOARD FETCH ERROR:", error.message);
         } finally {
             setLoading(false);
         }
     };
-
-    const getResetDate = () => {
-        if (!user || !usage) return null;
-        const profile = user.user_metadata; // This might be stale, better to use a profile state if available
-        // BUT we know getCurrentCycleStart is imported... wait, dashboard doesn't have it imported yet.
-        return null; // I'll fix the imports first
-    };
-
-    const userPlan = profile?.plan || 'free';
-    const limits = LIMITS[userPlan];
-
-    const stats = [
-        {
-            label: "Resume Credits",
-            value: usage?.resumes_generated || 0,
-            total: limits?.resume || 5,
-            icon: LucideFileText,
-            color: "text-primary",
-            bg: "bg-primary/10"
-        },
-        {
-            label: "AI Refinements",
-            value: usage?.ai_refines || 0,
-            total: limits?.ai_refines || 10,
-            resetDate: usage?.month_year ? new Date(new Date(usage.month_year).setMonth(new Date(usage.month_year).getMonth() + 1)).toLocaleDateString() : null,
-            icon: LucideSparkles,
-            color: "text-purple-600",
-            bg: "bg-purple-100"
-        },
-    ];
 
     return (
         <div className="space-y-10 pb-20">
@@ -131,52 +77,49 @@ export default function DashboardPage() {
                     <h1 className="text-3xl font-bold font-heading text-foreground">Welcome back, {user?.user_metadata?.full_name?.split(" ")[0] || "User"}!</h1>
                     <p className="text-muted-foreground">Ready to take the next step in your career?</p>
                 </div>
-                {usage?.resumes_generated >= (limits?.resume || 5) ? (
-                    <div className="flex flex-col items-end gap-2">
-                        <Button size="lg" disabled className="bg-zinc-200 text-zinc-500 cursor-not-allowed border-none shadow-none grayscale">
-                            <LucidePlus className="mr-2 w-5 h-5" />
-                            Credits Exhausted (5/5)
-                        </Button>
-                        <p className="text-[10px] font-bold text-primary animate-pulse">Upgrade to Premium for 30 Credits ✨</p>
-                    </div>
-                ) : (
-                    <Link href="/builder">
-                        <Button size="lg" className="shadow-lg shadow-primary/20">
-                            <LucidePlus className="mr-2 w-5 h-5" />
-                            Create New Resume
-                        </Button>
-                    </Link>
-                )}
+                <Link href="/builder">
+                    <Button size="lg" className="shadow-lg shadow-primary/20">
+                        <LucidePlus className="mr-2 w-5 h-5" />
+                        Create New Resume
+                    </Button>
+                </Link>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-                {stats.map((stat, i) => (
-                    <motion.div
-                        key={stat.label}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                    >
-                        <Card variant="glass" className="p-6">
-                            <div className="flex items-center gap-4">
-                                <div className={`p-3 rounded-2xl ${stat.bg}`}>
-                                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
-                                </div>
-                                <div>
-                                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{stat.label}</p>
-                                    <div className="flex items-baseline gap-2">
-                                        <h3 className="text-2xl font-bold text-foreground">{stat.value}</h3>
-                                        {stat.total && <span className="text-sm text-muted-foreground">/ {stat.total}</span>}
-                                    </div>
-                                    {stat.resetDate && (
-                                        <p className="text-[10px] text-muted-foreground mt-1">Resets: {stat.resetDate}</p>
-                                    )}
-                                </div>
-                            </div>
-                        </Card>
-                    </motion.div>
-                ))}
+            {/* Quick Stats (Simplified) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl">
+                <Card variant="glass" className="p-6">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-2xl bg-primary/10">
+                            <LucideFileText className="w-6 h-6 text-primary" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Total Resumes</p>
+                            <h3 className="text-2xl font-bold text-foreground">{resumes.length}</h3>
+                        </div>
+                    </div>
+                </Card>
+                <Card variant="glass" className="p-6">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-2xl bg-purple-100">
+                            <LucideSparkles className="w-6 h-6 text-purple-600" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">AI Access</p>
+                            <h3 className="text-2xl font-bold text-foreground">Unlimited</h3>
+                        </div>
+                    </div>
+                </Card>
+                <Card variant="glass" className="p-6">
+                    <div className="flex items-center gap-4">
+                        <div className="p-3 rounded-2xl bg-emerald-100">
+                            <LucideCheckCircle className="w-6 h-6 text-emerald-600" />
+                        </div>
+                        <div>
+                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Status</p>
+                            <h3 className="text-2xl font-bold text-foreground">Open Source</h3>
+                        </div>
+                    </div>
+                </Card>
             </div>
 
             {/* Main Content Area */}
@@ -269,24 +212,8 @@ export default function DashboardPage() {
                     )}
                 </div>
 
-                {/* Sidebar: Tips & Credits */}
+                {/* Sidebar Tips */}
                 <div className="xl:col-span-1 space-y-8">
-                    {userPlan === 'free' && (
-                        <Card variant="secondary" className="p-6 border-transparent bg-primary text-white space-y-4 shadow-xl shadow-primary/20">
-                            <LucideSparkles className="w-10 h-10 text-white/40" />
-                            <div className="space-y-2">
-                                <h3 className="font-bold text-lg">Go Premium</h3>
-                                <p className="text-xs text-white/70 leading-relaxed">Unlock unlimited resumes, AI refinements, and direct LaTeX exports with a premium plan.</p>
-                            </div>
-                            <Button
-                                onClick={() => window.location.href = '/#pricing'}
-                                className="w-full bg-white text-primary hover:bg-white/90 font-bold border-none shadow-none"
-                            >
-                                Upgrade ₹139/mo
-                            </Button>
-                        </Card>
-                    )}
-
                     <div className="bg-white p-6 rounded-3xl border border-border space-y-6">
                         <h3 className="font-bold text-sm uppercase tracking-widest text-muted-foreground">Expert Tips</h3>
                         <div className="space-y-4">

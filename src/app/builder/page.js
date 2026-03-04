@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { LucideArrowLeft, LucideZap } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { AdBanner } from "@/components/common/AdBanner";
 
 export default function BuilderPage() {
     const { currentStep } = useResume();
@@ -77,7 +78,7 @@ export default function BuilderPage() {
 
                         <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/10 border border-primary/20">
                             <LucideZap className="w-3.5 h-3.5 text-primary" />
-                            <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Premium Mode</span>
+                            <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Open Source Edition</span>
                         </div>
                     </div>
                 </div>
@@ -93,6 +94,11 @@ export default function BuilderPage() {
                         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/strength:opacity-100 transition-opacity" />
                         <ResumeStrength />
                     </div>
+                </div>
+
+                {/* Native Ad Placement (Interstitial) */}
+                <div className="w-full max-w-[1400px] mb-8">
+                    <AdBanner format="native" placementId="73b6b292ed780e89f620ff15c77b7ef0" />
                 </div>
 
                 {/* Main Form Container - Broadened Lumina Evolution */}

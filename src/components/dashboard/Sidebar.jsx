@@ -6,22 +6,19 @@ import {
     LucideFileText,
     LucideLayout,
     LucideSettings,
-    LucideCreditCard,
     LucideLogOut,
-    LucideLayoutDashboard,
     LucideZap
 } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/lib/auth";
 import { BrandLogo } from "../ui/BrandLogo";
 import { clsx } from "clsx";
 import { useState, useEffect } from "react";
-import { getUsage, LIMITS } from "@/lib/credits";
 import { supabase } from "@/lib/supabase";
+import { AdBanner } from "@/components/common/AdBanner";
 
 const DASHBOARD_LINKS = [
     { name: "My Resumes", href: "/dashboard", icon: LucideFileText },
     { name: "Templates", href: "/templates", icon: LucideLayout },
-    { name: "Automations", href: "/dashboard/workflows", icon: LucideZap },
     { name: "Account Settings", href: "/dashboard/settings", icon: LucideSettings },
 ];
 
@@ -29,24 +26,13 @@ export const Sidebar = () => {
     const pathname = usePathname();
     const { signOut, user } = useAuth();
     const [resumeCount, setResumeCount] = useState(0);
-    const [usage, setUsage] = useState({ resumes_generated: 0 });
-    const [profile, setProfile] = useState(null);
 
     useEffect(() => {
         if (user) {
-            getUsage(user.id).then(setUsage);
-            supabase.from('profiles').select('plan').eq('id', user.id).single()
-                .then(({ data }) => setProfile(data));
-
-            // Fetch actual resume count for "Slot" logic
             supabase.from('resumes').select('id', { count: 'exact', head: true }).eq('user_id', user.id)
                 .then(({ count }) => setResumeCount(count || 0));
         }
-    }, [user, pathname]); // Re-fetch on path change to catch deletions/creations
-
-    const userPlan = profile?.plan || 'free';
-    const isPremium = userPlan === "premium";
-    const limits = LIMITS[userPlan];
+    }, [user, pathname]);
 
     return (
         <aside className="w-64 border-r border-border bg-white flex flex-col h-screen sticky top-0">
@@ -81,27 +67,22 @@ export const Sidebar = () => {
                 })}
             </nav>
 
-            {/* Usage Indicator */}
-            <div className="p-4 mx-4 mb-4 bg-secondary/30 rounded-2xl space-y-3">
-                <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="text-muted-foreground uppercase tracking-wider">
-                        {isPremium ? "Premium Plan" : "Free Plan"}
-                    </span>
-                    <span className="text-primary">
-                        {usage?.resumes_generated || 0} / {limits?.resume || 5} Credits
+            {/* Community / Open Source Info */}
+            <div className="p-4 mx-4 mb-4 bg-primary/5 rounded-2xl space-y-2 border border-primary/10">
+                <div className="flex items-center gap-2 text-primary">
+                    <LucideZap className="w-4 h-4 fill-primary" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">
+                        Open Source
                     </span>
                 </div>
-                <div className="h-1.5 w-full bg-border rounded-full overflow-hidden">
-                    <div
-                        className="h-full bg-primary transition-all duration-500"
-                        style={{ width: `${Math.min(((usage?.resumes_generated || 0) / (limits?.resume || 5)) * 100, 100)}%` }}
-                    />
-                </div>
-                {!isPremium && (
-                    <Link href="/dashboard/settings" className="block text-center text-xs font-bold text-primary hover:underline">
-                        Upgrade for MORE
-                    </Link>
-                )}
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                    Enjoy unlimited access to all features. Community supported.
+                </p>
+            </div>
+
+            {/* Ad Slot */}
+            <div className="mt-auto px-4 pb-4">
+                <AdBanner placementId="73b6b292ed780e89f620ff15c77b7ef0" format="sidebar" />
             </div>
 
             {/* User / Logout */}

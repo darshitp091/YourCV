@@ -1,168 +1,129 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "@/lib/auth";
+import { supabase } from "@/lib/supabase";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
 import {
     LucideUser,
-    LucideMail,
-    LucideShield,
     LucideZap,
-    LucideLogOut,
-    LucideCreditCard,
-    LucideHistory,
-    LucideCheckCircle
+    LucideLogOut
 } from "lucide-react";
-import { useState } from "react";
 
 export default function SettingsPage() {
     const { user, signOut } = useAuth();
-    const isPremium = user?.user_metadata?.plan === "premium";
+    const [loading, setLoading] = useState(false);
+    const [profile, setProfile] = useState({
+        full_name: "",
+        email: ""
+    });
 
-    const handleUpgrade = () => {
-        window.location.href = '/#pricing';
+    useEffect(() => {
+        if (user) {
+            setProfile({
+                full_name: user?.user_metadata?.full_name || "",
+                email: user?.email || ""
+            });
+        }
+    }, [user]);
+
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const { error } = await supabase.auth.updateUser({
+                data: { full_name: profile.full_name }
+            });
+
+            if (error) throw error;
+            alert("Profile updated successfully!");
+        } catch (error) {
+            console.error("Profile Update Error:", error.message);
+            alert("Failed to update profile.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="space-y-8 pb-20">
-            {/* Active Plan Overview */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="md:col-span-2 p-8 bg-white border-border/50">
-                    <div className="flex justify-between items-start mb-8">
-                        <div className="space-y-1">
-                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Active Plan</p>
-                            <h2 className="text-3xl font-black font-heading text-foreground">
-                                {isPremium ? "Premium Pro" : "Free Explorer"}
-                            </h2>
-                        </div>
-                        <Badge variant={isPremium ? "primary" : "secondary"} className="py-1 px-4 rounded-full">
-                            {isPremium ? "Active" : "Free Plan"}
-                        </Badge>
-                    </div>
-
-                    <div className="space-y-4 mb-8">
-                        <div className="flex items-center gap-3">
-                            <LucideCheckCircle className="w-5 h-5 text-emerald-500" />
-                            <p className="text-sm font-medium">{isPremium ? "30 Resume Credits per month" : "5 Resume Credits (Lifetime)"}</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <LucideCheckCircle className="w-5 h-5 text-emerald-500" />
-                            <p className="text-sm font-medium">{isPremium ? "AI-Powered ATS Audits" : "Basic ATS Checks"}</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <LucideCheckCircle className="w-5 h-5 text-emerald-500" />
-                            <p className="text-sm font-medium">Premium Template Library</p>
-                        </div>
-                    </div>
-
-                    {!isPremium && (
-                        <Button className="w-full md:w-auto px-8" onClick={handleUpgrade}>
-                            <LucideZap className="w-4 h-4 mr-2" />
-                            Upgrade to Premium
-                        </Button>
-                    )}
-                </Card>
-
-                <Card className="p-8 bg-primary text-white space-y-6 flex flex-col justify-between shadow-xl shadow-primary/10">
-                    <div className="space-y-4">
-                        <LucideCreditCard className="w-10 h-10 opacity-40" />
-                        <div className="space-y-1">
-                            <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Payment Method</p>
-                            <p className="font-bold">No card linked</p>
-                        </div>
-                    </div>
-                    <p className="text-xs opacity-70 leading-relaxed italic">
-                        Transactions are processed securely via Razorpay.
-                    </p>
-                </Card>
+        <div className="max-w-4xl space-y-10">
+            <div className="space-y-1">
+                <h1 className="text-3xl font-bold font-heading">Settings</h1>
+                <p className="text-muted-foreground">Manage your account and preferences.</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Profile Info */}
-                <div className="lg:col-span-2 space-y-8">
-                    <Card className="p-8 bg-white border-border/50 space-y-8">
-                        <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 rounded-3xl bg-primary/10 flex items-center justify-center">
-                                <LucideUser className="w-8 h-8 text-primary" />
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold font-heading">Personal Information</h3>
-                                <p className="text-sm text-muted-foreground">Manage your account details and preferences.</p>
-                            </div>
-                        </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                {/* Profile Settings */}
+                <div className="md:col-span-2">
+                    <Card className="p-8">
+                        <form onSubmit={handleUpdateProfile} className="space-y-6">
+                            <h2 className="text-xl font-bold flex items-center gap-2">
+                                <LucideUser className="w-5 h-5 text-primary" />
+                                Profile Information
+                            </h2>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="relative">
-                                <Input
-                                    label="Full Name"
-                                    value={user?.user_metadata?.full_name || ""}
-                                    readOnly
-                                    className="pl-11 bg-secondary/20"
-                                />
-                                <LucideUser className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
-                            </div>
-                            <div className="relative">
-                                <Input
-                                    label="Email Address"
-                                    value={user?.email || ""}
-                                    readOnly
-                                    className="pl-11 bg-secondary/20"
-                                />
-                                <LucideMail className="absolute left-3.5 bottom-3 text-muted-foreground w-5 h-5" />
-                            </div>
-                        </div>
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Full Name</label>
+                                    <input
+                                        type="text"
+                                        value={profile.full_name}
+                                        onChange={(e) => setProfile({ ...profile, full_name: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium"
+                                        placeholder="Your full name"
+                                    />
+                                </div>
 
-                        <div className="pt-4 border-t border-border/50">
-                            <Button variant="outline" className="text-xs uppercase font-bold tracking-widest h-10 px-6">
-                                Update Profile
+                                <div className="space-y-2 opacity-60">
+                                    <label className="text-sm font-bold text-muted-foreground uppercase tracking-widest">Email Address</label>
+                                    <input
+                                        type="email"
+                                        value={profile.email}
+                                        disabled
+                                        className="w-full px-4 py-3 rounded-xl border border-border bg-secondary/30 cursor-not-allowed font-medium"
+                                    />
+                                    <p className="text-[10px] text-muted-foreground italic">Email cannot be changed yet.</p>
+                                </div>
+                            </div>
+
+                            <Button type="submit" isLoading={loading} className="w-full md:w-auto px-8">
+                                Save Changes
                             </Button>
-                        </div>
-                    </Card>
-
-                    {/* Billing History Integrated here */}
-                    <Card className="p-8 bg-white border-border/50 space-y-6">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center">
-                                <LucideHistory className="w-6 h-6 text-muted-foreground" />
-                            </div>
-                            <div>
-                                <h3 className="font-bold font-heading">Transaction History</h3>
-                                <p className="text-xs text-muted-foreground">Review your past payments and receipts.</p>
-                            </div>
-                        </div>
-                        <div className="p-12 text-center border-2 border-dashed border-border rounded-3xl">
-                            <p className="text-sm text-muted-foreground font-medium">No transactions yet.</p>
-                        </div>
+                        </form>
                     </Card>
                 </div>
 
-                {/* Sidebar Actions */}
-                <div className="lg:col-span-1 space-y-6">
-                    <Card className="p-8 bg-white border-border/50 space-y-6">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center">
-                                <LucideShield className="w-6 h-6 text-amber-600" />
-                            </div>
-                            <div>
-                                <h3 className="font-bold font-heading">Security</h3>
-                                <p className="text-xs text-muted-foreground">Update password settings.</p>
-                            </div>
+                {/* Account Status / Info */}
+                <div className="md:col-span-1 space-y-6">
+                    <Card className="p-6 bg-primary/5 border-primary/20 space-y-4">
+                        <div className="p-3 bg-white rounded-2xl w-fit shadow-sm">
+                            <LucideZap className="w-6 h-6 text-primary" />
                         </div>
-                        <Button variant="ghost" className="text-amber-600 hover:bg-amber-50 h-10 text-xs font-bold uppercase tracking-widest">
-                            Change Password
-                        </Button>
+                        <div>
+                            <h3 className="font-bold text-lg text-primary">Open Source</h3>
+                            <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                                You are using the community edition. All features are unlocked and free forever.
+                            </p>
+                        </div>
                     </Card>
 
-                    <Button
-                        variant="ghost"
-                        className="w-full justify-start text-destructive hover:bg-destructive/10 h-12 px-6 rounded-2xl gap-3"
-                        onClick={() => signOut()}
-                    >
-                        <LucideLogOut className="w-5 h-5" />
-                        <span className="font-bold text-sm">Sign Out</span>
-                    </Button>
+                    <div className="p-6 border border-border rounded-3xl space-y-4">
+                        <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Actions</h3>
+                        <Button variant="outline" size="sm" className="w-full justify-start text-xs border-dashed">
+                            Change Password
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={signOut}
+                            className="w-full justify-start text-xs text-destructive hover:bg-destructive/5"
+                        >
+                            <LucideLogOut className="w-4 h-4 mr-2" />
+                            Log Out
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

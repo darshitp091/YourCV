@@ -28,9 +28,6 @@ export async function POST(req) {
                                 cookieStore.set(name, value, options)
                             );
                         } catch (error) {
-                            // The `setAll` method was called from a Server Component.
-                            // This can be ignored if you have middleware refreshing
-                            // user sessions.
                             console.warn("Supabase SSR: Failed to set cookies in API route", error.message);
                         }
                     },
@@ -38,30 +35,17 @@ export async function POST(req) {
             }
         );
 
-        // Use getUser for the most robust server-side session verification
         const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {
-            console.error("Auth Fail Diagnostic:", {
-                error: authError?.message,
-                cookiesPresent: cookieStore.getAll().length > 0,
-                cookieNames: cookieStore.getAll().map(c => c.name)
-            });
             return NextResponse.json({ error: "Unauthorized. Please sign in." }, { status: 401 });
         }
 
-        // 2. Check Credits
-        const hasCredits = await checkCredits(user.id, 'ai_refines', supabase);
-        if (!hasCredits) {
-            return NextResponse.json({
-                error: "AI Refinement limit reached for this month. Please upgrade your plan for more!"
-            }, { status: 403 });
-        }
-
-        // 3. Process with AI (Using Pollinations - Keyless)
+        // 2. Process with AI (Using Pollinations - Keyless)
+        // Unlimited access for Open Source model
         const refined = await refineWithAI(content, type, context);
 
-        // 4. Increment Usage
+        // 3. Increment Usage (Optional: For analytics only)
         await incrementUsage(user.id, 'ai_refines', supabase);
 
         return NextResponse.json({ refined });

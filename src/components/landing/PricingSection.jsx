@@ -1,145 +1,136 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
+import {
+    LucideCheckCircle,
+    LucideZap,
+    LucideSparkles,
+    LucideGithub,
+    LucideDownload,
+    LucideFileCheck
+} from 'lucide-react';
 import { Button } from "../ui/Button";
-import { Badge } from "../ui/Badge";
-import { LucideCheck, LucideX } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
-import { triggerCheckout } from "@/lib/razorpay";
-
-const PLANS = [
-    {
-        name: "Free",
-        price: "₹0",
-        description: "Everything you need to land your next role.",
-        features: [
-            { text: "5 resumes per month", included: true },
-            { text: "50+ professional templates", included: true },
-            { text: "Download as PDF (No watermark)", included: true },
-            { text: "LaTeX code + Browser preview", included: true },
-            { text: "ATS Score Analysis", included: true },
-            { text: "Unlimited edits after download", included: false },
-        ],
-        cta: "Start for Free",
-        variant: "outline",
-        popular: false,
-    },
-    {
-        name: "Premium",
-        price: "₹139",
-        description: "For serious job seekers who want the edge.",
-        features: [
-            { text: "30 resumes per month", included: true },
-            { text: "50+ professional templates", included: true },
-            { text: "30 LaTeX generations / month", included: true },
-            { text: "Full ATS score breakdown", included: true },
-            { text: "Priority AI generation", included: true },
-            { text: "Unlimited edits & versions", included: true },
-        ],
-        cta: "Get Premium Edge",
-        variant: "primary",
-        popular: true,
-    },
-];
+import { Card } from "../ui/Card";
+import Link from 'next/link';
 
 export const PricingSection = () => {
-    const { user } = useAuth();
-    const router = useRouter();
-
-    const handlePlanAction = async (plan) => {
-        if (!user) {
-            router.push("/signup");
-            return;
-        }
-
-        if (plan.name === "Premium") {
-            await triggerCheckout({
-                userId: user.id,
-                fullName: user.user_metadata?.full_name || "User",
-                email: user.email,
-                amount: 139, // INR 139 for Premium
-                successCallback: () => {
-                    alert("Payment Successful! Welcome to Premium.");
-                    router.push("/dashboard");
-                }
-            });
-        } else {
-            router.push("/builder");
-        }
-    };
+    const features = [
+        "Unlimited Resume Generations",
+        "Job-Winning Templates Unlocked",
+        "Unlimited AI Content Refinement",
+        "Direct LaTeX Source Export",
+        "No Watermarks or Branding",
+        "Customizable Niche Templates",
+        "ATS-Optimized Formatting"
+    ];
 
     return (
-        <section id="pricing" className="py-24 px-6 bg-white">
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-                    <h2 className="text-4xl md:text-5xl font-bold font-heading">
-                        Simple, <span className="text-gradient">Transparent</span> Pricing
+        <section id="pricing" className="py-24 bg-white relative overflow-hidden">
+            {/* Background Accents */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -mr-64 -mt-64" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[100px] -ml-64 -mb-64" />
+
+            <div className="max-w-7xl mx-auto px-8 relative z-10">
+                <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-bold text-sm"
+                    >
+                        <LucideZap className="w-4 h-4 fill-primary" />
+                        COMMUNITY EDITION
+                    </motion.div>
+                    <h2 className="text-4xl md:text-5xl font-black font-heading text-foreground tracking-tight leading-tight">
+                        Power to the <span className="text-primary italic">Professionals</span>.
+                        <br />
+                        Now Fully <span className="underline decoration-primary/30">Open Source</span>.
                     </h2>
-                    <p className="text-muted-foreground">
-                        Choose the plan that fits your career goals. No hidden fees, cancel anytime.
+                    <p className="text-lg text-muted-foreground">
+                        We believe professional tools should be accessible to everyone. YourCV is now free, unlimited, and supported by our community.
                     </p>
                 </div>
 
-                {/* Pricing Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto pt-10">
-                    {PLANS.map((plan, index) => (
-                        <motion.div
-                            key={plan.name}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className={`relative p-12 rounded-[3rem] rounded-tr-none border ${plan.popular
-                                ? "border-primary/30 shadow-[0_30px_60px_rgba(13,110,110,0.1)] ring-8 ring-primary/5"
-                                : "border-border bg-white"
-                                } bg-white/80 backdrop-blur-xl group transition-all duration-500 hover:y-[-10px]`}
-                        >
-                            {plan.popular && (
-                                <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
-                                    <div className="bg-primary text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
-                                        Most Popular
-                                    </div>
-                                </div>
-                            )}
+                <div className="max-w-4xl mx-auto">
+                    <Card variant="glass" className="relative p-10 md:p-16 overflow-hidden border-2 border-primary/20 bg-white/50 backdrop-blur-xl">
+                        {/* Glow effect */}
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
 
-                            <div className="mb-10">
-                                <h3 className="text-2xl font-bold font-heading mb-4 text-foreground/80">{plan.name}</h3>
-                                <div className="flex items-baseline gap-1 mb-6">
-                                    <span className="text-6xl font-black tracking-tighter text-primary">{plan.price}</span>
-                                    {plan.price !== "₹0" && <span className="text-muted-foreground font-bold">/month</span>}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div className="space-y-8">
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-2 text-emerald-600 font-black text-xs uppercase tracking-widest">
+                                        <LucideFileCheck className="w-4 h-4" />
+                                        Lifetime Access
+                                    </div>
+                                    <h3 className="text-6xl font-black text-foreground">₹0</h3>
+                                    <p className="text-muted-foreground font-medium">Free forever. No hidden fees. No limits.</p>
                                 </div>
-                                <p className="text-muted-foreground font-medium">{plan.description}</p>
+
+                                <ul className="space-y-4">
+                                    {features.map((feature, i) => (
+                                        <motion.li
+                                            key={i}
+                                            initial={{ opacity: 0, x: -10 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: i * 0.05 }}
+                                            className="flex items-center gap-3 text-sm font-semibold text-muted-foreground"
+                                        >
+                                            <div className="p-1 bg-primary/10 rounded-full">
+                                                <LucideCheckCircle className="w-3.5 h-3.5 text-primary" />
+                                            </div>
+                                            {feature}
+                                        </motion.li>
+                                    ))}
+                                </ul>
+
+                                <Link href="/login">
+                                    <Button size="lg" className="w-full h-14 text-lg font-bold shadow-2xl shadow-primary/30">
+                                        Get Started Now
+                                        <LucideSparkles className="ml-2 w-5 h-5 fill-white" />
+                                    </Button>
+                                </Link>
                             </div>
 
-                            <div className="space-y-5 mb-12">
-                                {plan.features.map((feature) => (
-                                    <div key={feature.text} className="flex items-start gap-4">
-                                        <div className={`p-1 rounded-full ${feature.included ? "bg-emerald-50 text-emerald-500" : "bg-muted text-muted-foreground/30"}`}>
-                                            {feature.included ? (
-                                                <LucideCheck className="w-4 h-4" />
-                                            ) : (
-                                                <LucideX className="w-4 h-4" />
-                                            )}
+                            <div className="space-y-8 p-8 bg-secondary/30 rounded-[40px] border border-border/50">
+                                <div className="space-y-4 text-center md:text-left">
+                                    <h4 className="font-bold text-lg">Why Free?</h4>
+                                    <p className="text-xs text-muted-foreground leading-relaxed">
+                                        After serving thousands of users, we've decided to move to an ad-supported, open-source model. Our mission is to democratize career growth tools.
+                                    </p>
+                                </div>
+
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-border">
+                                        <div className="p-2 bg-blue-50 rounded-xl">
+                                            <LucideDownload className="w-5 h-5 text-blue-600" />
                                         </div>
-                                        <span className={`text-sm font-medium ${feature.included ? "text-foreground" : "text-muted-foreground/50"}`}>
-                                            {feature.text}
-                                        </span>
+                                        <div>
+                                            <p className="font-bold text-sm">No Downloads Limits</p>
+                                            <p className="text-[10px] text-muted-foreground">Export as many PDFs as you need.</p>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
+                                    <div className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-border">
+                                        <div className="p-2 bg-purple-50 rounded-xl">
+                                            <LucideSparkles className="w-5 h-5 text-purple-600" />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-sm">Full AI Refinement</p>
+                                            <p className="text-[10px] text-muted-foreground">Unlimited use of our AI editor.</p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <Button
-                                onClick={() => handlePlanAction(plan)}
-                                variant={plan.variant}
-                                className={`w-full py-8 text-lg font-bold rounded-2xl ${plan.popular ? "shadow-xl shadow-primary/20" : ""}`}
-                            >
-                                {plan.cta}
-                            </Button>
-                        </motion.div>
-                    ))}
+                                <div className="pt-4 text-center">
+                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-4">Supported by the community</p>
+                                    <div className="flex justify-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-300 cursor-pointer">
+                                        <LucideGithub className="w-6 h-6" />
+                                        <span className="font-black italic text-xl">OPEN SOURCE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
                 </div>
             </div>
         </section>

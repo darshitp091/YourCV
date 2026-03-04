@@ -1,7 +1,7 @@
 "use client";
 
 import { useResume } from "@/context/ResumeContext";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/Button";
 import { getTemplateComponent } from "@/lib/template-registry";
 import { DynamicTemplate } from "@/components/templates/DynamicTemplate";
@@ -12,7 +12,6 @@ import {
     LucideDownload,
     LucideCode,
     LucideCheckCircle,
-    LucideShare2,
     LucideSparkles
 } from "lucide-react";
 import Link from "next/link";
@@ -20,11 +19,10 @@ import { useRef, useState, useEffect } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { LaTeXModal } from "@/components/resume/LaTeXModal";
-import { incrementUsage, checkCredits } from "@/lib/credits";
-import { triggerCheckout } from "@/lib/razorpay";
 import { triggerWorkflow } from "@/lib/workflows/engine";
 import { SocialShare } from "@/components/common/SocialShare";
 import { ResumeStrength } from "@/components/resume/ResumeStrength";
+import { AdBanner } from "@/components/common/AdBanner";
 
 export default function PreviewPage() {
     const { user } = useAuth();
@@ -33,9 +31,8 @@ export default function PreviewPage() {
     const [exporting, setExporting] = useState(false);
     const [isLatexOpen, setIsLatexOpen] = useState(false);
     const [bulkTemplates, setBulkTemplates] = useState([]);
-    const [selectedTemplate, setSelectedTemplate] = useState(null); // { id, name, html, type: 'bulk' | 'reactive' }
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
     const resumeRef = useRef(null);
-    const isPremium = user?.user_metadata?.plan === "premium" || user?.plan === "premium";
 
     const fetchBulkTemplates = async () => {
         try {
@@ -51,24 +48,6 @@ export default function PreviewPage() {
         fetchBulkTemplates();
     }, []);
 
-    const handleUpgrade = async () => {
-        if (!user) {
-            router.push("/login?redirect=/builder/preview");
-            return;
-        }
-
-        await triggerCheckout({
-            userId: user.id,
-            fullName: user.user_metadata?.full_name || "User",
-            email: user.email,
-            amount: 139, // INR 139 for Premium
-            successCallback: (response) => {
-                alert("Payment Successful! Your account is now Premium.");
-                window.location.reload();
-            }
-        });
-    };
-
     const downloadPDF = async () => {
         if (!user) {
             router.push("/login?redirect=/builder/preview");
@@ -76,19 +55,11 @@ export default function PreviewPage() {
         }
 
         try {
-            // 1. Check Credits (using 'latex' as the export limit bucket)
-            const hasCredits = await checkCredits(user.id, 'latex');
-            if (!hasCredits) {
-                alert("You've reached your export limit for this month. Please upgrade to Premium for more!");
-                handleUpgrade();
-                return;
-            }
-
             setExporting(true);
             const input = document.getElementById('resume-preview');
 
             const canvas = await html2canvas(input, {
-                scale: 2, // Higher scale for better quality
+                scale: 2,
                 useCORS: true,
                 logging: false,
                 backgroundColor: "#ffffff"
@@ -108,10 +79,6 @@ export default function PreviewPage() {
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
             pdf.save(`${resumeData.personal.fullName || 'Resume'}_YourCV.pdf`);
 
-            // 2. Increment Usage
-            await incrementUsage(user.id, 'latex');
-
-            // 3. Trigger Workflow
             triggerWorkflow('pdf_downloaded', user.id, {
                 resumeId: localStorage.getItem("current_resume_id"),
                 filename: `${resumeData.personal.fullName || 'Resume'}_YourCV.pdf`
@@ -119,7 +86,7 @@ export default function PreviewPage() {
 
         } catch (error) {
             console.error("PDF Export Error:", error);
-            alert("Failed to export PDF. Please try again.");
+            alert("Failed to export PDF.");
         } finally {
             setExporting(false);
         }
@@ -171,131 +138,88 @@ export default function PreviewPage() {
                 </div>
             </header>
 
-            <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-4 gap-10">
-                {/* Sidebar Info */}
-                <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
-                    <div className="bg-white p-6 rounded-3xl border border-border space-y-4">
-                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Active Template</p>
-                        <div className="p-4 bg-primary/5 rounded-2xl border border-primary/10">
-                            <p className="font-bold text-primary">{selectedTemplate ? selectedTemplate.name : "Modern Minimal"}</p>
-                            <p className="text-[10px] text-primary/60 uppercase tracking-tighter">
-                                {selectedTemplate ? "Bulk Niche Template" : "Classic Template"}
-                            </p>
-                        </div>
+            <div className="max-w-7xl mx-auto px-4 py-8">
+                <AdBanner placementId="73b6b292ed780e89f620ff15c77b7ef0" format="banner" className="mb-8" />
 
-                        {bulkTemplates.length > 0 && (
-                            <div className="pt-2 space-y-2">
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase">Niche Templates (Bulk)</p>
-                                <div className="grid grid-cols-1 gap-2">
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className={`text-[10px] justify-start h-8 ${!selectedTemplate ? 'bg-primary/10 text-primary' : ''}`}
-                                        onClick={() => setSelectedTemplate(null)}
-                                    >
-                                        Modern Minimal
-                                    </Button>
-                                    {bulkTemplates.map(t => {
-                                        const isLocked = !isPremium;
-                                        return (
-                                            <div key={t.id} className="relative group/btn">
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    disabled={isLocked}
-                                                    className={`text-[10px] justify-start h-8 w-full ${selectedTemplate?.id === t.id ? 'bg-primary/10 text-primary' : ''} ${isLocked ? 'opacity-50' : ''}`}
-                                                    onClick={() => !isLocked && setSelectedTemplate({ ...t, type: 'bulk' })}
-                                                >
-                                                    {t.name}
-                                                    {isLocked && <LucideSparkles className="w-3 h-3 ml-auto text-amber-500" />}
-                                                </Button>
-                                                {isLocked && (
-                                                    <div className="absolute inset-0 z-10 cursor-pointer" onClick={handleUpgrade} />
-                                                )}
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="pt-2 space-y-2 border-t border-secondary mt-2">
-                            <p className="text-[10px] font-bold text-muted-foreground uppercase">Premium (rxresu.me)</p>
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    {/* Sidebar Info */}
+                    <div className="lg:col-span-1 space-y-6">
+                        <div className="bg-white p-6 rounded-3xl border border-border space-y-4">
+                            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Select Template</p>
                             <div className="grid grid-cols-1 gap-2">
-                                <div className="relative group/btn">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className={`text-[10px] justify-start h-8 ${!selectedTemplate ? 'bg-primary/10 text-primary' : ''}`}
+                                    onClick={() => setSelectedTemplate(null)}
+                                >
+                                    Modern Minimal
+                                </Button>
+                                {bulkTemplates.map(t => (
                                     <Button
+                                        key={t.id}
                                         variant="ghost"
                                         size="sm"
-                                        disabled={!isPremium}
-                                        className={`text-[10px] justify-start h-8 w-full ${selectedTemplate?.id === 'pikachu' ? 'bg-primary/10 text-primary' : ''} ${!isPremium ? 'opacity-50' : ''}`}
-                                        onClick={() => isPremium && setSelectedTemplate({ id: 'pikachu', name: 'Pikachu (Premium)', type: 'reactive' })}
+                                        className={`text-[10px] justify-start h-8 w-full ${selectedTemplate?.id === t.id ? 'bg-primary/10 text-primary' : ''}`}
+                                        onClick={() => setSelectedTemplate({ ...t, type: 'bulk' })}
                                     >
-                                        Pikachu (Modern)
-                                        {!isPremium && <LucideSparkles className="w-3 h-3 ml-auto text-amber-500" />}
+                                        {t.name}
                                     </Button>
-                                    {!isPremium && <div className="absolute inset-0 z-10 cursor-pointer" onClick={handleUpgrade} />}
-                                </div>
-                                <div className="relative group/btn">
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        disabled={!isPremium}
-                                        className={`text-[10px] justify-start h-8 w-full ${selectedTemplate?.id === 'onyx' ? 'bg-primary/10 text-primary' : ''} ${!isPremium ? 'opacity-50' : ''}`}
-                                        onClick={() => isPremium && setSelectedTemplate({ id: 'onyx', name: 'Onyx (Premium)', type: 'reactive' })}
-                                    >
-                                        Onyx (Formal)
-                                        {!isPremium && <LucideSparkles className="w-3 h-3 ml-auto text-amber-500" />}
-                                    </Button>
-                                    {!isPremium && <div className="absolute inset-0 z-10 cursor-pointer" onClick={handleUpgrade} />}
-                                </div>
+                                ))}
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className={`text-[10px] justify-start h-8 w-full ${selectedTemplate?.id === 'pikachu' ? 'bg-primary/10 text-primary' : ''}`}
+                                    onClick={() => setSelectedTemplate({ id: 'pikachu', name: 'Pikachu (Premium)', type: 'reactive' })}
+                                >
+                                    Pikachu (Modern)
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className={`text-[10px] justify-start h-8 w-full ${selectedTemplate?.id === 'onyx' ? 'bg-primary/10 text-primary' : ''}`}
+                                    onClick={() => setSelectedTemplate({ id: 'onyx', name: 'Onyx (Premium)', type: 'reactive' })}
+                                >
+                                    Onyx (Formal)
+                                </Button>
                             </div>
                         </div>
-                        <Link href="/templates">
-                            <Button variant="outline" size="sm" className="w-full text-xs">
-                                Change Template
-                            </Button>
-                        </Link>
-                    </div>
 
-                    <ResumeStrength data={resumeData} />
+                        <ResumeStrength data={resumeData} />
 
-                    <div className="bg-white p-6 rounded-3xl border border-border">
-                        <SocialShare
-                            url="https://your-cv-eta.vercel.app"
-                            title="I just built my professional resume with YourCV! 🚀"
-                            text="I just created my ATS-optimized resume in minutes using YourCV AI. If you're looking to level up your career, check it out here: "
-                        />
-                    </div>
-
-                    <div className="bg-primary p-6 rounded-3xl text-white space-y-4 shadow-xl shadow-primary/20">
-                        <LucideSparkles className="w-8 h-8 opacity-50" />
-                        <div className="space-y-1">
-                            <p className="font-bold">Upgrade to Premium</p>
-                            <p className="text-xs text-white/70">Unlock elite templates, priority AI processing, and advanced ATS analytics.</p>
+                        <div className="bg-primary/5 p-6 rounded-3xl border border-primary/20 space-y-4">
+                            <LucideSparkles className="w-8 h-8 text-primary opacity-50" />
+                            <div>
+                                <p className="font-bold text-primary">Open Source Forever</p>
+                                <p className="text-[10px] text-muted-foreground">This platform is now free and open-source. Enjoy unlimited access!</p>
+                            </div>
                         </div>
-                        <Button
-                            variant="outline"
-                            className="w-full border-white/20 hover:bg-white/10 text-white font-bold"
-                            onClick={handleUpgrade}
-                        >
-                            Upgrade ₹139/mo
-                        </Button>
-                    </div>
-                </div>
 
-                {/* Live Preview */}
-                <div className="lg:col-span-3 flex justify-center order-1 lg:order-2">
-                    <div className="scale-[0.5] sm:scale-[0.7] md:scale-[0.85] lg:scale-[1] origin-top" id="resume-preview">
-                        {!selectedTemplate ? (
-                            (() => {
-                                const Template = getTemplateComponent(resumeData.templateId || "modern-minimal");
-                                return <Template data={resumeData} />;
-                            })()
-                        ) : selectedTemplate.type === 'bulk' ? (
-                            <DynamicTemplate html={selectedTemplate.html} data={resumeData} />
-                        ) : (
-                            <ReactiveRenderEngine data={resumeData} templateId={selectedTemplate.id} />
-                        )}
+                        {/* High Payout Direct Link Ad */}
+                        <div className="pt-4">
+                            <AdBanner format="direct-link" placementId="73b6b292ed780e89f620ff15c77b7ef0" className="mt-4">
+                                <div className="bg-gradient-to-r from-primary to-accent p-4 rounded-2xl text-white text-center shadow-lg shadow-primary/20 cursor-pointer hover:scale-[1.02] transition-transform">
+                                    <p className="text-[10px] font-black uppercase tracking-widest mb-1">🎁 Exclusive Offer</p>
+                                    <p className="text-xs font-bold leading-tight">Get Premium Resume Review & Job Matching (Sponsored)</p>
+                                </div>
+                            </AdBanner>
+                        </div>
+                    </div>
+
+                    {/* Live Preview */}
+                    <div className="lg:col-span-3 flex justify-center">
+                        <div className="scale-[0.5] sm:scale-[0.7] md:scale-[0.85] lg:scale-[1] origin-top" id="resume-preview">
+                            {!selectedTemplate ? (
+                                (() => {
+                                    const Template = getTemplateComponent(resumeData.templateId || "modern-minimal");
+                                    return <Template data={resumeData} />;
+                                })()
+                            ) : selectedTemplate.type === 'bulk' ? (
+                                <DynamicTemplate html={selectedTemplate.html} data={resumeData} />
+                            ) : (
+                                <ReactiveRenderEngine data={resumeData} templateId={selectedTemplate.id} />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

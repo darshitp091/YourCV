@@ -101,35 +101,8 @@ export const ResumeProvider = ({ children }) => {
                 updated_at: new Date().toISOString()
             };
 
-            if (resumeId) {
-                const { error, data } = await supabase
-                    .from("resumes")
-                    .update(payload)
-                    .eq("id", resumeId)
-                    .eq("user_id", user.id) // Security: Ensure user owns this resume
-                    .select();
-
-                if (error) throw error;
-
-                // If no data returned, it means the update didn't match any row (e.g., mismatched user)
-                if (!data || data.length === 0) {
-                    console.warn("Resume ID mismatch or ownership error. Clearing ID and re-saving as new.");
-                    localStorage.removeItem("current_resume_id");
-                    return saveResume(); // Recursive call to save as new
-                }
-
-                console.log("Resume auto-saved.");
-                triggerWorkflow('resume_updated', user.id, { resumeId, data: resumeData });
-            } else {
-                // NEW RESUME: Check slots first
-                const hasSlots = await checkCredits(user.id, 'resume');
-
-                if (!hasSlots) {
-                    alert("You've reached your resume limit. Please upgrade to Premium or delete an existing resume to create a new one!");
-                    window.location.href = "/#pricing";
-                    return;
-                }
-
+            if (!resumeId) {
+                // NEW RESUME: Community edition allows unlimited slots
                 const { data, error } = await supabase
                     .from("resumes")
                     .insert([payload])
@@ -141,7 +114,7 @@ export const ResumeProvider = ({ children }) => {
                     localStorage.setItem("current_resume_id", data.id);
                     console.log("New resume created and saved.");
 
-                    // Increment usage for permanent slot logic
+                    // Increment usage for analytics
                     await incrementUsage(user.id, 'resume');
 
                     triggerWorkflow('resume_updated', user.id, { resumeId: data.id, data: resumeData });

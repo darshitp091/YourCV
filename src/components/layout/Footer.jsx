@@ -9,7 +9,6 @@ const FOOTER_LINKS = {
         { name: "Features", href: "/#features" },
         { name: "Templates", href: "/templates" },
         { name: "AI Builder", href: "/builder" },
-        { name: "Pricing", href: "/#pricing" },
     ],
     Company: [
         { name: "About", href: "/about" },

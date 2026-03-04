@@ -6,11 +6,10 @@ import { useAuth } from "@/context/AuthContext";
 import { BrandLogo } from "../ui/BrandLogo";
 import { Button } from "../ui/Button";
 
-const NAV_LINKS = [
+const navLinks = [
     { name: "Features", href: "/#features" },
     { name: "Templates", href: "/templates" },
-    { name: "Pricing", href: "/#pricing" },
-    { name: "FAQ", href: "/#faq" },
+    { name: "Blog", href: "/blog" },
 ];
 
 export const Header = () => {

@@ -18,7 +18,7 @@ export default function TermsPage() {
                     >
                         <div className="space-y-4">
                             <h1 className="text-5xl font-black font-heading leading-tight">Terms of Service</h1>
-                            <p className="text-muted-foreground font-medium">Last updated: February 22, 2026</p>
+                            <p className="text-muted-foreground font-medium">Last updated: March 4, 2026</p>
                         </div>
 
                         <div className="prose prose-lg prose-primary max-w-none text-muted-foreground
@@ -28,20 +28,16 @@ export default function TermsPage() {
                             prose-strong:text-foreground prose-strong:font-bold"
                         >
                             <h2>1. Acceptance of Terms</h2>
-                            <p>By accessing or using YourCV, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not use our services.</p>
+                            <p>By accessing or using YourCV, you agree to be bound by these Terms of Service. YourCV is now an open-source platform supported by advertisements.</p>
 
                             <h2>2. Description of Service</h2>
-                            <p>YourCV is an AI-powered resume building platform. We provide tools for content generation, ATS optimization, and professional template rendering in HTML, PDF, and LaTeX formats.</p>
+                            <p>YourCV provides AI-powered resume building tools for free. We provide tools for content generation, ATS optimization, and professional template rendering in HTML, PDF, and LaTeX formats.</p>
 
                             <h2>3. Account Registration</h2>
-                            <p>To use certain features, you must register for an account. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+                            <p>To use certain features, you must register for an account. You are responsible for maintaining the confidentiality of your account credentials.</p>
 
-                            <h2>4. Subscription and Payments</h2>
-                            <ul>
-                                <li><strong>Free Plan:</strong> Includes basic resume building, all templates, and no watermarks.</li>
-                                <li><strong>Premium Plan:</strong> Recurring monthly fee for full access to all features, priority AI, and clean exports.</li>
-                                <li><strong>Refunds:</strong> Payments are generally non-refundable, but we evaluate requests on a case-by-case basis.</li>
-                            </ul>
+                            <h2>4. Advertising and Free Access</h2>
+                            <p>YourCV is a free service provided to the community. To keep the service free, we display advertisements provided by our partner, Adsterra. By using the service, you agree to the display of such advertisements.</p>
 
                             <h2>5. Prohibited Conduct</h2>
                             <p>You agree not to use YourCV for any unlawful purpose or in any way that violates these Terms. You may not attempt to reverse engineer or extract the AI models used by our service.</p>

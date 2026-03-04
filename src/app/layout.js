@@ -107,6 +107,10 @@ export default function RootLayout({ children }) {
         </AuthProvider>
         <Analytics />
         <SpeedInsights />
+        {/* Adsterra Social Bar (Anti-Adblock) */}
+        <script type='text/javascript' src='//pl25927364.highperformanceformat.com/73/b6/b2/73b6b292ed780e89f620ff15c77b7ef0.js' async></script>
+        {/* Adsterra Pop-under (Main Revenue Tab) */}
+        <script type='text/javascript' src='//pl25927364.highperformanceformat.com/a4/bc/cc/a4bccc84e68e42d07fe284186b2af48a.js' async></script>
       </body>
     </html>
   );
